@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8" />
+<?=$PAGE->getCSS()?>
+	<title><?=$PAGE->getTitle()?></title>
+</head>
+
+<body>
+
+<header>
+<div id="logo"><img src="/<?=$PAGE->getLogo()?>" alt = "Logo"></div>
+<div id="titre">
+	<?=$PAGE->getHeaderText()?>
+	<?=$PAGE->AfficherOnglets()?>
+</div>
+</header>
+
+<main role="main"> <!--remarque: <main> suffit à Chrome pour tenir compte de la feuille de style.-->
+
+<?=$PAGE->AfficherMenu()?>
+
+<section>
+<?=$PAGE->getSection()?>
+</section>
+
+<?=$PAGE->AfficherURLConnexes()?>
+
+</main>
+
+<footer>
+	<!-- code commun à toutes les pages -->
+	<?=$PAGE->getFooter()?>
+	<!-- code commun à toutes les pages -->
+</footer>
+
+</body>
+</html>
+
