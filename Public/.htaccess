@@ -1,0 +1,20 @@
+ErrorDocument 403 /index.php
+ErrorDocument 404 /index.php
+ErrorDocument 500 /index.php
+
+<IfDefine Free>
+php56 1
+</IfDefine>
+Options -Indexes
+
+#protection du fichier de connexion
+<files connexion.php>
+order allow,deny
+deny from all
+</files>
+
+<Files ".ht*">
+Order allow,deny
+Deny from all
+Satisfy all
+</Files>
