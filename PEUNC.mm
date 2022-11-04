@@ -717,15 +717,9 @@
 <node TEXT="L&apos;arboresence des dossiers" LOCALIZED_STYLE_REF="AutomaticLayout.level,1" POSITION="right" ID="ID_1199568779" CREATED="1620349059360" MODIFIED="1620410392126">
 <edge COLOR="#007c00"/>
 </node>
-<node TEXT="La g&#xe9;n&#xe8;se" LOCALIZED_STYLE_REF="AutomaticLayout.level,1" POSITION="left" ID="ID_843485989" CREATED="1616263833721" MODIFIED="1616263948158" HGAP_QUANTITY="16.999999910593036 pt" VSHIFT_QUANTITY="-14.999999552965178 pt">
-<edge COLOR="#ff0000"/>
-<node TEXT="Pourquoi?" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_259898528" CREATED="1616264947430" MODIFIED="1616265073693"/>
-<node TEXT="Trouver un nom" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_946940717" CREATED="1616264968978" MODIFIED="1616265073702"/>
-</node>
 <node TEXT="Les contraintes" LOCALIZED_STYLE_REF="AutomaticLayout.level,1" POSITION="left" ID="ID_1078391746" CREATED="1620410562174" MODIFIED="1620410575297">
 <edge COLOR="#7c007c"/>
-<node TEXT="pas de moteur Rewrite" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_723316953" CREATED="1616264881384" MODIFIED="1620410592194">
-<node TEXT="Pas d&apos;URL rewriting sur les pages persos de Free." LOCALIZED_STYLE_REF="AutomaticLayout.level,3" ID="ID_536723622" CREATED="1616926660157" MODIFIED="1620410597971"><richcontent TYPE="NOTE">
+<node TEXT="c&#xf4;t&#xe9; serveur" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_119965609" CREATED="1624267338844" MODIFIED="1624274059575"><richcontent TYPE="NOTE">
 
 <html>
   <head>
@@ -733,22 +727,19 @@
   </head>
   <body>
     <p>
-      <font size="5">N'&#233;tant pas un pro, j'utilise les pages personnelles de free. C'est largement suffisant pour mon usage. </font>
-    </p>
-    <p>
-      
-    </p>
-    <p>
-      <font size="5">Par contre les versions de PHP et MySQL sont obsol&#232;tes.</font>
+      <font size="5">N'&#233;tant pas un pro, j'utilise les pages personnelles de free. C'est largement suffisant pour mon usage.</font>
     </p>
   </body>
 </html>
 </richcontent>
+<node TEXT="pas de moteur Rewrite" LOCALIZED_STYLE_REF="AutomaticLayout.level,3" ID="ID_723316953" CREATED="1616264881384" MODIFIED="1624267404241">
+<node TEXT="Pas d&apos;URL rewriting sur les pages persos de Free." LOCALIZED_STYLE_REF="AutomaticLayout.level,4" ID="ID_536723622" CREATED="1616926660157" MODIFIED="1624274037474"/>
+<node TEXT="la solution: Du rewriting sans le moteur rewrite" LOCALIZED_STYLE_REF="AutomaticLayout.level,4" ID="ID_1927115662" CREATED="1616926696164" MODIFIED="1624267413572" LINK="http://urlrewriting.fr/tutoriel-urlrewriting-sans-moteur-rewrite.htm"/>
 </node>
-<node TEXT="la solution: Du rewriting sans le moteur rewrite" LOCALIZED_STYLE_REF="AutomaticLayout.level,3" ID="ID_1927115662" CREATED="1616926696164" MODIFIED="1620410597976" LINK="http://urlrewriting.fr/tutoriel-urlrewriting-sans-moteur-rewrite.htm"/>
+<node TEXT="version obsol&#xe8;te de PHP et MySQL" LOCALIZED_STYLE_REF="AutomaticLayout.level,3" ID="ID_1910092602" CREATED="1620347839728" MODIFIED="1624267457449"/>
+<node TEXT="impossible de changer le document_root" LOCALIZED_STYLE_REF="AutomaticLayout.level,3" ID="ID_1606779939" CREATED="1624267433010" MODIFIED="1624267460813"/>
 </node>
-<node TEXT="version obsol&#xe8;te de PHP et MySQL" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1910092602" CREATED="1620347839728" MODIFIED="1620410592201"/>
-<node TEXT="s&#xe9;curit&#xe9; de l&apos;application" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1109896954" CREATED="1619283843168" MODIFIED="1620348613398"><richcontent TYPE="NOTE">
+<node TEXT="c&#xf4;t&#xe9; s&#xe9;curit&#xe9;" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_1109896954" CREATED="1619283843168" MODIFIED="1624267591383"><richcontent TYPE="NOTE">
 
 <html>
   <head>
@@ -785,234 +776,6 @@
   </body>
 </html>
 </richcontent>
-<node TEXT="g&#xe9;rer un site structur&#xe9; en arbre sur 3 niveaux" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_830676070" CREATED="1616264425392" MODIFIED="1620347817068"><richcontent TYPE="NOTE">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      <font size="5">Chaque page aura une adresse /(niveau1 (/niveau2 (/niveau3)))</font>
-    </p>
-  </body>
-</html>
-</richcontent>
-</node>
-<node TEXT="page d&apos;administration" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_421734172" CREATED="1616264441371" MODIFIED="1616927479620"><richcontent TYPE="NOTE">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      <font size="5">Cette page ne remplace pas PhpMyAdmin mais viens la compl&#233;ter sur les sp&#233;cificit&#233;s de PEUNC.</font>
-    </p>
-  </body>
-</html>
-</richcontent>
-<node TEXT="g&#xe9;rer l&apos;arborescence" LOCALIZED_STYLE_REF="AutomaticLayout.level,3" ID="ID_53082085" CREATED="1616264481602" MODIFIED="1620347901768">
-<node TEXT="dessiner l&apos;arborescence" ID="ID_1932863142" CREATED="1620348460738" MODIFIED="1620348470027"/>
-<node TEXT="ajouter/enlever des noeuds" LOCALIZED_STYLE_REF="AutomaticLayout.level,5" ID="ID_1869812442" CREATED="1616264532933" MODIFIED="1616264616123"/>
-<node TEXT="d&#xe9;placer des noeuds" LOCALIZED_STYLE_REF="AutomaticLayout.level,5" ID="ID_1161820720" CREATED="1616264553315" MODIFIED="1616264616131"/>
-<node TEXT="v&#xe9;rifier la conformit&#xe9; de l&apos;arborecence" LOCALIZED_STYLE_REF="AutomaticLayout.level,5" ID="ID_207912724" CREATED="1616264566667" MODIFIED="1620348503389">
-<node TEXT="pas ne noeud orphelin" ID="ID_1600261610" CREATED="1620408918521" MODIFIED="1620408931762">
-<node TEXT="1er niveau" ID="ID_386180245" CREATED="1620409395583" MODIFIED="1620409510449"><richcontent TYPE="NOTE">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      <font size="5">pas de condition</font>
-    </p>
-  </body>
-</html>
-</richcontent>
-</node>
-<node TEXT="2e niveau" ID="ID_1744978706" CREATED="1620409389454" MODIFIED="1620409719940"><richcontent TYPE="NOTE">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      <font size="5">chaque noeud (X;Y;0) avec Y&gt;0 a un noeud parent (X;0;0)</font>
-    </p>
-  </body>
-</html>
-</richcontent>
-</node>
-<node TEXT="3e niveau" ID="ID_1304636947" CREATED="1620409377443" MODIFIED="1620409666962"><richcontent TYPE="NOTE">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      <font size="5">chaque noeud (X;Y;Z) avec Z&gt;0 a un noeud parent (X;Y;0)</font>
-    </p>
-  </body>
-</html>
-</richcontent>
-</node>
-</node>
-<node TEXT="pas de doublon" ID="ID_357556102" CREATED="1620408957552" MODIFIED="1620408967194"/>
-<node TEXT="noeud voisin" FOLDED="true" ID="ID_159937514" CREATED="1620409785204" MODIFIED="1620409791538">
-<node TEXT="1er niveau" ID="ID_1926349872" CREATED="1620409800395" MODIFIED="1620409960445"><richcontent TYPE="NOTE">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      <font size="5">pour chaque noeud (X;0;0) avec X&gt;0 il existe un noeud (X-1;0;0)</font>
-    </p>
-  </body>
-</html>
-</richcontent>
-</node>
-<node TEXT="2e niveau" ID="ID_608463029" CREATED="1620409809932" MODIFIED="1620410004573"><richcontent TYPE="NOTE">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      <font size="5">pour chaque noeud (X;Y;0) avec Y&gt;1 il existe un noeud (X;Y-1;0)</font>
-    </p>
-  </body>
-</html>
-</richcontent>
-</node>
-<node TEXT="3e niveau" ID="ID_1225060449" CREATED="1620409816072" MODIFIED="1620410200131"><richcontent TYPE="NOTE">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      <font size="5">pour chaque noeud (X;Y;Z) avec Z&gt;1 il existe un noeud (X;Y;Z-1)</font>
-    </p>
-  </body>
-</html>
-</richcontent>
-</node>
-</node>
-<node TEXT="noeud impossible" ID="ID_696713622" CREATED="1620447156858" MODIFIED="1620447236583"><richcontent TYPE="NOTE">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      <font size="5">(X;0;Z) avec Z&gt;0 est un noeud impossible</font>
-    </p>
-  </body>
-</html>
-</richcontent>
-</node>
-<node TEXT="condition sur les ptiNoms" ID="ID_1296499141" CREATED="1620408993537" MODIFIED="1620409029050">
-<node TEXT="le noeud (0;0;0) est la racine" ID="ID_1644916979" CREATED="1620409052813" MODIFIED="1620449909322"><richcontent TYPE="NOTE">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      <font size="5">Mais le ptiNom ne doit pas &#234;tre vide. </font>
-    </p>
-    <p>
-      <font size="5">Par contre une requ&#234;te vide aboutira toujours sur la page d'accueil. </font>
-    </p>
-    <p>
-      <font size="5">Avoir un nom permet d'avoir des pages-filles. </font>
-    </p>
-    <p>
-      
-    </p>
-    <p>
-      <font size="5">Exemple pour ma FAQ </font>
-    </p>
-    <p>
-      <font size="5">taper&#160;&quot;faq.sw.free.fr&quot; et &quot;faq.sw.free.fr/Accueil&quot; enverra sur la m&#234;me page </font>
-    </p>
-    <p>
-      
-    </p>
-    <p>
-      <font size="5">Le fait d'avoir un nom permet la cr&#233;ation de page-fille comme Accueil/moi</font>
-    </p>
-  </body>
-</html>
-</richcontent>
-</node>
-<node TEXT="caract&#xe8;res autoris&#xe9;s" ID="ID_1056855974" CREATED="1620409089204" MODIFIED="1620410331931"><richcontent TYPE="NOTE">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      <font size="5">- comme un nom de fichier linux. </font>
-    </p>
-    <p>
-      <font size="5">- un caract&#232;re au minimum</font>
-    </p>
-  </body>
-</html>
-</richcontent>
-<node TEXT="lettre minuscule ou majuscule" ID="ID_1668020593" CREATED="1620409130675" MODIFIED="1620409144478"/>
-<node TEXT="chiffre" ID="ID_1263752775" CREATED="1620409147468" MODIFIED="1620409154869"/>
-<node TEXT="caract&#xe8;res sp&#xe9;ciaux" ID="ID_98815765" CREATED="1620409155948" MODIFIED="1620409238683"><richcontent TYPE="NOTE">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      underscore: _
-    </p>
-    <p>
-      tiret: -
-    </p>
-  </body>
-</html>
-</richcontent>
-</node>
-<node TEXT="les autres caract&#xe8;res sont interdits" ID="ID_1874898185" CREATED="1620409297058" MODIFIED="1620409354171"><richcontent TYPE="NOTE">
-
-<html>
-  <head>
-    
-  </head>
-  <body>
-    <p>
-      &#224; commenccer par le caract&#232;re espace
-    </p>
-  </body>
-</html>
-</richcontent>
-</node>
-</node>
-</node>
-</node>
-</node>
-<node TEXT="g&#xe9;rer les classes" LOCALIZED_STYLE_REF="AutomaticLayout.level,3" ID="ID_468109177" CREATED="1620347671081" MODIFIED="1620347689450"/>
-<node TEXT="g&#xe9;rer les utilisateurs" LOCALIZED_STYLE_REF="AutomaticLayout.level,3" ID="ID_142382623" CREATED="1616264497219" MODIFIED="1616928611741"/>
-<node TEXT="journal d&apos;activit&#xe9; du site" LOCALIZED_STYLE_REF="AutomaticLayout.level,3" ID="ID_1701095863" CREATED="1619292903366" MODIFIED="1619292926833"/>
-</node>
 <node TEXT="Pour le futur" LOCALIZED_STYLE_REF="AutomaticLayout.level,2" ID="ID_672630054" CREATED="1620348519181" MODIFIED="1620348554212">
 <node TEXT="moteur de recherche interne" LOCALIZED_STYLE_REF="AutomaticLayout.level,3" ID="ID_752475991" CREATED="1617823555734" MODIFIED="1620348578940"><richcontent TYPE="NOTE">
 

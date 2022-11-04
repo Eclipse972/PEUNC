@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cherrytree>
+  <bookmarks list=""/>
+  <node name="PEUNC est un nano cadriciel" unique_id="1" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661617158" ts_lastsave="1661621690">
+    <rich_text>documentation officielle
+</rich_text>
+    <node name="La génèse" unique_id="2" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661617207" ts_lastsave="1661623639">
+      <rich_text>Lorsque je code je commence par faire un code qui fonctionne puis factoriser le code le plus possible. J'ai créé 3 sites et je me suis rendu compte qu'il était encore possible de factoriser. D'où l'idée de créer un framework en PHP avec POO suivant l'architecture MVC.
+
+J'ai été largement inspiré par le site </rich_text>
+      <rich_text link="webs https://www.training-dev.fr/Cours/Creer-un-framework-MVC-en-Php">Créer un framework MVC en Php</rich_text>
+      <rich_text>
+
+Il a fallu trouvé un nom. Je voulais une définition récursive comme GNU: GNU is Not Unix. La définition est X Est Un Nano Cadriciel ou X était une lettre à choisir. J'ai comencé par éliminé les voyelles. Pour choisir parmi les 19 possibilités restantes, j'ai testé la sonorité de chaque nom avec Google Voice en Français, Anglais, Italien et Espagnol. Et c'est PEUNC qui a gagné parce qu'il m'a fait rire.
+
+Mon projet équivaut à réinventer l'eau tiède mais ce défi est motivant pour moi. Loin de moi l'idée de concurrencer Laravel ou Symphony mais je veux voir où cela peut m'emmener.</rich_text>
+    </node>
+    <node name="Les contraintes" unique_id="3" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661617712" ts_lastsave="1661622973">
+      <rich_text>N'étant qu'un amateur je n'ai as voulu investir dans un serveur dédié que je n'aurait peut être plus utilisé par la suite. Étant chez Free à l'époque je me suis tourné vers leur pages persos.
+Avantages
+- gratuité
+- 10Go de stockage
+- une adresse mail
+- une URL libre du style mon.site.free.fr
+- PHP + MySQL + phpMyAdmin
+
+Inconvénients dûs au fait que ce n'est pas mon serveur
+- des versions des logiciel datant du paléolitique: la 5.6 pour PHP, 5 pour MySQL et 3.1.5 pour phpMyAdmin
+- impossibilité de changer le DocumentRoot
+- pas de réécriture d'URL
+- pas de HTTPS
+</rich_text>
+    </node>
+    <node name="Mes objectifs" unique_id="4" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661619234" ts_lastsave="1661621073">
+      <node name="site avec une arborescence sur 3 niveaux maximum" unique_id="5" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661619259" ts_lastsave="1661619441">
+        <rich_text>À mon sens c'est juste. Au dela de 3 clics pour accéder à une page un internaute (peu motivé) lâche l'affaire.</rich_text>
+      </node>
+      <node name="réécriture d'URL" unique_id="6" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661619278" ts_lastsave="1661620653">
+        <rich_text>Je voulais des URL compréhensibles du style mon.site.free.fr/(niveau1 (/niveau2 (/niveau3))) sans moteur Rewrite
+J'ai fini par trouver mon bonheur: </rich_text>
+        <rich_text link="webs https://urlrewriting.fr/tutoriel-urlrewriting-sans-moteur-rewrite.htm">Tutoriel sur la réécriture d'url - Du rewriting sans le moteur rewrite</rich_text>
+      </node>
+      <node name="Outils d'administration" unique_id="7" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661619310" ts_lastsave="1661620873">
+        <rich_text>Ces outils ne remplacent pas PhpMyAdmin mais viennent le compléter sur les spécificités de PEUNC.
+gérer l'arborescence sans phpMyAdmin</rich_text>
+        <node name="l'arborescence" unique_id="8" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661620151" ts_lastsave="1661620774">
+          <rich_text>dessiner l'arborescence
+gérer les noeuds: ajquter, enlever, modifier
+pas de doublon, ni d'orphelin
+des noms conforme pour toutes les URL (pas d'espace ni de caractères accentuéspar exemple).</rich_text>
+        </node>
+        <node name="journal d'activité" unique_id="9" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661620210" ts_lastsave="1661620230"/>
+        <node name="les utilisateurs" unique_id="10" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661620230" ts_lastsave="1661620230"/>
+      </node>
+    </node>
+    <node name="Principe de base" unique_id="11" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661621073" ts_lastsave="1661621306">
+      <rich_text>L'arborescence est stockée en BDD
+Utilisation de l'erreur 404 pour simuler la réécriture d'URL
+Utilisations des sessions</rich_text>
+    </node>
+  </node>
+  <node name="Créer un site avec PEUNC" unique_id="32" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661623356" ts_lastsave="1661792289">
+    <node name="installation" unique_id="33" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661623378" ts_lastsave="1661630112">
+      <rich_text>les dossiers
+les tables et vue de BDD
+Attention:
+- certaines vues reposent sur d'autres donc l'importaion dans phpMyAdmin doit respecter un certain ordre.
+- toutes les vues ne sont pas essentielles pour une utilisation de base</rich_text>
+    </node>
+    <node name="hello world!" unique_id="34" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661623528" ts_lastsave="1661628416"/>
+    <node name="construire une classe de page personnalisée" unique_id="54" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661628456" ts_lastsave="1661628692">
+      <rich_text>Héritage de PEUNC\Page</rich_text>
+    </node>
+    <node name="construire une vue" unique_id="53" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661628427" ts_lastsave="1661628632">
+      <rich_text>les balises:
+header
+title
+section
+nav
+footer
+
+ajouter des feuile de style
+
+Factorisation de code
+insérer direcetement du code html</rich_text>
+    </node>
+    <node name="construire un contrôleur" unique_id="52" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661628416" ts_lastsave="1661628729"/>
+  </node>
+  <node name="Implémentation" unique_id="12" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661621690" ts_lastsave="1661623356">
+    <node name="Les dossiers" unique_id="13" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661621739" ts_lastsave="1661624450">
+      <rich_text>j'ai choisi de les nommer en français sans caractères accentués mais ça pourrai changer plus tard.</rich_text>
+      <node name="bac_a_sable" unique_id="22" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661622230" ts_lastsave="1661622234"/>
+      <node name="BD" unique_id="19" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661622103" ts_lastsave="1661622458">
+        <rich_text>sauvegardes des tables de la BDD</rich_text>
+        <node name="PEUNC" unique_id="23" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661622458" ts_lastsave="1661622493">
+          <rich_text>Les vues de la BDD</rich_text>
+        </node>
+      </node>
+      <node name="Public" unique_id="18" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661621982" ts_lastsave="1661623232">
+        <rich_text>Il contient tous les fichiers à transmettre au serveur.
+Il faut associer ce dossier avec la racine du serveur web dans Filezilla par exemple.</rich_text>
+        <node name="Controleur" unique_id="14" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661621888" ts_lastsave="1661622554">
+          <rich_text>les controleur de chaque page</rich_text>
+        </node>
+        <node name="CSS" unique_id="15" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661621907" ts_lastsave="1661622083"/>
+        <node name="JS" unique_id="16" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661621951" ts_lastsave="1661622571">
+          <rich_text>scripts javascript</rich_text>
+        </node>
+        <node name="Images" unique_id="17" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661621961" ts_lastsave="1661622583">
+          <rich_text>dossier par défaut des images</rich_text>
+        </node>
+        <node name="Modele" unique_id="20" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661622137" ts_lastsave="1661622613">
+          <rich_text>les classes utilisateur</rich_text>
+        </node>
+        <node name="PEUNC" unique_id="21" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661622176" ts_lastsave="1661622652">
+          <node name="classes" unique_id="24" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661622652" ts_lastsave="1661622685"/>
+          <node name="Vue" unique_id="25" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661622685" ts_lastsave="1661622685"/>
+        </node>
+        <node name="Vue" unique_id="26" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661622759" ts_lastsave="1661622782">
+          <node name="commun" unique_id="27" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661622782" ts_lastsave="1661622782"/>
+        </node>
+        <node name="les scripts" unique_id="29" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661623232" ts_lastsave="1661623254">
+          <node name="index.php" unique_id="30" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661623254" ts_lastsave="1661623275"/>
+          <node name="connexion.php" unique_id="31" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661623275" ts_lastsave="1661623275"/>
+        </node>
+      </node>
+    </node>
+    <node name="Requête http et routes" unique_id="35" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661624450" ts_lastsave="1661626330">
+      <rich_text>Rappel requête Http:
+Lorsqu'on tape une url dans un navigateur ou que l'on clique sur un lien, ça créé une requête Http.
+
+Les informations qui sont envoyées avec la requête sont :
+- Les informations de requêtes (l'url, le type, le status, les types d'informations transmises et attendues...)
+- Les informations de navigateur (type de navigateur, version ...)
+- Les informations du client (adresse IP,géolicalisation...)
+- Les données complémentaires (données url, formulaire, données multipart...)
+- 
+
+Chaque requête http doit correspondre à une et une seule route, et cette route sait quel contrôleur, quelle action appeler et quels paramètres il faut utiliser.
+
+Chaque route est l'association d'une table, d'une vue sur cette table et d'une classe.
+</rich_text>
+      <node name="la table Squelette" unique_id="36" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661624800" ts_lastsave="1661625974">
+        <rich_text>C'est elle qui contient l'arborescence de tout le site
+
+La position dans l'arborescence est représentée par un triplet (alpha, beta, gamma) par importance décroissante
+ 
+ Si alpha &gt;= 0 =&gt; pages du site
+ * (X;0;0) =&gt; page de 1er niveau. 	(0;0;0) -&gt; la racine.
+ * (X;Y;0) avec Y&gt;0 =&gt; page de 2e niveau avec comme noeud  parent (X;0;0)
+ * (X;Y;Z) avec Z&gt;0 =&gt; page de 3e niveau avec comme noeud  parent (X;Y;0)
+ 
+ si alpha &lt; 0 =&gt; page spéciales PEUNC ou autre
+ * (-1;code;0) -&gt; page d'erreur avec son code que ce soit un erreur serveur ou une erreur interne à l'application
+ * (-2;0;0) -&gt; formulaire de contact. Mais ce n'est pas une obligation</rich_text>
+      </node>
+      <node name="La vue VueURLvalides" unique_id="37" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661624819" ts_lastsave="1661625416"/>
+      <node name="la classe HttpRouter" unique_id="38" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661625416" ts_lastsave="1661625527">
+        <rich_text>Cette classe décode une requête http et renvoie :
+- la position dans l'arborescence même s'il s'agit d'une erreur serveur
+- la méthode Http utilisée</rich_text>
+      </node>
+    </node>
+    <node name="réponse à requête http" unique_id="44" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661627390" ts_lastsave="1661627964">
+      <rich_text>Sont extraits de la BDD les éléments pour construire la réponse:
+- classePage
+- controleur
+- texteMenu
+etc</rich_text>
+      <node name="Méthode GET" unique_id="45" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661627544" ts_lastsave="1661627602"/>
+      <node name="Méthode POST" unique_id="46" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661627579" ts_lastsave="1661627718">
+        <rich_text>À cause de la pseudo réécriture d'URL on est obligé de passer par index.php. Script qui se chargera d'appeler lebon controleur pour traiter les données.</rich_text>
+      </node>
+      <node name="Les autres  méthodes HTTP" unique_id="47" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661627718" ts_lastsave="1661627813">
+        <rich_text>Je pense à PUT et DELETE mêm s'il en existe d'autre.
+Pour le moment de telles requêtes provoquent une erreur de l'application.</rich_text>
+      </node>
+    </node>
+    <node name=".htaccess" unique_id="39" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661626330" ts_lastsave="1661629370">
+      <rich_text>C'est un fichier vital pour le fonctionnement du site</rich_text>
+      <node name="PHP5 chez free" unique_id="41" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661626438" ts_lastsave="1661628765">
+        <rich_text>spécifique à free pour activer php5</rich_text>
+      </node>
+      <node name="protection" unique_id="40" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661626382" ts_lastsave="1661628776">
+        <rich_text>les sous-dossiers
+les fichiers sensibles comme conexion.php qui contient les paramètres de connexion à la BDD.</rich_text>
+      </node>
+      <node name="redirection des erreurs serveur" unique_id="42" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661626499" ts_lastsave="1661817487">
+        <rich_text>Les erreurs serveur doivent être redirigées vers index.php si on veut qu'elles soient traitées par PEUNC.
+La pseudo réécriture d'URL repose sur le détournement de l'erreur 404</rich_text>
+      </node>
+    </node>
+    <node name="Les classes de PEUNC" unique_id="61" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661629370" ts_lastsave="1661629370">
+      <node name="La classe Page de PEUNC" unique_id="55" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661628950" ts_lastsave="1661630173">
+        <rich_text>l'interface pour une description des fonctions</rich_text>
+        <node name="les variables-membres" unique_id="63" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661630173" ts_lastsave="1661630193"/>
+        <node name="assesseurs et mutateurs" unique_id="64" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661630219" ts_lastsave="1661630230"/>
+        <node name="autres fonctions" unique_id="65" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661630230" ts_lastsave="1661630230"/>
+        <node name="Les classes filles" unique_id="57" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661628995" ts_lastsave="1661630181"/>
+      </node>
+      <node name="La classe BDD de PEUNC" unique_id="56" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661628976" ts_lastsave="1661629438">
+        <node name="le principe" unique_id="58" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661629097" ts_lastsave="1661629197">
+          <rich_text>Il n'y a pas d'objet classe mais on utilise la classe sans instanciation
+Source: </rich_text>
+        </node>
+        <node name="SELECT" unique_id="59" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661629144" ts_lastsave="1661629152">
+          <rich_text>Exemple
+</rich_text>
+        </node>
+        <node name="Les autres requête SQL" unique_id="60" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661629178" ts_lastsave="1661629295">
+          <rich_text>non implémantées pour le moment
+UPDATE
+DELETE
+INSERT</rich_text>
+        </node>
+      </node>
+      <node name="Les utilisateurs" unique_id="62" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661629438" ts_lastsave="1661629438"/>
+      <node name="Les exceptions personnalisées" unique_id="48" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661627964" ts_lastsave="1661816436">
+        <rich_text>Le script index.php contient un bloc try-catch pour gérer les exceptions.
+</rich_text>
+        <node name="ServeurException" unique_id="66" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661816487" ts_lastsave="1663346078">
+          <rich_text>Gère les erreurs serveur redirigées vers index.php grace au fichier .htaccess
+Erreurs gérées: 403, 404 et 500
+on peut facilemnt rajouter des erreus
+rajouter l'erreur dans .htaccess et dans la classes ServeurException</rich_text>
+        </node>
+        <node name="ApplicationException" unique_id="67" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661816651" ts_lastsave="1661816673">
+          <rich_text>Gère les erreurS  de PEUNC</rich_text>
+        </node>
+        <node name="PDOException" unique_id="68" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661816699" ts_lastsave="1661816756">
+          <rich_text>Les erreur dela BDD sont récupérées ici</rich_text>
+        </node>
+        <node name="Exception" unique_id="69" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661816756" ts_lastsave="1661816762">
+          <rich_text>Toutes les erreurs inconnues sont interceptée ici</rich_text>
+        </node>
+      </node>
+    </node>
+    <node name="L'autoload des classes" unique_id="43" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661627306" ts_lastsave="1661817003">
+      <rich_text>deux sources PEUNC/classes et Modele
+
+dans /Modele les fichiers doivent s'appeler classe_Nom-de-la-classe.php
+Dans /PEUNC les fichiers s'appelent Nom-de-la-classe.php</rich_text>
+    </node>
+    <node name="les paramètres" unique_id="49" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661628329" ts_lastsave="1661628347">
+      <node name="passés par l'URL" unique_id="50" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661628347" ts_lastsave="1661628373"/>
+      <node name="passés par la requête" unique_id="51" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661628373" ts_lastsave="1661628385"/>
+    </node>
+  </node>
+</cherrytree>
