@@ -60,31 +60,76 @@ Utilisations des sessions</rich_text>
     </node>
   </node>
   <node name="Créer un site avec PEUNC" unique_id="32" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661623356" ts_lastsave="1661792289">
-    <node name="installation" unique_id="33" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661623378" ts_lastsave="1661630112">
+    <node name="installation" unique_id="33" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661623378" ts_lastsave="1667597250">
       <rich_text>les dossiers
 les tables et vue de BDD
 Attention:
 - certaines vues reposent sur d'autres donc l'importaion dans phpMyAdmin doit respecter un certain ordre.
 - toutes les vues ne sont pas essentielles pour une utilisation de base</rich_text>
+      <node name="arborescence des dossiers" unique_id="70" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1667597250" ts_lastsave="1667597283">
+        <rich_text>Elle doit respecter certaines règles</rich_text>
+      </node>
+      <node name="Base de données" unique_id="71" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1667597277" ts_lastsave="1667597567">
+        <node name="les tables" unique_id="72" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1667597321" ts_lastsave="1667597331"/>
+        <node name="les vues" unique_id="73" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1667597331" ts_lastsave="1667597427">
+          <rich_text>Les peuvent classée en deux catégories
+- pour le fonctionnement du site
+- administration</rich_text>
+          <node name="fonctionnement du site" unique_id="75" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1667597470" ts_lastsave="1667597482"/>
+          <node name="administration" unique_id="76" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1667597482" ts_lastsave="1667597486">
+            <rich_text>entre autre controler l'intégrité de l'arborescence et son contenu</rich_text>
+          </node>
+        </node>
+        <node name="fonctions et procedures" unique_id="74" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1667597341" ts_lastsave="1667597356">
+          <rich_text>Un jour peut-être</rich_text>
+        </node>
+      </node>
+      <node name="automatisation" unique_id="77" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1667597567" ts_lastsave="1667597610">
+        <rich_text>J'aimerai automatiser le processus avec des scripts
+Pour le moment j'enrevois l'utilisation du archive ZIP qui permettrait de créer tous les dossiers</rich_text>
+      </node>
     </node>
     <node name="hello world!" unique_id="34" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661623528" ts_lastsave="1661628416"/>
-    <node name="construire une classe de page personnalisée" unique_id="54" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661628456" ts_lastsave="1661628692">
-      <rich_text>Héritage de PEUNC\Page</rich_text>
+    <node name="construire une classe de page personnalisée" unique_id="54" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661628456" ts_lastsave="1667598686">
+      <rich_text>Héritage de PEUNC\Page
+Cette classe fournit un certain nombre d'outils qu'il est possible de personaliser en utilisant l'héritage.
+La liste des méthodes diponible est fourni dans l'interface iPage.php</rich_text>
     </node>
-    <node name="construire une vue" unique_id="53" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661628427" ts_lastsave="1661628632">
-      <rich_text>les balises:
-header
-title
-section
-nav
-footer
+    <node name="construire une vue" unique_id="53" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661628427" ts_lastsave="1667598747">
+      <rich_text>Al structure d'un page web est toujours la même.
+Les balises dans l'ordre d'apparttion:
+- head
+- header
+- title
+- section
+- nav
+- footer
 
-ajouter des feuile de style
+Le contenu de la balise peut être statique ou dynamique
+S'il est statique on peut l'intégrer directement dans la vue
 
-Factorisation de code
-insérer direcetement du code html</rich_text>
+S'il est dynamique il faut utiliser les méthodes fournies par PEUNC. La syntaxe est:
+&lt;balise&gt;
+&lt;?$PAGE-&gt;getBalise();?&gt;
+&lt;/balise&gt;
+
+On peut aussi avoir un mélange des deux en insérant du code html. Ceci est interessant si seulement une partie du contenu de la balise est dynamique.
+Exemple: les en-tête de mes dossiers techniques en Ligne.
+Chaque entête est Dossier technique du ...
+ 
+ Il y deux manières de coder l'en-tête
+ 1 tout le code est générer par ma méthode getHead() et on se retrouve avec le code décrit plus haut
+ 2 un partie statique et une partie dynamique
+ &lt;head&gt;
+ &lt;p&gt;Dossier technique &lt;?$PAGE-&gt;getHead();?&gt;&lt;/p&gt;
+ &lt;/head&gt;
+ La méthode getHead n'affihera que l'article (du, de la ou de l') suivi du nim du support
+ 
+ Un exemple de vue est fourni. firhcier doctype.html.</rich_text>
     </node>
-    <node name="construire un contrôleur" unique_id="52" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661628416" ts_lastsave="1661628729"/>
+    <node name="construire un contrôleur" unique_id="52" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661628416" ts_lastsave="1667598765">
+      <rich_text>Il va conctruire le code de chaque partie de a page. En utilisant les méthodes mise à disposition par PEUNC et celles que vous aurez créé.</rich_text>
+    </node>
   </node>
   <node name="Implémentation" unique_id="12" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661621690" ts_lastsave="1661623356">
     <node name="Les dossiers" unique_id="13" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661621739" ts_lastsave="1661624450">
