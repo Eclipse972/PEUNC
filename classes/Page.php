@@ -162,6 +162,8 @@ class Page implements iPage	{
  	public static function CodeOnglets(HttpRoute $route)
  	{
 		$T_Onglets = BDD::Liste_niveau();
+		if(!is_array($T_Onglets)) throw new Exception("Onglets inexistants!  Il faut au moins 2 items");
+
 		$code = "<ul>\n";
 		foreach($T_Onglets as $alpha => $code)
 		{
@@ -174,6 +176,8 @@ class Page implements iPage	{
 	public static function CodeMenu(HttpRoute $route)
 	{
 		$T_item = BDD::Liste_niveau($route->getAlpha());
+		if(!is_array($T_item)) throw new Exception("Menu inexistant! Il faut au moins 2 items");
+		
 		$codeMenu = "\t<ul>\n";
 		foreach($T_item as $beta => $code)
 		{
