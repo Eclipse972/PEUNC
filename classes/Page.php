@@ -108,6 +108,8 @@ class Page implements iPage	{
 
 	public function getCSS()			{ foreach($this->T_CSS as $feuilleCSS) echo"\t<link rel=\"stylesheet\" href=\"", $feuilleCSS,"\" />\n";	}
 
+	public function getRoute()			{ return $this->route; }
+
 /* ***************************
  * AUTRE
  * ***************************/
@@ -142,35 +144,30 @@ class Page implements iPage	{
 
 	public static function SauvegardeEtat(HttpRoute $route)
 	{
-		// sauvegarde de l'état précédent
-		if (isset($_SESSION["PEUNC"]['alpha'])) // défini => une page a été mémorisée
+		$URLactuelle = BDD::SELECT("URL FROM Vue_URLvalides WHERE niveau1=? AND niveau2=? AND niveau3=?", [$route->getAlpha(), $route->getBeta(), $route->getGamma()]);
+
+		if ($_SESSION["PEUNC"]["URL"] != $URLactuelle) // sauvagarde s'il n'y a pas rafraichiisemnt de page
 		{
-			if(($_SESSION["PEUNC"]['alpha'] < 0) || ($route->getMethode == "POST"))	// page spéciale OU traitement de formulaire
-					$T_etatPrecedent = [$_SESSION["PEUNC"]['alphaPrecedent'],$_SESSION["PEUNC"]['betaPrecedent'],	$_SESSION["PEUNC"]['gammaPrecedent']];	// l'état précédent reste le même pour les pages spéciales (erreur, pages admin, ...)
-			else	$T_etatPrecedent = [$_SESSION["PEUNC"]['alpha'],		 $_SESSION["PEUNC"]['beta'],			$_SESSION["PEUNC"]['gamma']];			// sauvegarde état actuel
+			$_SESSION["PEUNC"]["URLprecedente"] = (isset($_SESSION["PEUNC"]["URL"])) ? $_SESSION["PEUNC"]["URL"] : "/";
+
+			$_SESSION["PEUNC"]["URL"] =	$URLactuelle;
 		}
-		else		$T_etatPrecedent = [0, 0, 0];	// alpha non défini => on vient de l'ailleurs. On mémorise la page d'accueil
-
-		list($_SESSION["PEUNC"]['alphaPrecedent'], $_SESSION["PEUNC"]['betaPrecedent'], $_SESSION["PEUNC"]['gammaPrecedent']) = $T_etatPrecedent;
-
-		// MAJ de l'état
-		$_SESSION["PEUNC"]['alpha']	= $route->getAlpha();
-		$_SESSION["PEUNC"]['beta']	= $route->getBeta();
-		$_SESSION["PEUNC"]['gamma']	= $route->getGamma();
 	}
 
- 	public static function CodeOnglets(HttpRoute $route)
+	public static function URLprecedente()	{ return $_SESSION["PEUNC"]["URLprecedente"]; }
+	
+ 	public static function CodeOnglets(HttpRoute $route, $alphaMini = Page::ALPHA_MINI, $alphaMaxi = Page::ALPHA_MAXI)
  	{
 		$T_Onglets = BDD::Liste_niveau();
 		if(!is_array($T_Onglets)) throw new Exception("Onglets inexistants!  Il faut au moins 2 items");
 
-		$code = "<ul>\n";
+		$codeOnglet = "<ul>\n";
 		foreach($T_Onglets as $alpha => $code)
 		{
-			if (($alpha >= Page::ALPHA_MINI) && ($alpha <= Page::ALPHA_MAXI))
-				$code .= "\t<li>" . (($alpha == $route->getAlpha()) ? str_replace('href', 'id="alpha_actif" href', $code) : $code) . "</li>\n";
+			if (($alpha >= $alphaMini) && ($alpha <= $alphaMaxi))
+				$codeOnglet .= "\t<li>" . (($alpha == $route->getAlpha()) ? str_replace('href', 'id="alpha_actif" href', $code) : $code) . "</li>\n";
 		}
-		return $code . "\t</ul>\n";
+		return $codeOnglet . "\t</ul>\n";
 	}
 
 	public static function CodeMenu(HttpRoute $route)
@@ -195,11 +192,5 @@ class Page implements iPage	{
 			}
 		}
 		return $codeMenu . "\t</ul>\n";
-	}
-
-	public static function URLprecedente()
-	{
-		return BDD::SELECT("URL FROM Vue_Routes WHERE niveau1 = ? AND niveau2 = ? AND niveau3 = ?",
-						array($_SESSION["PEUNC"]['alphaPrecedent'],$_SESSION["PEUNC"]['betaPrecedent'],$_SESSION["PEUNC"]['gammaPrecedent']));
 	}
 }
