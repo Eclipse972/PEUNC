@@ -6,7 +6,7 @@ spl_autoload_register(function($classe)
 		if (substr($classe, 0, 5) == "PEUNC")
 		{	// PEUNC
 			$classe = substr($classe, 6, 99);
-			$prefixe = "PEUNC/classes/";
+			$prefixe = "PEUNC/";
 		}
 		else $prefixe =  "Modele/classe_"; // utilisateur
 
@@ -46,9 +46,7 @@ catch(PEUNC\Exception $e)
 	$PAGE = new PEUNC\Page($route);
 	$PAGE->setTitle("Erreur de base de l&apos;application");
 	$PAGE->setHeaderText("<p>Erreur de l&paos;application</p>");
-	$PAGE->SetSection("<h1>" . $e->getMessage() . "</h1>\n"
-					. "<p>Noeud : " . $route->getAlpha() . " - " . $route->getBeta() . " - " . $route->getGamma()
-					. " M&eacute;thode:" . $route->getMethode() . "</p>\n");
+	$PAGE->SetSection("<h1>" . $e->getMessage() . "</h1>\n");
 	$PAGE->setView("erreur.html");
 	include $PAGE->getView();
 }
@@ -57,9 +55,7 @@ catch(Exception $e)
 	$PAGE = new PEUNC\Page($route);
 	$PAGE->setTitle("Erreur inconnue");
 	$PAGE->setHeaderText("<p>Erreur inconnue</p>");
-	$PAGE->SetSection("<h1>" . $e->getMessage() . "</h1>\n"
-					. "<p>Noeud : " . $route->getAlpha() . " - " . $route->getBeta() . " - " . $route->getGamma()
-					. " M&eacute;thode:" . $route->getMethode() . "</p>\n");
+	$PAGE->SetSection("<h1>" . $e->getMessage() . "</h1>\n");
 	$PAGE->setView("erreur.html");
 	include $PAGE->getView();
 }
