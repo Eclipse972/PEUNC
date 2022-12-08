@@ -5,9 +5,7 @@ class ReponseClient
 /* Réponse à servir au client en fonction de la route trouvée suite à la requête http.
  * Classe nécesaire: HttpRoute chargée par l'autoloader
 */
-{
-	protected $route;
-	
+{	
 	public function __construct(HttpRoute $route)
 	{
 		$classePage = BDD::SELECT("classePage FROM Squelette WHERE alpha= ? AND beta= ? AND gamma= ? AND methode = ?",
