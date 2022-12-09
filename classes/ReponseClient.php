@@ -6,6 +6,8 @@ class ReponseClient
  * Classe nécesaire: HttpRoute chargée par l'autoloader
 */
 {	
+	private $page;
+
 	public function __construct(HttpRoute $route)
 	{
 		$classePage = BDD::SELECT("classePage FROM Squelette WHERE alpha= ? AND beta= ? AND gamma= ? AND methode = ?",
@@ -20,10 +22,13 @@ class ReponseClient
 		$PAGE = new $classePage($route, $Tparam);
 		$PAGE->ExecuteControleur($route);
 
+		$this->page = $PAGE;
 		// post-traitement
-		if ($route->getMethode()=="GET")	include $PAGE->getView(); // insertion de la vue
+		//if ($route->getMethode()=="GET")	include $PAGE->getView(); // insertion de la vue
 	}
 
+	public function getPage()	{ return $this->page; }
+	
 	public static function PrepareParametres(HttpRoute $route)
 	/* Dans la table Squelette on récupère la liste des paramètres autorisés.
 	 * On construit un nouveau tableau qui ne contient que les clés autorisées et chaque valeur subit un nettoyage.
