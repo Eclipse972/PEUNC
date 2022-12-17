@@ -6,29 +6,59 @@ class ReponseClient
  * Classe nécesaire: HttpRoute chargée par l'autoloader
 */
 {	
-	private $page;
+	const DUREE_VIE = 3600;	// 1 heure
+	const DOSSIER_CACHE = "cache/";
+
+	private $route;
 
 	public function __construct(HttpRoute $route)
 	{
-		$classePage = BDD::SELECT("classePage FROM Squelette WHERE alpha= ? AND beta= ? AND gamma= ? AND methode = ?",
-								[$route->getAlpha(), $route->getBeta(), $route->getGamma(), $route->getMethode()]);
-		if (!isset($classePage))
-			throw new Exception("La classe de page n&apos;est pas d&eacute;finie dans le squelette.");
+		/* pour le moment toutes les pages peuvent être mise en cache.
+		 * Or ce pas possible pour les pages posesdant des paramètres car on ne peut les connaitre
+		 * tousà l'avance.
+		 * La liste des paramètres de chaque page est diponible dans la table squellette
+		 * Une age peut est 'cachée' si la méthode http =GET  et pas de paramètre */
 
-		// pré-traitement
-		$Tparam = self::PrepareParametres($route);
-					
-		// création de la page
-		$PAGE = new $classePage($route, $Tparam);
-		$PAGE->ExecuteControleur($route);
+		$this->route = $route;
 
-		$this->page = $PAGE;
 		/* Remarque: dans le cas d'un traitement de formulaire, la redirection devrait provoquer
-		 * une nouveele requête qui générera une nouvelle réponse. A VÉRIFIER */
+		 * une nouvelle requête qui générera une nouvelle réponse. A VÉRIFIER */
 	}
 
-	public function getPage()	{ return $this->page; }
-	
+	public function AvecCache()
+	{
+		$fichierCache = self::DOSSIER_CACHE . "cache" . str_replace('/','-',$this->route->getURL()) . '.html';
+		If(file_exists($fichierCache) && filemtime($fichierCache) + self::DUREE_VIE > time())
+		{	// le cache existe et n'est pas périmé
+			$PAGE = new PAGE($route);
+			$PAGE->setView($fichierCache, false);
+		} else
+		{	// il faut créer le cache
+			$PAGE = $this->SansCache();
+
+			// création du cache
+			ob_start();
+			include $PAGE->getView();	// la vue fait appel à une variable $PAGE pour fonctionner
+			$contenu = ob_get_clean();
+			$contenu = str_replace("<body>", "<!-- cache créé le " .  date("d-m-Y") . " à " . date("H:i:s") ." -->\n<body>", $contenu);
+			file_put_contents($fichierCache, $contenu);
+		}
+		return $PAGE;
+	}
+
+	public function SansCache()
+	{
+		// pré-traitement
+		$Tparam = self::PrepareParametres($this->route);
+
+		// création de la page
+		$classePage = $this->route->getClassePage();
+		if (!isset($classePage))	throw new Exception("La classe de page n&apos;est pas d&eacute;finie dans le squelette.");
+		$page = new $classePage($this->route, $Tparam);
+		$page->ExecuteControleur($this->route);
+		return $page;
+	}
+
 	public static function PrepareParametres(HttpRoute $route)
 	/* Dans la table Squelette on récupère la liste des paramètres autorisés.
 	 * On construit un nouveau tableau qui ne contient que les clés autorisées et chaque valeur subit un nettoyage.

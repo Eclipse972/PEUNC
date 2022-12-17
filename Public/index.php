@@ -21,7 +21,7 @@ try
 	PEUNC\Page::SauvegardeEtat($route);			// sauvegarde de l'état courant
 
 	$reponse = new PEUNC\ReponseClient($route);	// construction de la réponse en fonction de la route trouvée
-	$PAGE = $reponse->getPage();
+	$PAGE = $reponse->AvecCache();
 }
 catch(PEUNC\ServeurException $e)
 {
