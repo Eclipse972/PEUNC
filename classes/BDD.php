@@ -32,7 +32,7 @@ class BDD implements iBDD
 
 //	Implémentation de l'interface
 
-	public static function SELECT($requete, array $T_parametre)
+	public static function SELECT($requete, array $T_parametre = [])
 	{
 		$pdo = self::getInstance();
 		$requete = $pdo->prepare("SELECT " . $requete);
