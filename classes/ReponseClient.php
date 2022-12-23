@@ -6,7 +6,6 @@ class ReponseClient
  * Classe nécesaire: HttpRoute chargée par l'autoloader
 */
 {	
-	const DUREE_VIE = 3600;	// 1 heure
 	const DOSSIER_CACHE = "cache/";
 
 	private $route;
@@ -25,10 +24,10 @@ class ReponseClient
 		 * une nouvelle requête qui générera une nouvelle réponse. A VÉRIFIER */
 	}
 
-	public function AvecCache()
+	public function AvecCache($duree2vie = 3600)
 	{
 		$fichierCache = self::DOSSIER_CACHE . "cache" . str_replace('/','-',$this->route->getURL()) . '.html';
-		If(file_exists($fichierCache) && filemtime($fichierCache) + self::DUREE_VIE > time())
+		If(file_exists($fichierCache) && filemtime($fichierCache) + $duree2vie > time())
 		{	// le cache existe et n'est pas périmé
 			$PAGE = new PAGE($route);
 			$PAGE->setView($fichierCache, false);
@@ -47,19 +46,23 @@ class ReponseClient
 	}
 
 	public function SansCache()
-	{
-		// pré-traitement
-		$Tparam = self::PrepareParametres($this->route);
-
-		// création de la page
-		$classePage = $this->route->getClassePage();
+	{	// trouver les infos pour construire la réponse
+		$Treponse = BDD::SELECT("classePage, controleur, paramAutorise FROM Squelette WHERE alpha=? AND beta=? AND gamma=? AND methode=?",
+								[$this->route->getAlpha(), $this->route->getBeta(), $this->route->getGamma(), $this->route->getMethode()]);
+		$classePage = $Treponse["classePage"];
 		if (!isset($classePage))	throw new Exception("La classe de page n&apos;est pas d&eacute;finie dans le squelette.");
+		
+		$controleur = $Treponse["controleur"];
+		$paramAutorise = $Treponse["paramAutorise"];
+		
+		// création de la page
+		$Tparam = self::PrepareParametres($this->route, $paramAutorise);
 		$page = new $classePage($this->route, $Tparam);
-		$page->ExecuteControleur($this->route);
+		$page->ExecuteControleur($controleur);
 		return $page;
 	}
 
-	public static function PrepareParametres(HttpRoute $route)
+	public static function PrepareParametres(HttpRoute $route, $TparamAutorise)
 	/* Dans la table Squelette on récupère la liste des paramètres autorisés.
 	 * On construit un nouveau tableau qui ne contient que les clés autorisées et chaque valeur subit un nettoyage.
 	 * Par contre des paramètres manquant ne provoquent pas d'erreur.
@@ -83,10 +86,7 @@ class ReponseClient
 		}
 
 		// récupère la liste des paramètres autorisés
-		$reponseBD = BDD::SELECT("paramAutorise FROM Squelette WHERE alpha= ? AND beta= ? AND gamma= ? AND methode = ?",
-								[$route->getAlpha(), $route->getBeta(), $route->getGamma(), $route->getMethode()]);
-
-		$TparamAutorises = json_decode($reponseBD, true);
+		$TparamAutorises = json_decode($TparamAutorise, true);
 
 		$Treponse = [];
 		foreach ($TparamAutorises as $clé)
