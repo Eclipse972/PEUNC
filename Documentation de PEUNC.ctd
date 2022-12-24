@@ -15,8 +15,8 @@ Il a fallu trouvé un nom. Je voulais une définition récursive comme GNU: GNU 
 
 Mon projet équivaut à réinventer l'eau tiède mais ce défi est motivant pour moi. Loin de moi l'idée de concurrencer Laravel ou Symphony mais je veux voir où cela peut m'emmener.</rich_text>
     </node>
-    <node name="Les contraintes" unique_id="3" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661617712" ts_lastsave="1661622973">
-      <rich_text>N'étant qu'un amateur je n'ai as voulu investir dans un serveur dédié que je n'aurait peut être plus utilisé par la suite. Étant chez Free à l'époque je me suis tourné vers leur pages persos.
+    <node name="Les contraintes" unique_id="3" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661617712" ts_lastsave="1671308497">
+      <rich_text>N'étant qu'un amateur je n'ai pas voulu investir dans un serveur dédié que je n'aurait peut être plus utilisé par la suite. Étant chez Free à l'époque je me suis tourné vers leur pages persos.
 Avantages
 - gratuité
 - 10Go de stockage
@@ -80,7 +80,15 @@ Attention:
             <rich_text>entre autre controler l'intégrité de l'arborescence et son contenu</rich_text>
           </node>
         </node>
-        <node name="fonctions et procedures" unique_id="74" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1667597341" ts_lastsave="1667597356">
+        <node name="connexion.php" unique_id="78" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1671305616" ts_lastsave="1671305790">
+          <rich_text>script défissant 4 variables pour la connexion à la BD:
+$host
+$dbname
+$user
+$pwd
+</rich_text>
+        </node>
+        <node name="fonctions et procedures" unique_id="74" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1667597341" ts_lastsave="1671305616">
           <rich_text>Un jour peut-être</rich_text>
         </node>
       </node>
@@ -94,38 +102,6 @@ Pour le moment j'enrevois l'utilisation du archive ZIP qui permettrait de créer
       <rich_text>Héritage de PEUNC\Page
 Cette classe fournit un certain nombre d'outils qu'il est possible de personaliser en utilisant l'héritage.
 La liste des méthodes diponible est fourni dans l'interface iPage.php</rich_text>
-    </node>
-    <node name="construire une vue" unique_id="53" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661628427" ts_lastsave="1667598747">
-      <rich_text>Al structure d'un page web est toujours la même.
-Les balises dans l'ordre d'apparttion:
-- head
-- header
-- title
-- section
-- nav
-- footer
-
-Le contenu de la balise peut être statique ou dynamique
-S'il est statique on peut l'intégrer directement dans la vue
-
-S'il est dynamique il faut utiliser les méthodes fournies par PEUNC. La syntaxe est:
-&lt;balise&gt;
-&lt;?$PAGE-&gt;getBalise();?&gt;
-&lt;/balise&gt;
-
-On peut aussi avoir un mélange des deux en insérant du code html. Ceci est interessant si seulement une partie du contenu de la balise est dynamique.
-Exemple: les en-tête de mes dossiers techniques en Ligne.
-Chaque entête est Dossier technique du ...
- 
- Il y deux manières de coder l'en-tête
- 1 tout le code est générer par ma méthode getHead() et on se retrouve avec le code décrit plus haut
- 2 un partie statique et une partie dynamique
- &lt;head&gt;
- &lt;p&gt;Dossier technique &lt;?$PAGE-&gt;getHead();?&gt;&lt;/p&gt;
- &lt;/head&gt;
- La méthode getHead n'affihera que l'article (du, de la ou de l') suivi du nim du support
- 
- Un exemple de vue est fourni. firhcier doctype.html.</rich_text>
     </node>
     <node name="construire un contrôleur" unique_id="52" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661628416" ts_lastsave="1667598765">
       <rich_text>Il va conctruire le code de chaque partie de a page. En utilisant les méthodes mise à disposition par PEUNC et celles que vous aurez créé.</rich_text>
@@ -170,6 +146,38 @@ Il faut associer ce dossier avec la racine du serveur web dans Filezilla par exe
         </node>
       </node>
     </node>
+    <node name="construire une vue" unique_id="53" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661628427" ts_lastsave="1671306292">
+      <rich_text>Al structure d'un page web est toujours la même.
+Les balises dans l'ordre d'apparttion:
+- head
+- header
+- title
+- section
+- nav
+- footer
+
+Le contenu de la balise peut être statique ou dynamique
+S'il est statique on peut l'intégrer directement dans la vue
+
+S'il est dynamique il faut utiliser les méthodes fournies par PEUNC. La syntaxe est:
+&lt;balise&gt;
+&lt;?$PAGE-&gt;getBalise();?&gt;
+&lt;/balise&gt;
+
+On peut aussi avoir un mélange des deux en insérant du code html. Ceci est interessant si seulement une partie du contenu de la balise est dynamique.
+Exemple: les en-tête de mes dossiers techniques en Ligne.
+Chaque entête est Dossier technique du ...
+ 
+ Il y deux manières de coder l'en-tête
+ 1 tout le code est générer par ma méthode getHead() et on se retrouve avec le code décrit plus haut
+ 2 un partie statique et une partie dynamique
+ &lt;head&gt;
+ &lt;p&gt;Dossier technique &lt;?$PAGE-&gt;getHead();?&gt;&lt;/p&gt;
+ &lt;/head&gt;
+ La méthode getHead n'affihera que l'article (du, de la ou de l') suivi du nim du support
+ 
+ Un exemple de vue est fourni. firhcier doctype.html.</rich_text>
+    </node>
     <node name="Requête http et routes" unique_id="35" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661624450" ts_lastsave="1661626330">
       <rich_text>Rappel requête Http:
 Lorsqu'on tape une url dans un navigateur ou que l'on clique sur un lien, ça créé une requête Http.
@@ -199,19 +207,28 @@ La position dans l'arborescence est représentée par un triplet (alpha, beta, g
  * (-1;code;0) -&gt; page d'erreur avec son code que ce soit un erreur serveur ou une erreur interne à l'application
  * (-2;0;0) -&gt; formulaire de contact. Mais ce n'est pas une obligation</rich_text>
       </node>
-      <node name="La vue VueURLvalides" unique_id="37" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661624819" ts_lastsave="1661625416"/>
-      <node name="la classe HttpRouter" unique_id="38" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661625416" ts_lastsave="1661625527">
+      <node name="La vue VueURLvalides" unique_id="37" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661624819" ts_lastsave="1671306748">
+        <rich_text>Elle permet de faire la correspondance entre une URL et la position dans l'arborescence.</rich_text>
+      </node>
+      <node name="la classe HttpRoute" unique_id="38" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661625416" ts_lastsave="1671306930">
         <rich_text>Cette classe décode une requête http et renvoie :
-- la position dans l'arborescence même s'il s'agit d'une erreur serveur
-- la méthode Http utilisée</rich_text>
+- la position dans l'arborescence
+- la méthode http
+- la classe de la page
+- le controleur
+- la liste des paramètres autorisés
+
+Une exception est lancée pour un un certains nombre d'erreur (serveur, BDD et application) Voir les exceptions de ce manuel.</rich_text>
       </node>
     </node>
-    <node name="réponse à requête http" unique_id="44" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661627390" ts_lastsave="1661627964">
+    <node name="réponse à requête http" unique_id="44" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661627390" ts_lastsave="1671307054">
       <rich_text>Sont extraits de la BDD les éléments pour construire la réponse:
 - classePage
 - controleur
 - texteMenu
-etc</rich_text>
+etc
+
+Une fois les infos recupérées dans la route, la page à afficher est construite.</rich_text>
       <node name="Méthode GET" unique_id="45" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661627544" ts_lastsave="1661627602"/>
       <node name="Méthode POST" unique_id="46" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661627579" ts_lastsave="1661627718">
         <rich_text>À cause de la pseudo réécriture d'URL on est obligé de passer par index.php. Script qui se chargera d'appeler lebon controleur pour traiter les données.</rich_text>
@@ -221,8 +238,8 @@ etc</rich_text>
 Pour le moment de telles requêtes provoquent une erreur de l'application.</rich_text>
       </node>
     </node>
-    <node name=".htaccess" unique_id="39" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661626330" ts_lastsave="1661629370">
-      <rich_text>C'est un fichier vital pour le fonctionnement du site</rich_text>
+    <node name=".htaccess" unique_id="39" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661626330" ts_lastsave="1671836359">
+      <rich_text>C'est un fichier vital pour le fonctionnement du site. Ce fichier n'existe que pour les serveurs Apache.</rich_text>
       <node name="PHP5 chez free" unique_id="41" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661626438" ts_lastsave="1661628765">
         <rich_text>spécifique à free pour activer php5</rich_text>
       </node>
@@ -269,11 +286,11 @@ Erreurs gérées: 403, 404 et 500
 on peut facilemnt rajouter des erreus
 rajouter l'erreur dans .htaccess et dans la classes ServeurException</rich_text>
         </node>
-        <node name="ApplicationException" unique_id="67" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661816651" ts_lastsave="1661816673">
-          <rich_text>Gère les erreurS  de PEUNC</rich_text>
-        </node>
-        <node name="PDOException" unique_id="68" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661816699" ts_lastsave="1661816756">
+        <node name="PDOException" unique_id="68" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661816699" ts_lastsave="1671305422">
           <rich_text>Les erreur dela BDD sont récupérées ici</rich_text>
+        </node>
+        <node name="Exception" unique_id="67" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661816651" ts_lastsave="1671305380">
+          <rich_text>Gère les erreurS  de PEUNC</rich_text>
         </node>
         <node name="Exception" unique_id="69" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661816756" ts_lastsave="1661816762">
           <rich_text>Toutes les erreurs inconnues sont interceptée ici</rich_text>
