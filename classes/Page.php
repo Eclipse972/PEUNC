@@ -15,7 +15,8 @@ class Page implements iPage	{
 	const DOSSIER_CSS		= 'CSS/';
 	const DOSSIER_JS		= 'js/';
 	const DOSSIER_VIDEO		= 'video/';
-
+	const IMAGE_ABSENTE		= '/images/image_absente.png';
+	
 	// Intervalle pour les onglets
 	const ALPHA_MINI = 0;
 	const ALPHA_MAXI = 4;
@@ -65,10 +66,11 @@ class Page implements iPage	{
 
 	public function setFooter($code)		{ $this->PiedDePage = $code; }
 
-	public function setView($fichier)
+	public function setView($fichier, $cheminParDefaut = true)
 	{
-		if (file_exists(self::DOSSIER_VUE . $fichier))
-			$this->vue = self::DOSSIER_VUE . $fichier;
+		$fichier =  $cheminParDefaut ? self::DOSSIER_VUE . $fichier : $fichier;
+		if (file_exists($fichier))
+			$this->vue = $fichier;
 		else throw new Exception("Vue inexistante");
 	}
 
@@ -114,10 +116,8 @@ class Page implements iPage	{
  * AUTRE
  * ***************************/
 
-	public function ExecuteControleur(HttpRoute $route)
+	public function ExecuteControleur($script)
 	{
-		$script = BDD::SELECT("controleur FROM Squelette WHERE alpha= ? AND beta= ? AND gamma= ? AND methode = ?",
-							[$route->getAlpha(), $route->getBeta(), $route->getGamma(), $route->getMethode()]);
 		if($script == "")
 			throw new Exception("Controleur non d&eacute;fini");
 		elseif (file_exists(self::DOSSIER_CONTROLEUR. $script))	// script dans le dossier des controleurs
@@ -137,14 +137,14 @@ class Page implements iPage	{
 		{
 			//		chemin absolu?				suppression de / au début		ajout dossier image
 			$src = (substr($src,0,1) == '/') ? substr($src,1,strlen($src)) : self::DOSSIER_IMAGE . $src;
-			$src = (file_exists($src)) ? '/' . $src : "/PEUNC/images/image_absente.png";
+			$src = (file_exists($src)) ? '/' . $src : self::IMAGE_ABSENTE;
 		}
 		return '<img src="' . $src . '" alt="' . $alt . '" ' . $code . '>';
 	}
 
 	public static function SauvegardeEtat(HttpRoute $route)
 	{
-		$URLactuelle = BDD::SELECT("URL FROM Vue_URLvalides WHERE niveau1=? AND niveau2=? AND niveau3=?", [$route->getAlpha(), $route->getBeta(), $route->getGamma()]);
+		$URLactuelle = $route->URL();
 
 		if ($_SESSION["PEUNC"]["URL"] != $URLactuelle) // sauvagarde s'il n'y a pas rafraichiisemnt de page
 		{
@@ -156,7 +156,7 @@ class Page implements iPage	{
 
 	public static function URLprecedente()	{ return $_SESSION["PEUNC"]["URLprecedente"]; }
 	
- 	public static function CodeOnglets(HttpRoute $route, $alphaMini = Page::ALPHA_MINI, $alphaMaxi = Page::ALPHA_MAXI)
+ 	public static function CodeOnglets($alphaCourant, $alphaMini = Page::ALPHA_MINI, $alphaMaxi = Page::ALPHA_MAXI)
  	{
 		$T_Onglets = BDD::Liste_niveau();
 		if(!is_array($T_Onglets)) throw new Exception("Onglets inexistants!  Il faut au moins 2 items");
@@ -165,7 +165,7 @@ class Page implements iPage	{
 		foreach($T_Onglets as $alpha => $code)
 		{
 			if (($alpha >= $alphaMini) && ($alpha <= $alphaMaxi))
-				$codeOnglet .= "\t<li>" . (($alpha == $route->getAlpha()) ? str_replace('href', 'id="alpha_actif" href', $code) : $code) . "</li>\n";
+				$codeOnglet .= "\t<li>" . (($alpha == $alphaCourant) ? str_replace('href', 'id="alpha_actif" href', $code) : $code) . "</li>\n";
 		}
 		return $codeOnglet . "\t</ul>\n";
 	}
