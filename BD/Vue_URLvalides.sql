@@ -3,6 +3,7 @@
 DROP VIEW IF EXISTS Vue_URLvalides;
 CREATE VIEW Vue_URLvalides AS
 SELECT
+	ID,
 	alpha AS niveau1,
 	beta AS niveau2,
 	gamma AS niveau3,
