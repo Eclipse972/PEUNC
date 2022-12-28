@@ -64,8 +64,7 @@ class HttpRoute
 		list($URL, $reste) = explode("?", $_SERVER['REQUEST_URI'], 2);
 		
 		// recherche alpha, beta et gamma
-		$Treponse = BDD::SELECT("niveau1, niveau2, niveau3 FROM Vue_Routes WHERE URL = ? and methodeHttp = ?",
-									[$URL, $_SERVER['REQUEST_METHOD']]);
+		$Treponse = BDD::SELECT("niveau1, niveau2, niveau3 FROM Vue_URLvalides WHERE URL = ?", [$URL]);
 		if(!isset($Treponse["niveau1"]))
 			throw new ServeurException(404);
 		header("Status: 200 OK", false, 200);	// modification pour dire au navigateur que tout va bien finalement
