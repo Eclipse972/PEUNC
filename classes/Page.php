@@ -44,8 +44,8 @@ class Page implements iPage	{
 			// valeur par défaut de l'en-tête
 			$this->entetePage = BDD::SELECT("texteMenu FROM Squelette WHERE alpha= ? AND beta= ? AND gamma= ? AND methode = ?",
 									[$route->getAlpha(), $route->getBeta(), $route->getGamma(), $route->getMethode()]);
-			foreach($TparamURL as $valeur)
-				$this->T_paramURL[] = htmlspecialchars($valeur);
+			foreach($TparamURL as $clé => $valeur)
+				$this->T_paramURL[$clé] = htmlspecialchars($valeur);
 		}
 		else $this->entetePage = "Erreur serveur";
 	}
