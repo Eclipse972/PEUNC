@@ -26,6 +26,7 @@ class HttpRoute
 	private $beta;
 	private $gamma;
 	private $methode;	// méthode Http
+	private $T_paramURL;
 
 	public function __construct()
 	{
@@ -48,6 +49,18 @@ class HttpRoute
 		}
 
 		$this->methode = $_SERVER['REQUEST_METHOD'];
+		
+		// Extraction des paramètres passés par l'URL		
+		list($URL, $reste) = explode("?", $_SERVER['REQUEST_URI'], 2);// découpe de l'URL
+		list($paramURL, $ancre) = explode("#", $reste, 2);	// suppression de l'ancre
+
+		$this->T_paramURL = [];
+		foreach (explode('&', $paramURL) as $instruction)
+		{
+			$param = explode("=", $instruction);
+			if ($param) $this->T_paramURL[urldecode($param[0])] = strip_tags(urldecode($param[1]));
+		}
+
 	}
 
 //	Gestion des redirections =====================================================================
@@ -105,6 +118,7 @@ class HttpRoute
 	public function getBeta()		{ return $this->beta; }
 	public function getGamma()		{ return $this->gamma; }
 	public function getMethode()	{ return $this->methode; }
+	public function getParamURL(){ return $this->T_paramURL; }
 
 //	Autre ========================================================================================
 	public function getURL()
