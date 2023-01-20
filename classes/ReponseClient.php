@@ -82,7 +82,7 @@ class ReponseClient
 		switch($route->getMethode())
 		{
 			case "GET":
-				$Tableau = $_GET;
+				$Tableau = $route->getParamURL();
 				break;
 			case "POST":
 				$Tableau = $_POST;
