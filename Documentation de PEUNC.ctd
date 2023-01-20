@@ -35,10 +35,15 @@ Inconvénients dûs au fait que ce n'est pas mon serveur
       <node name="site avec une arborescence sur 3 niveaux maximum" unique_id="5" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661619259" ts_lastsave="1661619441">
         <rich_text>À mon sens c'est juste. Au dela de 3 clics pour accéder à une page un internaute (peu motivé) lâche l'affaire.</rich_text>
       </node>
-      <node name="réécriture d'URL" unique_id="6" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661619278" ts_lastsave="1661620653">
+      <node name="réécriture d'URL" unique_id="6" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661619278" ts_lastsave="1674088645">
         <rich_text>Je voulais des URL compréhensibles du style mon.site.free.fr/(niveau1 (/niveau2 (/niveau3))) sans moteur Rewrite
 J'ai fini par trouver mon bonheur: </rich_text>
         <rich_text link="webs https://urlrewriting.fr/tutoriel-urlrewriting-sans-moteur-rewrite.htm">Tutoriel sur la réécriture d'url - Du rewriting sans le moteur rewrite</rich_text>
+        <rich_text>
+
+Contraintes
+La variable $_GET est inutilisable donc PEUNC décode lui-même les varaiable passées par l'URL
+Les scripts de traitement de formulaire doivent être défini de manière absolu. Ex /traitement.php </rich_text>
       </node>
       <node name="Outils d'administration" unique_id="7" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661619310" ts_lastsave="1661620873">
         <rich_text>Ces outils ne remplacent pas PhpMyAdmin mais viennent le compléter sur les spécificités de PEUNC.
@@ -269,9 +274,11 @@ Toutes les requêtes passent par lui
 - les erreurs serveur grace à .htacess
 - les traitement de tous les formulaires</rich_text>
     </node>
-    <node name="Traitement des formulaires" unique_id="82" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1672187117" ts_lastsave="1672187173">
+    <node name="Traitement des formulaires" unique_id="82" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1672187117" ts_lastsave="1674088939">
       <rich_text>Le triatement de tous les formuaire passent par index.php.
-Un jeton devra êtr inséré pour indiquer à index.php quel est la route de la requête POST.</rich_text>
+Un jeton devra êtr inséré pour indiquer à index.php quel est la route de la requête POST.
+
+Pour définir un script spécifique il faut le définir de manière absolue. par exmple /traitement.php. Cette méthode fonction mais elle est à proscrire   À VÉRIFIER</rich_text>
     </node>
     <node name="Les classes de PEUNC" unique_id="61" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661629370" ts_lastsave="1661629370">
       <node name="La classe Page de PEUNC" unique_id="55" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661628950" ts_lastsave="1661630173">
