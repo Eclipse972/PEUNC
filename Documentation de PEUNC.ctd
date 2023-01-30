@@ -121,24 +121,24 @@ La liste des méthodes diponible est fourni dans l'interface iPage.php</rich_tex
           <rich_text>Les vues de la BDD</rich_text>
         </node>
       </node>
-      <node name="Public" unique_id="18" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661621982" ts_lastsave="1661623232">
+      <node name="Public" unique_id="18" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661621982" ts_lastsave="1674929045">
         <rich_text>Il contient tous les fichiers à transmettre au serveur.
-Il faut associer ce dossier avec la racine du serveur web dans Filezilla par exemple.</rich_text>
-        <node name="Controleur" unique_id="14" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661621888" ts_lastsave="1661622554">
-          <rich_text>les controleur de chaque page</rich_text>
+Il faut associer ce dossier avec la racine du serveur web dans Filezilla ou autre logiciel FTP.</rich_text>
+        <node name="Controleur" unique_id="14" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661621888" ts_lastsave="1674929072">
+          <rich_text>Les controleurs de chaque page</rich_text>
         </node>
         <node name="CSS" unique_id="15" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661621907" ts_lastsave="1661622083"/>
-        <node name="JS" unique_id="16" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661621951" ts_lastsave="1661622571">
-          <rich_text>scripts javascript</rich_text>
+        <node name="JS" unique_id="16" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661621951" ts_lastsave="1674929085">
+          <rich_text>Scripts javascript</rich_text>
         </node>
         <node name="Images" unique_id="17" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661621961" ts_lastsave="1661622583">
           <rich_text>dossier par défaut des images</rich_text>
         </node>
-        <node name="Modele" unique_id="20" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661622137" ts_lastsave="1661622613">
-          <rich_text>les classes utilisateur</rich_text>
+        <node name="Modele" unique_id="20" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661622137" ts_lastsave="1674929098">
+          <rich_text>Les classes utilisateur</rich_text>
         </node>
-        <node name="PEUNC" unique_id="21" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661622176" ts_lastsave="1672268038">
-          <rich_text>Qui contient toutes les classes</rich_text>
+        <node name="PEUNC" unique_id="21" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661622176" ts_lastsave="1674929109">
+          <rich_text>Contient toutes les classes de PEUNC</rich_text>
         </node>
         <node name="Vue" unique_id="26" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661622759" ts_lastsave="1661622782">
           <node name="commun" unique_id="27" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661622782" ts_lastsave="1661622782"/>
@@ -339,6 +339,26 @@ Dans /PEUNC les fichiers s'appelent Nom-de-la-classe.php</rich_text>
     <node name="Gestion des ancres dans les page html" unique_id="83" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1672187266" ts_lastsave="1672267232">
       <rich_text>Je ne sais pas si PEUNC est capable de traiter les ancres dans les liens.</rich_text>
     </node>
+    <node name="script d'installation" unique_id="86" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1672267865" ts_lastsave="1674928620">
+      <rich_text>Automatisée à l'aide d'un script qui irai chercher les fichier dans le dépot Git et les mettre au bon endroit.
+Dans un premier temps il est possible d'utiliser une archive compressée contenant tos le fichiers</rich_text>
+      <node name="les dossiers" unique_id="88" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1674928349" ts_lastsave="1674928391">
+        <rich_text>
+</rich_text>
+      </node>
+      <node name="les fichiers de PEUNC" unique_id="89" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1674928426" ts_lastsave="1674928842">
+        <rich_text>Ces fichiers sont:
+index.php
+.htacess
+connexion.php
+
+Idéalement télécharger les fichiers depuis le dépot git</rich_text>
+      </node>
+      <node name="la BDD" unique_id="90" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1674928445" ts_lastsave="1674928500">
+        <rich_text>création des tables et des vues.
+Un seul fichier.sql devrait pouvoir tout faire</rich_text>
+      </node>
+    </node>
     <node name="page d'administration" unique_id="85" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1672267246" ts_lastsave="1672267865">
       <rich_text>Permettre une maintenance plus facile du site. Méthode CRUD Create, Read, Update, Delete
 
@@ -355,9 +375,6 @@ Modifier le squelette
 
 Gérer les utilisateurs
 </rich_text>
-    </node>
-    <node name="installation automatisée" unique_id="86" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1672267865" ts_lastsave="1672267950">
-      <rich_text>Automatisée à l'aide scripte qui irai chercher les fichier dans le dépot Git et les mettre au bon endroit.</rich_text>
     </node>
     <node name="les paramètres passés par l'URL" unique_id="49" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661628329" ts_lastsave="1672268491">
       <rich_text>peunc doit être capable de lire ces paramètres
