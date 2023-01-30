@@ -17,24 +17,25 @@ interface iPage
 	public function getView();		// chemin de la vue associée à la page
 	public function getParamURL($i);// retourne le i-ème paramètre passé par l'URL
 	public function getDossier();	// retourne le dossier associé à la page
+	public function getRoute();		// renvoie la route http. Remarque pas de setter car variable intialisée dans le constructeur
 
 // Assesseurs (setters)
-	public function setCSS($feuilleCSS);	// ajoute une feuille CSS associée à la page. Répétables plusieurs fois
-	public function setTitle($titre);		// affiche le titre du document (qui est affiché dans la barre de titre du navigateur ou dans l'onglet de la page)
-	public function setHeaderText($texte);	// en-tête de la page
-	public function setSection($code);		// affiche le code du corps de la page
-	public function setNav($code);			// affiche le code de la barre de navigation avec <nav> car cette balise est optionnelle
-	public function setFooter($code);		// pied de page
-	public function setView($fichier);		// définit le chemin de la vue
-	public function setDossier($dossier);	// défini le dossier associé à la page
+	public function setCSS($feuilleCSS);				// ajoute une feuille CSS associée à la page. Répétables plusieurs fois
+	public function setTitle($titre);					// affiche le titre du document (qui est affiché dans la barre de titre du navigateur ou dans l'onglet de la page)
+	public function setHeaderText($texte);				// en-tête de la page
+	public function setSection($code);					// affiche le code du corps de la page
+	public function setNav($code);						// affiche le code de la barre de navigation avec <nav> car cette balise est optionnelle
+	public function setFooter($code);					// pied de page
+	public function setView($fichier, $cheminParDefaut);// définit le chemin de la vue
+	public function setDossier($dossier);				// défini le dossier associé à la page
 
 // méthodes statiques
 	public static function BaliseImage($src, $alt, $code);	// insère une image en tenant compte du répertoire image. Seul le premier paramètre est obligatoire
 	public static function SauvegardeEtat(HttpRoute $route);// sauvegarde l'état courant dans la session
-	public static function CodeOnglets(HttpRoute $route);	// renvoie le code html des onglets sur un intervalle alpha. Permet par exemple d'ignorer la page de contact
+	public static function CodeOnglets($alphaCourant, $alphaMini, $alphaMaxi);		// renvoie le code html des onglets pour une valeur de alpha donnée. Paramètre facultatifs : mini et maxi
 	public static function CodeMenu(HttpRoute $route);		// renvoie le code html du menu pour une route donnée
 	public static function URLprecedente();					// URL de la page précédete sauf si cette page est spéciale (alpha < 0)
 
 // Autre
-	public function ExecuteControleur(HttpRoute $route);	// execute le controleur associé à la route http
+	public function ExecuteControleur($script);	// execute le script du controleur
 }
