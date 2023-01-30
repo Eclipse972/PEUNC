@@ -10,5 +10,4 @@ ob_start();	// début du code <section>
 ?>
 <h1>PEUNC fonctionne!</h1>
 <?php
-$this->setSection(ob_get_contents());
-ob_end_clean();
+$this->setSection(ob_get_clean());
