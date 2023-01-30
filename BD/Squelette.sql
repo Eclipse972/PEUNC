@@ -2,7 +2,6 @@
 -- version 3.1.5
 -- http://www.phpmyadmin.net
 --
--- Serveur: faq.sw.sql.free.fr
 -- Généré le : Mer 28 Décembre 2022 à 00:51
 -- Version du serveur: 5.0.83
 -- Version de PHP: 5.3.9
@@ -14,10 +13,6 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
-
---
--- Base de données: `faq_sw`
---
 
 -- --------------------------------------------------------
 
