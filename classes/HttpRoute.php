@@ -4,9 +4,8 @@ namespace PEUNC;
 class HttpRoute
 /*
  * Cette classe décode une requête http et renvoie :
- * 	- la position dans l'arborescence même s'il s'agit d'une erreur serveur
- *	- la méthode Http utilisée
- * 	- l'URL en clair
+ * 		- la position dans l'arborescence même s'il s'agit d'une erreur serveur
+ *		- la méthode Http utilisée
  *
  * La position dans l'arborescence. Elle est représentée par un triplet (alpha, beta, gamma) par importance décroissante
  * Si alpha >= 0 => pages du site
@@ -28,6 +27,9 @@ class HttpRoute
 	private $methode;	// méthode Http
 	private $T_paramURL;
 
+	// pour le futur
+	private $IP;
+
 	public function __construct()
 	{
 		// recherche de la position dans l'arborescence stockée en BD
@@ -39,62 +41,55 @@ class HttpRoute
 				throw new ServeurException($_SERVER['REDIRECT_STATUS']);
 				break;
 			case 200:	// le script est lancé sans redirection
-				list($this->alpha, $this->beta, $this->gamma, $this->URL, $this->methode, $this->classePage, $this->controleur, $this->parametres) = self::SansRedirection();
+				list($this->alpha, $this->beta, $this->gamma) = HttpRoute::SansRedirection();
 				break;
 			case 404:
-				list($this->alpha, $this->beta, $this->gamma, $this->URL, $this->methode, $this->classePage, $this->controleur, $this->parametres) = self::Redirection404();
+				list($this->alpha, $this->beta, $this->gamma) = HttpRoute::Redirection404();
 				break;
 			default:
 				throw new Exception("erreur inconnue");
 		}
 
 		$this->methode = $_SERVER['REQUEST_METHOD'];
-		
-		// Extraction des paramètres passés par l'URL		
-		list($URL, $reste) = explode("?", $_SERVER['REQUEST_URI'], 2);// découpe de l'URL
-		list($paramURL, $ancre) = explode("#", $reste, 2);	// suppression de l'ancre
-
-		$this->T_paramURL = [];
-		foreach (explode('&', $paramURL) as $instruction)
-		{
-			$param = explode("=", $instruction);
-			if ($param) $this->T_paramURL[urldecode($param[0])] = strip_tags(urldecode($param[1]));
-		}
-
+		$this->T_paramURL = self::ExtraireParamURL();
 	}
 
-//	Gestion des redirections =====================================================================
+//	Gestion des redirections ==================================================================================================================
 
 	private static function Redirection404()
 	/* Ce script est appelé suite à une erreur 404. C'est cette redirection que j'exploite pour gérer ma pseudo-réécriture d'URL.
 	 * Ma source d'inspiration: http://urlrewriting.fr/tutoriel-urlrewriting-sans-moteur-rewrite.htm Merci à son auteur.
 	 *
-	 * À partir d'une URL, Cette fonction renvoie la position dans l'arborescence du site.
+	 * À partir d'une URL, Cette fonction renvoie la position dans l'arborescence du  site.
 	 *
 	 * Résultat: le triplet (alpha, beta, gamma) sous la forme d'un tableau
-	 */
+	 * */
 	{
 		list($URL, $reste) = explode("?", $_SERVER['REQUEST_URI'], 2);
-		
-		// recherche alpha, beta et gamma
-		$Treponse = BDD::SELECT("niveau1, niveau2, niveau3 FROM Vue_URLvalides WHERE URL = ?", [$URL]);
-		if(!isset($Treponse["niveau1"]))
+
+		// interrogation de la BD pour retrouver la position dans l'arborescence
+		$Treponse = BDD::SELECT("niveau1, niveau2, niveau3 FROM Vue_Routes WHERE URL = ? and methodeHttp = ?", [$URL, $_SERVER['REQUEST_METHOD']]);
+		if (isset($Treponse["niveau1"]))	// l'URL existe?
+		{	// la page existe
+			header("Status: 200 OK", false, 200);	// modification pour dire au navigateur que tout va bien finalement
+			return array($Treponse["niveau1"], $Treponse["niveau2"], $Treponse["niveau3"]);
+		}
+		elseif (BDD::SELECT("count(*) FROM Vue_Routes WHERE URL = ?", [$URL]) > 0)	// au moins un noeud pour cet URL
+			throw new ServeurException(405);
+		else
 			throw new ServeurException(404);
-		header("Status: 200 OK", false, 200);	// modification pour dire au navigateur que tout va bien finalement
-		
-		return [$Treponse["niveau1"], $Treponse["niveau2"], $Treponse["niveau3"], $_SERVER['REQUEST_METHOD']];
 	}
 
 	private static function SansRedirection()
 	/* Un appel direct de index.php.
 	 * La pseudo réécriture d'URL ne fonctionne pas avec le script action de formulaire.
 	 * J'ai choisi de repasser par index.php pour traiter tous les formulaires.
-	 */
+	 * */
 	{
 		switch($_SERVER['REQUEST_METHOD'])
 		{
 			case"GET":
-				return [0, 0, 0, "GET"];
+				return [0, 0, 0];	// un appel ordinaire vers la page d'accueil
 				break;
 			case"POST":	// le jeton CSRF contient des infos sur le formuaire notemment sa position dans l'arborescence
 				if (!isset($_POST["CSRF"]))	// si le fomulaire ne contient pas de jeton CSRF
@@ -112,18 +107,35 @@ class HttpRoute
 		}
 	}
 
-//	Accesseurs ===================================================================================
+//	Gestion des paramètre passé par l'URL ============================================================
 
-	public function getAlpha()		{ return $this->alpha; }
-	public function getBeta()		{ return $this->beta; }
-	public function getGamma()		{ return $this->gamma; }
-	public function getMethode()	{ return $this->methode; }
+	//	Avec la pseudo-réécriture d'URL $_GET est toujours vide. Il faut donc décoder manuellement
+	public static function ExtraireParamURL()
+	{
+		// découpe de l'URL
+		list($URL, $reste) = explode("?", $_SERVER['REQUEST_URI'], 2);
+		list($paramURL, $ancre) = explode("#", $reste, 2);
+
+		$T_paramURL = [];
+		foreach (explode('&', $paramURL) as $instruction)
+		{
+			$param = explode("=", $instruction);
+			if ($param) $T_paramURL[urldecode($param[0])] = strip_tags(urldecode($param[1]));
+		}
+		return $T_paramURL;
+	}
+
+//	Accesseurs ================================================================================================================================
+
+	public function getAlpha()	{ return $this->alpha; }
+	public function getBeta()	{ return $this->beta; }
+	public function getGamma()	{ return $this->gamma; }
+	public function getMethode(){ return $this->methode; }
 	public function getParamURL(){ return $this->T_paramURL; }
 
 //	Autre ========================================================================================
-	public function getURL()
+	public function URL()
 	{
-		return BDD::SELECT("URL FROM Vue_Routes WHERE niveau1=? AND niveau2=? AND niveau3=? AND methodeHttp=?",
-							[$this->alpha, $this->beta, $this->gamma, $this->methode]);
-	}
-}
+		return BDD::SELECT("URL FROM Vue_URLvalides WHERE niveau1=? AND niveau2=? AND niveau3=?",
+							[$this->alpha, $this->beta, $this->gamma]);
+	}}

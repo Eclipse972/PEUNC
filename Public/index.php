@@ -37,7 +37,7 @@ catch(PDOException $e)
 	$PAGE = new PEUNC\Erreur($route);
 	$PAGE->setTitle("Erreur de base de donn&eacute;es");
 	$PAGE->setHeaderText("<p>Erreur de base de donn&eacute;es</p>");
-	$PAGE->setSection("<h1>" . $e->getMessage() . "</h1>\n");
+	$PAGE->setSection("<h1>Erreur de base de donn&eacute;es</h1>\n<p>" . $e->getMessage() . "</p>");
 	$PAGE->setView("erreur.html");
 }
 catch(PEUNC\Exception $e)
