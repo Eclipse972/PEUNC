@@ -167,7 +167,7 @@ class Page implements iPage	{
 			if (($alpha >= $alphaMini) && ($alpha <= $alphaMaxi))
 				$codeOnglet .= "\t<li>" . (($alpha == $alphaCourant) ? str_replace('href', 'id="alpha_actif" href', $code) : $code) . "</li>\n";
 		}
-		return $codeOnglet . "\t</ul>\n";
+		return $codeOnglet . "</ul>\n";
 	}
 
 	public static function CodeMenu(HttpRoute $route)
