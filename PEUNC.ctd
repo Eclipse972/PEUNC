@@ -140,9 +140,7 @@ Il faut associer ce dossier avec la racine du serveur web dans Filezilla ou autr
         <node name="PEUNC" unique_id="21" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661622176" ts_lastsave="1674929109">
           <rich_text>Contient toutes les classes de PEUNC</rich_text>
         </node>
-        <node name="Vue" unique_id="26" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661622759" ts_lastsave="1661622782">
-          <node name="commun" unique_id="27" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661622782" ts_lastsave="1661622782"/>
-        </node>
+        <node name="Vue" unique_id="26" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661622759" ts_lastsave="1661622782"/>
         <node name="les scripts" unique_id="29" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661623232" ts_lastsave="1661623254">
           <node name="index.php" unique_id="30" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661623254" ts_lastsave="1661623275"/>
           <node name="connexion.php" unique_id="31" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661623275" ts_lastsave="1661623275"/>
@@ -217,7 +215,7 @@ Ces noeuds sont accessibles d'une autre manière. Pour la méthode POST, un jeto
 Si /chemin/vers/page est une URL valide alors /chemin/vers et /chemin doivent l'être aussi
 Il existe dans PEUNC des vues pour trouver les noeuds orphelins.</rich_text>
       </node>
-      <node name="la classe HttpRoute" unique_id="38" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661625416" ts_lastsave="1671306930">
+      <node name="la classe HttpRoute" unique_id="38" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661625416" ts_lastsave="1675355228">
         <rich_text>Cette classe décode une requête http et renvoie :
 - la position dans l'arborescence
 - la méthode http
@@ -225,7 +223,9 @@ Il existe dans PEUNC des vues pour trouver les noeuds orphelins.</rich_text>
 - le controleur
 - la liste des paramètres autorisés
 
-Une exception est lancée pour un un certains nombre d'erreur (serveur, BDD et application) Voir les exceptions de ce manuel.</rich_text>
+Une exception est lancée pour un un certains nombre d'erreur (serveur, BDD et application) Voir les exceptions de ce manuel.
+
+Remarque: pourle moment seules les méthode GET et POST sont gérées. De plus chaque noeud POST (traitement de formulaire) est associé à un noeud de type GET (le formulaire). L'ajout d'autres méthodes http necéssitera la réécriture de Vue_URLvalides.sql.  En effet elle repose sur le fait que tous les noeud sont EUX-MÊME OU associé à un noeud avec méthode GET.</rich_text>
       </node>
     </node>
     <node name="réponse à requête http" unique_id="44" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661627390" ts_lastsave="1672267002">
