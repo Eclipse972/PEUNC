@@ -17,9 +17,9 @@ class Page implements iPage	{
 	const DOSSIER_VIDEO		= 'video/';
 	const IMAGE_ABSENTE		= '/images/image_absente.png';
 	
-	// Intervalle pour les onglets
-	const ALPHA_MINI = 0;
-	const ALPHA_MAXI = 4;
+	// Intervalle pour  le niveau alpha (les onglets)
+	const ALPHA_MINI = 10;
+	const ALPHA_MAXI = 20;
 
 	protected $titrePage	= "Titre de la page affiché dans la barre du haut du navigateur";
 	protected $T_CSS		= [];
@@ -156,41 +156,42 @@ class Page implements iPage	{
 
 	public static function URLprecedente()	{ return $_SESSION["PEUNC"]["URLprecedente"]; }
 	
- 	public static function CodeOnglets($alphaCourant, $alphaMini = Page::ALPHA_MINI, $alphaMaxi = Page::ALPHA_MAXI)
- 	{
-		$T_Onglets = BDD::Liste_niveau();
-		if(!is_array($T_Onglets)) throw new Exception("Onglets inexistants!  Il faut au moins 2 items");
-
-		$codeOnglet = "<ul>\n";
-		foreach($T_Onglets as $alpha => $code)
-		{
-			if (($alpha >= $alphaMini) && ($alpha <= $alphaMaxi))
-				$codeOnglet .= "\t<li>" . (($alpha == $alphaCourant) ? str_replace('href', 'id="alpha_actif" href', $code) : $code) . "</li>\n";
-		}
-		return $codeOnglet . "</ul>\n";
-	}
-
-	public static function CodeMenu(HttpRoute $route)
+ 	public static function MENU(HttpRoute $route, $niveau, $profondeur, $alphaMini = Page::ALPHA_MINI, $alphaMaxi = Page::ALPHA_MAXI)
 	{
-		$T_item = BDD::Liste_niveau($route->getAlpha());
-		if(!is_array($T_item)) throw new Exception("Menu inexistant! Il faut au moins 2 items");
-		
-		$codeMenu = "\t<ul>\n";
-		foreach($T_item as $beta => $code)
+		if (($niveau <= 0) || ($profondeur < 0) || ($niveau + $profondeur > 3))	throw new Exception("fonction MENU: erreur de paramètre");
+
+		switch($niveau)
 		{
-			$codeMenu .= "\t<li>" . (($beta == $route->getBeta()) ? str_replace('href', 'id="beta_actif" href', $code) : $code) . "</li>\n";
-			if ($beta == $route->getBeta())	// sous-menu?
-			{
-				$T_sous_item = BDD::Liste_niveau($route->getAlpha(), $route->getBeta());
-				if (isset($T_sous_item))	// génération sous-menu s'il existe
-				{
-					$codeMenu .= "\t<ul>\n";
-					foreach($T_sous_item as $gamma => $sous_code)
-						$codeMenu .= "\t\t<li>" . (($gamma == $route->getGamma()) ? str_replace('href', 'id="gamma_actif" href', $sous_code) : $sous_code) . "</li>\n";
-					$codeMenu .= "\t</ul>\n";
-				}
-			}
+			case 1:
+				$ancienTableau = BDD::Liste_niveau($route->getAlpha());
+				// suppression des lignes en dehors de l'intervalle
+				$Tableau = [];
+				foreach($ancienTableau as $i => $ligne)
+					if(($i >= $alphaMini) && ($i <= $alphaMaxi))
+						$Tableau[$i] = $ligne;
+				$indentation ="";
+				break;
+			case 2:
+				$Tableau = BDD::Liste_niveau($route->getBeta(), $route->getAlpha());
+				$indentation ="\t";
+				break;
+			case 3:
+				$Tableau = BDD::Liste_niveau($route->getGamma(), $route->getAlpha(), $route->getBeta());
+				$indentation ="\t\t";
+				break;
+			default: throw new Exception("fonction MENU: erreur deuxième paramètre");
 		}
-		return $codeMenu . "\t</ul>\n";
+		if (is_array($Tableau))
+		{
+			$code = $indentation . "<ul>\n";
+			foreach($Tableau as $i => $ligne)
+			{
+				$code .= $indentation . "<li>" . $ligne . "</li>\n";
+				
+				if ((substr($ligne, 0, 6) == "<a id=") && ($niveau < 4) && ($profondeur > 0))	// y a-t-il un niveau inférieur à afficher?
+					$code .= PAGE::MENU($route, $niveau+1, $profondeur-1);			// alors on insert le code du sous-item
+			}
+			return $code .  $indentation . "</ul>\n";
+		} else return "";
 	}
 }
