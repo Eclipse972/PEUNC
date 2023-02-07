@@ -68,7 +68,7 @@ class HttpRoute
 		list($URL, $reste) = explode("?", $_SERVER['REQUEST_URI'], 2);
 
 		// interrogation de la BD pour retrouver la position dans l'arborescence
-		$Treponse = BDD::SELECT("niveau1, niveau2, niveau3 FROM Vue_Routes WHERE URL = ? and methodeHttp = ?", [$URL, $_SERVER['REQUEST_METHOD']]);
+		$Treponse = BDD::SELECT("niveau1, niveau2, niveau3 FROM Vue_URLvalides WHERE URL = ? and methodeHttp = ?", [$URL, $_SERVER['REQUEST_METHOD']]);
 		if (isset($Treponse["niveau1"]))	// l'URL existe?
 		{	// la page existe
 			header("Status: 200 OK", false, 200);	// modification pour dire au navigateur que tout va bien finalement
