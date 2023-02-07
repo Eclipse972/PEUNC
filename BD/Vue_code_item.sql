@@ -9,8 +9,8 @@ SELECT
 	imageMenu AS image,
 	texteMenu AS texte,
 	CONCAT(
-		'<a href="',(SELECT URL),'">',
-		IF(imageMenu = '','',CONCAT('<img src="/images/',imageMenu,'" alt="',texteMenu,'">')), #-- code de l'image si elle est définie
+		'<a href=',(SELECT URL),'>',
+		IF(imageMenu = '','',CONCAT('<img src=/images/',imageMenu,' alt="',texteMenu,'">')), #-- code de l'image si elle est définie
 		texteMenu,'</a>'
 	) AS code
 FROM Squelette
