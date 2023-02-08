@@ -24,12 +24,15 @@ interface iBDD
 	 * une seule valeur
 	 * */
 
- 	public static function Liste_niveau($alpha = null, $beta = null);
+ 	public static function Liste_niveau($i_sectionne, $alpha = null, $beta = null);
  	/* Renvoie un liste des codes html des noeuds d'un niveau de l'arborescence
  	 *
- 	 * Exemples d'appes
- 	 * premier niveau (alpha):	PEUNC\BDD::Liste_niveau()
- 	 * deuxième niveau (beta):	PEUNC\BDD::Liste_niveau(X)		pour alpha = X
- 	 * troisième niveau(gamma):	PEUNC\BDD::Liste_niveau(X,Y)	pour alpha = X et beta = Y
+ 	 * $i_sectionne: N° de l'item sélectionné
+ 	 * $mini, $maxi: borne pour les indice por le niveau alpha
+ 	 * 
+ 	 * Exemples d'appels
+ 	 * premier niveau (alpha):	PEUNC\BDD::Liste_niveau(5)
+ 	 * deuxième niveau (beta):	PEUNC\BDD::Liste_niveau(3,X)	pour alpha = X
+ 	 * troisième niveau(gamma):	PEUNC\BDD::Liste_niveau(2,X,Y)	pour alpha = X et beta = Y
  	 * */
 }

@@ -86,18 +86,22 @@ class BDD implements iBDD
 							WHERE alpha{$eqAlpha} AND beta{$eqBeta} AND gamma{$eqGamma}
 							ORDER BY i",
 							$param
-						);
-		if(!is_array($Treponse)) throw new Exception("Liste niveau: la réponse n&apos;est pas un tableau");
-
-		$Tableau = [];
-		if (isset($Treponse))
+						);		
+		$Tableau = [];	// réponse de la forme Tableau[i] = code
+		switch(count($Treponse, COUNT_RECURSIVE))
 		{
-			foreach($Treponse as $ligne)
-			{
-				$i = (int)$ligne["i"];
-				$Tableau[$i] = ($i == $i_sectionne) ? str_replace('<a', '<a id=' . $nom, $ligne["code"]) : $ligne["code"];
-			}
+			case 0: // réponse vide
+				break;
+			case 2: // une seule réponse avec 2 colonnes i et code
+				$Tableau[0] = $Treponse["code"];
+				break;
+			default: // plusieurs réponses
+				foreach($Treponse as $ligne)
+				{
+					$i = (int)$ligne["i"];
+					$Tableau[$i] = ($i == $i_sectionne) ? str_replace('<a', '<a id=' . $nom, $ligne["code"]) : $ligne["code"];
+				}
 		}
-		return $Tableau; // de la forme Tableau[i] = code
+		return $Tableau;
 	}
 }
