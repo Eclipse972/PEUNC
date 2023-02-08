@@ -181,7 +181,7 @@ class Page implements iPage	{
 				break;
 			default: throw new Exception("fonction MENU: erreur deuxième paramètre");
 		}
-		if (is_array($Tableau))
+		if (count($Tableau) > 0)
 		{
 			$code = $indentation . "<ul>\n";
 			foreach($Tableau as $i => $ligne)
