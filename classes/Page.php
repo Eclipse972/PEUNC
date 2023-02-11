@@ -29,7 +29,7 @@ class Page implements iPage	{
 	protected $scriptSection= "<h1>Page en construction</h1>\n<p>Contactez l&apos;adminitrateur si le probl&egrave;me persiste </p>\n";
 	protected $scriptNav	= "";
 	protected $PiedDePage	= "<p>Pied de page &agrave; d&eacute;finir</p>";
-	protected $vue			= "doctype.html";
+	protected $vue;
 	protected $route;
 // FIN DE LA CONFIGURATION
 
@@ -38,6 +38,7 @@ class Page implements iPage	{
 
 	public function __construct(HttpRoute $route = null, array $TparamURL = [])
 	{
+		$this->setView("doctype.html");
 		$this->route = $route;
 		if (isset($route))
 		{
