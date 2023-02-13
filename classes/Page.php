@@ -27,7 +27,7 @@ class Page implements iPage	{
 	protected $logo			= "logo.png";
 	protected $dossier		= "/";
 	protected $scriptSection= "<h1>Page en construction</h1>\n<p>Contactez l&apos;adminitrateur si le probl&egrave;me persiste </p>\n";
-	protected $scriptNav	= "";
+	protected $T_nav		= [];
 	protected $PiedDePage	= "<p>Pied de page &agrave; d&eacute;finir</p>";
 	protected $vue;
 	protected $route;
@@ -63,7 +63,7 @@ class Page implements iPage	{
 
 	public function setSection($code)		{ $this->scriptSection = $code;	}
 
-	public function setNav($code)			{ $this->scriptNav = $code;	}
+	public function setNav(array $code)			{ $this->T_nav = $code;	}
 
 	public function setFooter($code)		{ $this->PiedDePage = $code; }
 
@@ -101,8 +101,6 @@ class Page implements iPage	{
 
 	public function getSection()		{ return $this->scriptSection; }
 
-	public function getNav()			{ return ($this->scriptNav == "" ? "" : "<nav>\n" . $this->scriptNav . "</nav>\n"); }
-	
 	public function getFooter()			{ return $this->PiedDePage; }
 
 	public function getView()			{ return $this->vue; }
@@ -113,6 +111,24 @@ class Page implements iPage	{
 
 	public function getRoute()			{ return $this->route; }
 
+	public function getNav()
+	{
+		if(count($this->T_nav) == 0)
+			$code = "";
+		else
+		{
+			$code = "<nav>\n";
+			$n = 0; // nombre de tabultion pour indenter le code
+			foreach($this->T_nav as $ligne)
+			{
+				if($ligne == "</ul>") $n--;
+				$code .= str_repeat("\t", $n) . $ligne . "\n";
+				if($ligne == "<ul>") $n++;
+			}
+		}
+		return $code ."</nav>\n";
+	}
+	
 /* ***************************
  * AUTRE
  * ***************************/
@@ -145,7 +161,7 @@ class Page implements iPage	{
 
 	public static function SauvegardeEtat(HttpRoute $route)
 	{
-		$URLactuelle = $route->URL();
+		$URLactuelle = $route->getURL();
 
 		if ($_SESSION["PEUNC"]["URL"] != $URLactuelle) // sauvagarde s'il n'y a pas rafraichiisemnt de page
 		{
@@ -170,29 +186,30 @@ class Page implements iPage	{
 				foreach($ancienTableau as $i => $ligne)
 					if(($i >= $alphaMini) && ($i <= $alphaMaxi))
 						$Tableau[$i] = $ligne;
-				$indentation ="";
 				break;
 			case 2:
 				$Tableau = BDD::Liste_niveau($route->getBeta(), $route->getAlpha());
-				$indentation ="\t";
 				break;
 			case 3:
 				$Tableau = BDD::Liste_niveau($route->getGamma(), $route->getAlpha(), $route->getBeta());
-				$indentation ="\t\t";
 				break;
 			default: throw new Exception("fonction MENU: erreur deuxième paramètre");
 		}
 		if (count($Tableau) > 0)
 		{
-			$code = $indentation . "<ul>\n";
+			$T_code = [ 0 => "<ul>" ];
 			foreach($Tableau as $i => $ligne)
 			{
-				$code .= $indentation . "<li>" . $ligne . "</li>\n";
+				$T_code[] = "<li>" . $ligne . "</li>";
 				
 				if ((substr($ligne, 0, 6) == "<a id=") && ($niveau < 4) && ($profondeur > 0))	// y a-t-il un niveau inférieur à afficher?
-					$code .= PAGE::MENU($route, $niveau+1, $profondeur-1);			// alors on insert le code du sous-item
+				{
+					$T_sousCode = PAGE::MENU($route, $niveau+1, $profondeur-1);	// alors on insert le code du sous-item
+					foreach($T_sousCode as $ligne)	$T_code[] = $ligne;			// on rajoute le sous-code
+				}
 			}
-			return $code .  $indentation . "</ul>\n";
-		} else return "";
+			$T_code[] = "</ul>";
+			return $T_code;
+		} else return [];
 	}
 }
