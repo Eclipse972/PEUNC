@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `Squelette` (
   `paramAutorise` varchar(99) collate latin1_general_ci NOT NULL default '[]',
   `dureeCache` int(11) NOT NULL default '0' COMMENT 'en heure',
   PRIMARY KEY  (`ID`),
-  UNIQUE KEY `navigation` (`alpha`,`beta`,`gamma`)
+  UNIQUE KEY `navigation` (alpha,beta,gamma,methode)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=1 ;
 
 
