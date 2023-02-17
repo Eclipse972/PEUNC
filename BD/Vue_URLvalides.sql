@@ -14,4 +14,5 @@ SELECT
 			IF(ISNULL((SELECT texte3)),'',CONCAT('/',(SELECT texte3))) )
 	AS URL
 FROM Squelette
+WHERE methode='GET'
 ORDER BY niveau1, niveau2, niveau3
