@@ -10,7 +10,9 @@ class BDD implements iBDD
 
 	private function __construct()
 	{
-		require"connexion.php";
+		if(!file_exists("connexionBDD.php"))	throw new Exception(600);
+
+		require"connexionBDD.php";
 		$this->BD = new \PDO("mysql:host={$host};dbname={$dbname};charset=utf8", $user , $pwd);
 		if (isset($this->BD))
 		{
@@ -18,7 +20,7 @@ class BDD implements iBDD
 			$this->BD->setAttribute(\PDO::ATTR_ERRMODE,				\PDO::ERRMODE_EXCEPTION);
 		}
 		else
-			exit("Erreur fatale: connexion &agrave; la base de données impossible!");
+			exit("Erreur fatale: connexion &agrave; la base de donn&eacute;es impossible!");
 	}
 
 	private static function getInstance()
@@ -36,7 +38,18 @@ class BDD implements iBDD
 	{
 		$pdo = self::getInstance();
 		$requete = $pdo->prepare("SELECT " . $requete);
-		$requete->execute($T_parametre);
+
+		if (($T_parametre != []) && (isset($T_parametre[0])))
+		{
+			foreach($T_parametre as $clé => $valeur)	// clé est un entier
+				$requete->bindValue($clé+1, $valeur);
+		}
+		else
+		{
+			foreach($T_parametre as $clé => $valeur)	// clé est une chaine de caractères
+				$requete->bindValue($clé, $valeur);
+		}
+		$requete->execute();
 		$reponse = $requete->fetchAll();
 		$requete->closeCursor();
 		switch(count($reponse))
@@ -52,7 +65,11 @@ class BDD implements iBDD
 		}
 		return $résultat;
 	}
-	
+
+	public static function INSERT_INTO($requete, $valeur)
+	{
+	}
+
 	public static function Liste_niveau($i_sectionne, $alpha = null, $beta = null)
 	{
 		if(!isset($alpha))
@@ -86,7 +103,7 @@ class BDD implements iBDD
 							WHERE alpha{$eqAlpha} AND beta{$eqBeta} AND gamma{$eqGamma}
 							ORDER BY i",
 							$param
-						);		
+						);
 		$Tableau = [];	// réponse de la forme Tableau[i] = code
 		switch(count($Treponse, COUNT_RECURSIVE))
 		{
