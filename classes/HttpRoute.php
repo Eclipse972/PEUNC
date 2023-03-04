@@ -1,22 +1,9 @@
 <?php
 namespace PEUNC;
 
-class HttpRoute
-/*
- * Cette classe décode une requête http et renvoie :
- * 		- la position dans l'arborescence même s'il s'agit d'une erreur serveur
- *		- la méthode Http utilisée
- * 		- les paramètres $_GET ou $_POST suivant les cas
- *
- * La position dans l'arborescence. Elle est représentée par un triplet (alpha, beta, gamma) par importance décroissante
- * Si alpha >= 0 => pages du site
- * (X;0;0) => page de 1er niveau. 	(0;0;0) -> page d'accueil.
- * (X;Y;0) avec Y>0 => page de 2e niveau
- * (X;Y;Z) avec Z>0 => page de 3e niveau
- *
- * Les pages d'erreur serveur gérées sont: 404, 403, 405 et 500 mais on peut en rajouter facilement d'autres.
- * Si la page n'est pas trouvée quelqu'en soit la raison la réponse sera la page 404.
-*/
+include"API_HttpRoute.php";
+
+class HttpRoute implements iHttpRoute
 {
 	// position dans l'arborescence
 	private $alpha;
@@ -100,7 +87,7 @@ class HttpRoute
 
 //	Renvoie les paramètres $_GET ou $_POST nettoyés ==============================================
 
-	public static function ExtraireParamURL()
+	private static function ExtraireParamURL()
 	/* Extraction des paramètres suite à une redirection 404.
 	 * $_GET n'existe pas, il faut donc décoder l'URL manuellement.
 	 * $_POST n'existe pas dans ce cas.
@@ -118,7 +105,7 @@ class HttpRoute
 		return $T_param;
 	}
 
-	public static function ExtraireParamRacine()
+	private static function ExtraireParamRacine()
 	{	// renvoie les paramètres envoyés à index.php
 		switch($_SERVER['REQUEST_METHOD'])
 		{
@@ -137,7 +124,7 @@ class HttpRoute
 		return $T_param;
 	}
 
-	public function NettoyerParametres()
+	private function NettoyerParametres()
 	/* Dans la table Squelette on récupère la liste des paramètres autorisés.
 	 * On construit un nouveau tableau qui ne contient que les clés autorisées et chaque valeur subit un nettoyage.
 	 * Par contre un paramètre manquant ne provoque pas d'erreur.
