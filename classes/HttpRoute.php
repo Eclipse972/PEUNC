@@ -36,7 +36,7 @@ class HttpRoute implements iHttpRoute
 
 		$this->URL = BDD::SELECT("URL FROM Vue_URLvalides
 									WHERE niveau1 = ? AND niveau2 = ? AND niveau3 = ?",
-									[$this->alpha, $this->beta, $this->gamma]
+									[$this->alpha, $this->beta, $this->gamma],true
 								);
 		$this->methode = $_SERVER['REQUEST_METHOD'];
 	}
@@ -51,7 +51,7 @@ class HttpRoute implements iHttpRoute
 	*/
 	{
 		// interrogation de la BD pour retrouver la position dans l'arborescence
-		$Treponse = BDD::SELECT("niveau1, niveau2, niveau3 FROM Vue_URLvalides WHERE URL = ?", [$URL]);
+		$Treponse = BDD::SELECT("niveau1, niveau2, niveau3 FROM Vue_URLvalides WHERE URL = ?", [$URL],true);
 		if (isset($Treponse["niveau1"]))	// l'URL existe?
 		{	// la page existe
 			header("Status: 200 OK", false, 200);	// modification pour dire au navigateur que tout va bien finalement
@@ -136,7 +136,7 @@ class HttpRoute implements iHttpRoute
 								$this->route->getBeta(),
 								$this->route->getGamma(),
 								$this->route->getMethode()
-							]);
+							],true);
 		$TparamAutorises = json_decode($reponse, true);
 
 		$Treponse = [];

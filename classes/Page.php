@@ -16,7 +16,7 @@ class Page implements iPage	{
 	const DOSSIER_JS		= 'js/';
 	const DOSSIER_VIDEO		= 'video/';
 	const IMAGE_ABSENTE		= '/images/image_absente.png';
-	
+
 	// Intervalle pour  le niveau alpha (les onglets)
 	const ALPHA_MINI = 10;
 	const ALPHA_MAXI = 20;
@@ -33,20 +33,14 @@ class Page implements iPage	{
 	protected $route;
 // FIN DE LA CONFIGURATION
 
-
-	protected $T_paramURL	= [];
-
-	public function __construct(HttpRoute $route = null, array $TparamURL = [])
+	public function __construct(HttpRoute $route = null)
 	{
 		$this->setView("doctype.html");
 		$this->route = $route;
 		if (isset($route))
-		{
-			// valeur par défaut de l'en-tête
+		{	// valeur par défaut de l'en-tête
 			$this->entetePage = BDD::SELECT("texteMenu FROM Squelette WHERE alpha= ? AND beta= ? AND gamma= ? AND methode = ?",
-									[$route->getAlpha(), $route->getBeta(), $route->getGamma(), $route->getMethode()]);
-			foreach($TparamURL as $clé => $valeur)
-				$this->T_paramURL[$clé] = htmlspecialchars($valeur);
+									[$route->getAlpha(), $route->getBeta(), $route->getGamma(), $route->getMethode()],true);
 		}
 		else $this->entetePage = "Erreur serveur";
 	}
@@ -63,7 +57,7 @@ class Page implements iPage	{
 
 	public function setSection($code)		{ $this->scriptSection = $code;	}
 
-	public function setNav(array $code)			{ $this->T_nav = $code;	}
+	public function setNav(array $code)		{ $this->T_nav = $code;	}
 
 	public function setFooter($code)		{ $this->PiedDePage = $code; }
 
@@ -72,7 +66,7 @@ class Page implements iPage	{
 		$fichier =  $cheminParDefaut ? self::DOSSIER_VUE . $fichier : $fichier;
 		if (file_exists($fichier))
 			$this->vue = $fichier;
-		else throw new Exception("Vue inexistante");
+		else throw new Exception(500);
 	}
 
 	public function setCSS($feuilleCSS)
@@ -105,8 +99,6 @@ class Page implements iPage	{
 
 	public function getView()			{ return $this->vue; }
 
-	public function getParamURL($i = 0)	{ return (isset($this->T_paramURL[$i])) ? $this->T_paramURL[$i] : null; }
-
 	public function getCSS()			{ foreach($this->T_CSS as $feuilleCSS) echo"\t<link rel=\"stylesheet\" href=\"", $feuilleCSS,"\" />\n";	}
 
 	public function getRoute()			{ return $this->route; }
@@ -128,7 +120,7 @@ class Page implements iPage	{
 		}
 		return $code ."</nav>\n";
 	}
-	
+
 /* ***************************
  * AUTRE
  * ***************************/
@@ -136,12 +128,12 @@ class Page implements iPage	{
 	public function ExecuteControleur($script)
 	{
 		if($script == "")
-			throw new Exception("Controleur non d&eacute;fini");
+			throw new Exception(501);
 		elseif (file_exists(self::DOSSIER_CONTROLEUR. $script))	// script dans le dossier des controleurs
 			require(self::DOSSIER_CONTROLEUR . $script);
 		elseif (file_exists($script))							//	script défini de manière absolue
 			require($script);
-		else throw new Exception("Controleur inexistant");
+		else throw new Exception(502);
 	}
 
 /* ***************************
@@ -172,10 +164,10 @@ class Page implements iPage	{
 	}
 
 	public static function URLprecedente()	{ return $_SESSION["PEUNC"]["URLprecedente"]; }
-	
+
  	public static function MENU(HttpRoute $route, $niveau, $profondeur, $alphaMini = Page::ALPHA_MINI, $alphaMaxi = Page::ALPHA_MAXI)
 	{
-		if (($niveau <= 0) || ($profondeur < 0) || ($niveau + $profondeur > 3))	throw new Exception("fonction MENU: erreur de paramètre");
+		if (($niveau <= 0) || ($profondeur < 0) || ($niveau + $profondeur > 3))	throw new Exception(503);
 
 		switch($niveau)
 		{
@@ -193,23 +185,27 @@ class Page implements iPage	{
 			case 3:
 				$Tableau = BDD::Liste_niveau($route->getGamma(), $route->getAlpha(), $route->getBeta());
 				break;
-			default: throw new Exception("fonction MENU: erreur deuxième paramètre");
+			default: throw new Exception(504);
 		}
 		if (count($Tableau) > 0)
 		{
-			$T_code = [ 0 => "<ul>" ];
+			Page::DebutMenu($T_code);
 			foreach($Tableau as $i => $ligne)
 			{
-				$T_code[] = "<li>" . $ligne . "</li>";
-				
+				Page::AjouteItem($T_code, $ligne);
+
 				if ((substr($ligne, 0, 6) == "<a id=") && ($niveau < 4) && ($profondeur > 0))	// y a-t-il un niveau inférieur à afficher?
-				{
-					$T_sousCode = PAGE::MENU($route, $niveau+1, $profondeur-1);	// alors on insert le code du sous-item
-					foreach($T_sousCode as $ligne)	$T_code[] = $ligne;			// on rajoute le sous-code
-				}
+				//	pour	chaque ligne de code du sous-menu s'il existe			on rajoute le sous-code
+					foreach(PAGE::MENU($route, $niveau+1, $profondeur-1) as $ligne)	$T_code[] = $ligne;
 			}
-			$T_code[] = "</ul>";
+			Page::FinMenu($T_code);
 			return $T_code;
 		} else return [];
 	}
+
+	public static function DebutMenu(&$Tableau)	{ $Tableau[] = "<ul>"; }
+
+	public static function FinMenu(&$Tableau)	{ $Tableau[] = "</ul>"; }
+
+	public static function AjouteItem(&$Tableau, $ligne){ $Tableau[] = "<li>" . $ligne . "</li>"; }
 }
