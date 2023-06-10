@@ -1,16 +1,19 @@
 <?php	// routeur de PEUNC
 session_start();
 
-spl_autoload_register(function($classe)
+spl_autoload_register(
+	function($classe)
 	{
-		if (substr($classe, 0, 5) == "PEUNC")
-		{	// PEUNC
-			$classe = substr($classe, 6, 99);
-			$prefixe = "PEUNC/";
-		}
-		else $prefixe =  "Modele/classe_"; // utilisateur
+		// $classe contient le namespace et ce namespace est le chemin vers le fichier
+		$TcheminFichier = explode('\\', $classe);
 
-		require_once $prefixe . $classe . ".php";
+		if ($TcheminFichier[0] != 'PEUNC') // classe utilisateur
+		{	// 2 sources de classes pour le moment PEUNC et utilisateur. Il faudra reprendre lorsqu'il faudra gérer les librairies
+			$TcheminFichier = array_unshift($TcheminFichier, 'Modele'); // ajout dossier contenant les classes utilisateur devant
+		}
+
+		$fichier = implode('/', $TcheminFichier) . '.php';	// test existence à faire
+		require_once $fichier;
 	}
 );
 
