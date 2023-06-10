@@ -6,9 +6,9 @@ namespace PEUNC;
 
 class Contact extends Formulaire
 {
-	public function __construct(HttpRoute $route, array $TparamURL = [])
+	public function __construct(HttpRoute $route)
 	{
-		parent::__construct($route, $TparamURL);
+		parent::__construct($route);
 		$this->setView("formulaire.html");
 	}
 /*

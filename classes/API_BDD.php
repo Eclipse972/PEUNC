@@ -72,6 +72,19 @@ interface iBDD
 	 * OU	PEUNC\BDD::DELETE_FROM("Table WHERE alpha= :alpha", ["alpha" => 8])
 	 * */
 
+	public static function UPDATE($requete, array $T_parametre);
+	/* Exécute la requête UPDATE.
+	 * $requete: chaine de caractère sans le mot UPDATE de début.
+	 * $T_parametre: liste des paramètres
+	 *
+	 * Exemples d'appels
+	 * 		PEUNC\BDD::UPDATE('Table SET champ=?', [14])
+	 * OU	PEUNC\BDD::UPDATE('Table SET champ=:valeur', ['valeur' => 14])
+	 *
+	 * 		PEUNC\BDD::UPDATE('Table SET champ1=?, champ2=?, champ3=?', [14, 5, 7])
+	 * OU	PEUNC\BDD::UPDATE('Table SET champ1=:valeur1, champ2=valeur2', ['valeur1' => 14, 'valeur2' => 4])
+	 */
+
  	public static function Liste_niveau($i_sectionne, $alpha = null, $beta = null);
  	/* Renvoie un liste des codes html des noeuds d'un niveau de l'arborescence
  	 *

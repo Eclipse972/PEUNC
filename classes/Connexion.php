@@ -17,7 +17,7 @@ class Connexion extends Formulaire
 // Traitement du formulaire ======================================================================
 	public function Traitement($nomClasseUtilisateur = "Utilisateur")
 	{
-		switch(BDD::SELECT("count(*) FROM Utilisateur WHERE pseudo = ? AND MDP = ?", [$this->route->getParam("login"), $this->route->getParam("MDP")],true))
+		switch(BDD::SELECT("count(*) FROM Utilisateur WHERE pseudo = ? AND hashMDP = ?", [$this->route->getParam("login"), sha1($this->route->getParam("MDP"))],true))
 		{
 			case 0:	// aucune correspondance
 				$_SESSION["PEUNC_messageConnexion"] = "La connexion a &eacute;chou&eacute;e!";
@@ -26,8 +26,9 @@ class Connexion extends Formulaire
 			case 1:	// une correspondance
 				$_SESSION["PEUNC_messageConnexion"] = "";
 				$classe = "\\" . $nomClasseUtilisateur;	// ajoute \ pour être à la racine de l'espace de noms
-				$id = BDD::SELECT("ID FROM Utilisateur WHERE pseudo = ? AND MDP = ?",
-								[$this->route->getParam("login"), $this->route->getParam("MDP")],true);
+				$id = BDD::SELECT("ID FROM Utilisateur WHERE pseudo = ? AND hashMDP = ?",
+								[$this->route->getParam("login"), sha1($this->route->getParam("MDP"))],
+								true);
 				$_SESSION[$nomClasseUtilisateur] = serialize(new $classe($id));
 				header("location: " . $this->jetonJSON->URLsuivante);	// page suivant la connexion
 				break;

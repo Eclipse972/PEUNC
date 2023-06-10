@@ -133,6 +133,27 @@ class BDD implements iBDD
 		$requete->closeCursor();
 	}
 
+	public static function UPDATE($requete, array $T_parametre)
+	{
+		if($T_parametre == [])	throw new Exception(604);
+
+		$pdo = self::getInstance();
+		$requete = $pdo->prepare('UPDATE ' . $requete);
+		if (isset($T_parametre[0]))
+		{
+			foreach($T_parametre as $clé => $valeur)	// clé est un entier
+				$requete->bindValue($clé+1, $valeur, BDD::PDO_param($valeur));
+		}
+		else
+		{
+			foreach($T_parametre as $clé => $valeur)	// clé est une chaine de caractères
+				$requete->bindValue($clé, $valeur, BDD::PDO_param($valeur));
+		}
+		$requete->execute();
+		$requete->closeCursor();
+
+	}
+
 	public static function Liste_niveau($i_sectionne, $alpha = null, $beta = null)
 	{
 		if(!isset($alpha))
