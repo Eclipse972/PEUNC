@@ -1,5 +1,5 @@
 <?php // Exception pour les erreurs de l'application
-namespace PEUNC;
+namespace PEUNC\Erreur;
 
 class Exception extends \Exception
 {

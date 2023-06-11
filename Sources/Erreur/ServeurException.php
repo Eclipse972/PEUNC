@@ -1,5 +1,5 @@
 <?php // Exception pour les erreurs serveurs
-namespace PEUNC;
+namespace PEUNC\Erreur;
 
 class ServeurException extends \Exception
 {
