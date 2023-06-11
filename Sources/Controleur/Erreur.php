@@ -6,6 +6,8 @@
  * BDD via PDOException
  * les erreur application de PEUNC
  * */
+use PEUNC\Http\HttpRoute;
+
 namespace PEUNC\Controleur;
 
 class Erreur extends Page

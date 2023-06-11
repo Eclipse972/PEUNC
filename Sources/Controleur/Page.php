@@ -1,5 +1,7 @@
 <?php
 // classe-mère des pages de PEUNC
+use PEUNC\Http\HttpRoute;
+
 namespace PEUNC\Controleur;
 
 include"API_page.php";

@@ -1,4 +1,6 @@
 <?php		// API de la classe Page de PEUNC
+use PEUNC\Http\HttpRoute;
+
 namespace PEUNC\Controleur;
 
 interface iPage

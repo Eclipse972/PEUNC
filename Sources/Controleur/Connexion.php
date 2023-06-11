@@ -1,5 +1,7 @@
 <?php
 
+use PEUNC\Http\HttpRoute;
+
 namespace PEUNC\Controleur;
 
 class Connexion extends Formulaire

@@ -1,4 +1,5 @@
 <?php	// formulaire de PEUNC
+use PEUNC\Http\HttpRoute;
 
 namespace PEUNC\Controleur;
 
