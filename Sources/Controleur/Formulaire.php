@@ -1,6 +1,6 @@
 <?php	// formulaire de PEUNC
 
-namespace PEUNC;
+namespace PEUNC\Controleur;
 
 class Formulaire extends Page
 {

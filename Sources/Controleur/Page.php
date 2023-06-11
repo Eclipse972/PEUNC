@@ -1,6 +1,6 @@
 <?php
 // classe-mère des pages de PEUNC
-namespace PEUNC;
+namespace PEUNC\Controleur;
 
 include"API_page.php";
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace PEUNC;
+namespace PEUNC\Controleur;
 
 class Connexion extends Formulaire
 {

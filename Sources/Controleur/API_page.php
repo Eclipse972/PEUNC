@@ -1,5 +1,5 @@
 <?php		// API de la classe Page de PEUNC
-namespace PEUNC;
+namespace PEUNC\Controleur;
 
 interface iPage
 /* Chaque page est entièrement construite avant le moindre affichage. L'hydratation de la page se fait à partir d'un controleur.

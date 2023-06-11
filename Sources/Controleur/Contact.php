@@ -2,7 +2,7 @@
 
 // classe requise: CodeValidation
 
-namespace PEUNC;
+namespace PEUNC\Controleur;
 
 class Contact extends Formulaire
 {
