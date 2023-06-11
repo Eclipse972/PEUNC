@@ -3,6 +3,7 @@
 // classe requise: CodeValidation
 
 use PEUNC\Http\HttpRoute;
+use PEUNC\Erreur\Exception;
 
 namespace PEUNC\Controleur;
 

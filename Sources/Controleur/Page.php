@@ -1,6 +1,7 @@
 <?php
 // classe-mère des pages de PEUNC
 use PEUNC\Http\HttpRoute;
+use PEUNC\Erreur\Exception;
 
 namespace PEUNC\Controleur;
 

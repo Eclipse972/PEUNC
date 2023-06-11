@@ -1,9 +1,10 @@
-<?php	// formulaire de PEUNC
+<?php
 use PEUNC\Http\HttpRoute;
+use PEUNC\Erreur\Exception;
 
 namespace PEUNC\Controleur;
 
-class Formulaire extends Page
+class Formulaire extends Page	// formulaire de PEUNC
 {
 	protected $jetonJSON;	// contient la configuration en clair sous la forme d'un objet JSON
 
