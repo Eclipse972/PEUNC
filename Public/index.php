@@ -4,6 +4,17 @@ session_start();
 spl_autoload_register(
 	function($classe)
 	{
+		/*	ancienne version 
+		if (substr($classe, 0, 5) == "PEUNC")
+		{	// PEUNC
+			$classe = substr($classe, 6, 99);
+			$prefixe = "PEUNC/";
+		}
+		else $prefixe =  "Modele/classe_"; // utilisateur
+
+		require_once $prefixe . $classe . ".php";
+		*/
+		
 		// $classe contient le namespace et ce namespace est le chemin vers le fichier
 		$TcheminFichier = explode('\\', $classe);
 
