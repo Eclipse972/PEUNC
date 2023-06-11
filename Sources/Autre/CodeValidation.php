@@ -1,4 +1,6 @@
 <?php
+use PEUNC\Erreur\Exception;
+
 namespace PEUNC\Autre;
 
 /* Le code de validation est un mot de 5 caractères composé d'une lettre de chaque champ (soit 4 lettres).
@@ -49,7 +51,7 @@ class CodeValidation
 				$this->dernier_choix = $dernier_choix;		// choix du dernier caractère
 				break;
 
-			default: throw new \Exception("Certaines variables du code de validation ne sont pas définies. Scénario: " . $scenario);
+			default: throw new Exception("Certaines variables du code de validation ne sont pas définies. Scénario: " . $scenario);
 		}
 	}
 
