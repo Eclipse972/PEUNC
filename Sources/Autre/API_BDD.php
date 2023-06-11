@@ -1,11 +1,10 @@
-<?php	// API de la classe BDD de PEUNC
-namespace PEUNC;
+<?php	// interface de la classe BDD de PEUNC
+namespace PEUNC\Autre;
 
 interface iBDD
-/* BDD de PEUNC
- *
- * La classe est statique et ne doit pas être instanciée. Elle permet d'avoir partout la même instance de la BDD sans passer par une variable globale
+/* La classe est statique et ne doit pas être instanciée. Elle permet d'avoir partout la même instance de la BDD sans passer par une variable globale
  * ma source d'inspiration: https://www.training-dev.fr/Cours/Creer-un-framework-MVC-en-Php/Acceder-a-une-base-de-donnees
+ * Un use PEUNC\Autre\BDD permetra d'avoir un code moins lourd.
  * */
 {
 	public static function SELECT($requete, array $T_parametre, $B_postTraitement);
@@ -16,16 +15,16 @@ interface iBDD
 	 *
 	 * Exemples de syntaxe
 	 * 1- plusieurs variables:
-	 * 		PEUNC\BDD::SELECT("* FROM table WHERE alpha=?		AND beta=?",	[5,1])
-	 * OU	PEUNC\BDD::SELECT("* FROM table WHERE alpha=:alpha	AND beta=:beta",["alpha" => 5, "beta" => 1])
+	 * 		BDD::SELECT("* FROM table WHERE alpha=?			AND beta=?",	[5,1])
+	 * OU	BDD::SELECT("* FROM table WHERE alpha=:alpha	AND beta=:beta",["alpha" => 5, "beta" => 1])
 	 *
 	 * 2- Une seule variable:
-	 * 		PEUNC\BDD::SELECT("* FROM table WHERE ID=?",	[5]) Il faut quand même envoyer un tableau
-	 * 	OU	PEUNC\BDD::SELECT("* FROM table WHERE ID=:ID",	["ID" => 5])
+	 * 		BDD::SELECT("* FROM table WHERE ID=?",	[5]) Il faut quand même envoyer un tableau
+	 * 	OU	BDD::SELECT("* FROM table WHERE ID=:ID",["ID" => 5])
 	 *
 	 * Remarque: que des ? ou des variables dans la requête pas de mélange.
 	 *
-	 * 3- Aucune variable		PEUNC\BDD::SELECT("* FROM table") pas besoin de tableau
+	 * 3- Aucune variable		BDD::SELECT("* FROM table") pas besoin de tableau
 	 *
 	 * Si $B_postTraitement égale à true, la réponse est reformatée suivant les cas:
 	 * un tableau avec les résultats en ligne
@@ -43,12 +42,12 @@ interface iBDD
 	 *
 	 * Exemples d'appels
 	 * Ajouter un enregistrement sous forme de triplet:
-	 * 		PEUNC\BDD::INSERT_INTO(" table (alpha, beta, gamma) VALUE (?, ?, ?)", [1,3,0])
-	 * OU	PEUNC\BDD::INSERT_INTO(" table (alpha, beta, gamma) VALUE (:alpha, :beta, gamma)", ["alpha" => 1, "beta" => 3, "gamma" => 0])
+	 * 		BDD::INSERT_INTO(" table (alpha, beta, gamma) VALUE (?, ?, ?)", [1,3,0])
+	 * OU	BDD::INSERT_INTO(" table (alpha, beta, gamma) VALUE (:alpha, :beta, gamma)", ["alpha" => 1, "beta" => 3, "gamma" => 0])
 	 *
 	 * On peut ajouter une liste d'enregistement en un seul appel
-	 * 		PEUNC\BDD::INSERT_INTO(" table (alpha, beta, gamma) VALUE (?, ?, ?)", [[1,3,0], [3,0,0], [1,3,3]])
-	 * OU	PEUNC\BDD::INSERT_INTO(" table (alpha, beta, gamma) VALUE (:alpha, :beta, gamma)",
+	 * 		BDD::INSERT_INTO(" table (alpha, beta, gamma) VALUE (?, ?, ?)", [[1,3,0], [3,0,0], [1,3,3]])
+	 * OU	BDD::INSERT_INTO(" table (alpha, beta, gamma) VALUE (:alpha, :beta, gamma)",
 	 * 								[	["alpha" => 1, "beta" => 3, "gamma" => 0],
 	 * 									["alpha" => 3, "beta" => 0, "gamma" => 0],
 	 * 									["alpha" => 1, "beta" => 3, "gamma" => 3] ])
@@ -65,11 +64,11 @@ interface iBDD
 	 * $T_parametre: liste des paramètres
 	 *
 	 * Exemples d'appels
-	 * 		PEUNC\BDD::DELETE_FROM("Table WHERE alpha= ? AND beta=? AND gamma=?", [8,1,0])
-	 *  OU	PEUNC\BDD::DELETE_FROM("Table WHERE alpha= :alpha AND beta=:beta AND gamma=:gamma",  ["alpha" => 8, "beta" => 1, "gamma" => 0])
+	 * 		BDD::DELETE_FROM("Table WHERE alpha= ? AND beta=? AND gamma=?", [8,1,0])
+	 *  OU	BDD::DELETE_FROM("Table WHERE alpha= :alpha AND beta=:beta AND gamma=:gamma",  ["alpha" => 8, "beta" => 1, "gamma" => 0])
 	 *
-	 * 		PEUNC\BDD::DELETE_FROM("Table WHERE alpha= ?", [8])
-	 * OU	PEUNC\BDD::DELETE_FROM("Table WHERE alpha= :alpha", ["alpha" => 8])
+	 * 		BDD::DELETE_FROM("Table WHERE alpha= ?", [8])
+	 * OU	BDD::DELETE_FROM("Table WHERE alpha= :alpha", ["alpha" => 8])
 	 * */
 
 	public static function UPDATE($requete, array $T_parametre);
@@ -78,11 +77,11 @@ interface iBDD
 	 * $T_parametre: liste des paramètres
 	 *
 	 * Exemples d'appels
-	 * 		PEUNC\BDD::UPDATE('Table SET champ=?', [14])
-	 * OU	PEUNC\BDD::UPDATE('Table SET champ=:valeur', ['valeur' => 14])
+	 * 		BDD::UPDATE('Table SET champ=?', [14])
+	 * OU	BDD::UPDATE('Table SET champ=:valeur', ['valeur' => 14])
 	 *
-	 * 		PEUNC\BDD::UPDATE('Table SET champ1=?, champ2=?, champ3=?', [14, 5, 7])
-	 * OU	PEUNC\BDD::UPDATE('Table SET champ1=:valeur1, champ2=valeur2', ['valeur1' => 14, 'valeur2' => 4])
+	 * 		BDD::UPDATE('Table SET champ1=?, champ2=?, champ3=?', [14, 5, 7])
+	 * OU	BDD::UPDATE('Table SET champ1=:valeur1, champ2=valeur2', ['valeur1' => 14, 'valeur2' => 4])
 	 */
 
  	public static function Liste_niveau($i_sectionne, $alpha = null, $beta = null);
@@ -92,8 +91,8 @@ interface iBDD
  	 * $mini, $maxi: borne pour les indice por le niveau alpha
  	 *
  	 * Exemples d'appels
- 	 * premier niveau (alpha):	PEUNC\BDD::Liste_niveau(5)
- 	 * deuxième niveau (beta):	PEUNC\BDD::Liste_niveau(3,X)	pour alpha = X
- 	 * troisième niveau(gamma):	PEUNC\BDD::Liste_niveau(2,X,Y)	pour alpha = X et beta = Y
+ 	 * premier niveau (alpha):	BDD::Liste_niveau(5)
+ 	 * deuxième niveau (beta):	BDD::Liste_niveau(3,X)	pour alpha = X
+ 	 * troisième niveau(gamma):	BDD::Liste_niveau(2,X,Y)	pour alpha = X et beta = Y
  	 * */
 }

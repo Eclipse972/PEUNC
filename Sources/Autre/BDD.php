@@ -1,5 +1,5 @@
-<?php	// Base de données de PEUNC
-namespace PEUNC;
+<?php	// Base de données de PEUNC\Autre
+namespace PEUNC\Autre;
 
 include"API_BDD.php";
 
@@ -10,9 +10,10 @@ class BDD implements iBDD
 
 	private function __construct()
 	{
-		if(!file_exists("connexionBDD.php"))	throw new Exception(600);
+		$fichier = 'Config/connexionBDD.php';
+		if(!file_exists($fichier))	throw new Exception(600);
 
-		require"connexionBDD.php";
+		require $fichier;
 		$this->BD = new \PDO("mysql:host={$host};dbname={$dbname};charset=utf8", $user , $pwd);
 		if (isset($this->BD))
 		{
