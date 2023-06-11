@@ -13,7 +13,7 @@ class ServeurException extends \Exception
 
 	public function __construct($code)
 	{		
-		$message = array_key_exists($code, LISTE) ? LISTE[$code] : "Erreur serveur N°" . $code;
+		$message = array_key_exists($code, self::LISTE) ? self::LISTE[$code] : "Erreur serveur N°" . $code;
 		parent::__construct($message, $code);
 	}
 }

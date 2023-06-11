@@ -43,7 +43,7 @@ class Exception extends \Exception
 	public function __construct($param = 0)
 	{
 		if (is_int($param))
-			$message =  array_key_exists($param, LISTE) ? LISTE[$param] : LISTE[0] . " code: " . $param;
+			$message =  array_key_exists($param, self::LISTE) ? self::LISTE[$param] : self::LISTE[0] . " code: " . $param;
 		else
 			$message = $param;
 
