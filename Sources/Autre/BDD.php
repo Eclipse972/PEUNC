@@ -11,7 +11,7 @@ class BDD implements iBDD
 	private function __construct()
 	{
 		$fichier = 'Config/connexionBDD.php';
-		if(!file_exists($fichier))	throw new Exception(600);
+		if(!file_exists($fichier))	throw new PEUNC\Erreur\Exception(600);
 
 		require $fichier;
 		$this->BD = new \PDO("mysql:host={$host};dbname={$dbname};charset=utf8", $user , $pwd);
@@ -46,7 +46,7 @@ class BDD implements iBDD
 			case "NULL":
 				$valeur = \PDO::PARAM_NULL;
 				break;
-			default: throw new Exception(601);
+			default: throw new PEUNC\Erreur\Exception(601);
 		}
 		return $valeur;
 	}
@@ -92,7 +92,7 @@ class BDD implements iBDD
 
 	public static function INSERT_INTO($requete, array $T_valeurs)
 	{
-		if($T_valeurs == [])	throw new Exception(603);
+		if($T_valeurs == [])	throw new PEUNC\Erreur\Exception(603);
 
 		$pdo = self::getInstance();
 		$requete = $pdo->prepare("INSERT INTO " . $requete);
@@ -116,7 +116,7 @@ class BDD implements iBDD
 
 	public static function DELETE_FROM($requete, array $T_parametre)
 	{
-		if($T_parametre == [])	throw new Exception(602);
+		if($T_parametre == [])	throw new PEUNC\Erreur\Exception(602);
 
 		$pdo = self::getInstance();
 		$requete = $pdo->prepare("DELETE FROM " . $requete);
@@ -136,7 +136,7 @@ class BDD implements iBDD
 
 	public static function UPDATE($requete, array $T_parametre)
 	{
-		if($T_parametre == [])	throw new Exception(604);
+		if($T_parametre == [])	throw new PEUNC\Erreur\Exception(604);
 
 		$pdo = self::getInstance();
 		$requete = $pdo->prepare('UPDATE ' . $requete);
