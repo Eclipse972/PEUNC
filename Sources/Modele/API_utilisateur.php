@@ -1,5 +1,5 @@
 <?php		// API de la classe User de PEUNC
-namespace PEUNC;
+namespace PEUNC\Modele;
 
 interface iUtilisateur
 {

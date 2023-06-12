@@ -1,5 +1,7 @@
 <?php	//
-namespace PEUNC;
+use PEUNC\Erreur\Exception;
+
+namespace PEUNC\Modele;
 
 include"API_utilisateur.php";
 
