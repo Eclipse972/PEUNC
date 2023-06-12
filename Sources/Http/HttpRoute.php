@@ -1,5 +1,8 @@
 <?php
-namespace PEUNC;
+use PEUNC\Erreur\ServeurException;
+use PEUNC\Erreur\Exception;
+
+namespace PEUNC\Http;
 
 include"API_HttpRoute.php";
 

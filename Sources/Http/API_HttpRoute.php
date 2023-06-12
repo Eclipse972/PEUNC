@@ -1,5 +1,5 @@
 <?php
-namespace PEUNC;
+namespace PEUNC\Http;
 /*
  * L'arborescence du site est stockée en BDD dans une table appelée Squelette. Elle est limitée à trois niveaux.
  * Elle est représentée par un triplet (alpha, beta, gamma) par importance décroissante
