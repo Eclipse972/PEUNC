@@ -1,5 +1,6 @@
 <?php	//
 use PEUNC\Erreur\Exception;
+use PEUNC\Autre\BDD;
 
 namespace PEUNC\Modele;
 
