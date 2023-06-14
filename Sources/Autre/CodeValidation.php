@@ -1,7 +1,7 @@
 <?php
-use PEUNC\Erreur\Exception;
-
 namespace PEUNC\Autre;
+
+use PEUNC\Erreur\Exception;
 
 /* Le code de validation est un mot de 5 caractères composé d'une lettre de chaque champ (soit 4 lettres).
  * Pour le choix du caractère il y a quatre possibilités: premier, deuxième, avant dernier et dernier

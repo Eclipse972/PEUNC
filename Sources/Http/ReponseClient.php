@@ -1,9 +1,9 @@
 <?php
+namespace PEUNC\Http;
+
 use PEUNC\Erreur\Exception;
 use PEUNC\Http\HttpRoute;
 use PEUNC\Autre\BDD;
-
-namespace PEUNC\Http;
 
 class ReponseClient
 /* Réponse à servir au client en fonction de la route trouvée suite à la requête http.

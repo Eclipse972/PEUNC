@@ -1,10 +1,10 @@
 <?php
 // classe-mère des pages de PEUNC
+namespace PEUNC\Controleur;
+
 use PEUNC\Http\HttpRoute;
 use PEUNC\Erreur\Exception;
 use PEUNC\Autre\BDD;
-
-namespace PEUNC\Controleur;
 
 include"API_page.php";
 

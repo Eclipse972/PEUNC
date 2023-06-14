@@ -1,7 +1,7 @@
 <?php	// Base de données de PEUNC\Autre
-use PEUNC\Erreur\Exception;
-
 namespace PEUNC\Autre;
+
+use PEUNC\Erreur\Exception;
 
 include"API_BDD.php";
 

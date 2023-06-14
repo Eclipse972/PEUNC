@@ -1,8 +1,8 @@
 <?php
+namespace PEUNC\Controleur;
+
 use PEUNC\Http\HttpRoute;
 use PEUNC\Erreur\Exception;
-
-namespace PEUNC\Controleur;
 
 class Formulaire extends Page	// formulaire de PEUNC
 {

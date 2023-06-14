@@ -1,4 +1,6 @@
 <?php
+namespace PEUNC\Controleur;
+
 /* PEUNC est capable de traiter un certain nombre d'erreur sous forme d'envoi d'exception. voir la partie catch de index.php
  * 
  * Les exceptions gérée par PEUNC :
@@ -7,8 +9,6 @@
  * les erreur application de PEUNC
  * */
 use PEUNC\Http\HttpRoute;
-
-namespace PEUNC\Controleur;
 
 class Erreur extends Page
 {

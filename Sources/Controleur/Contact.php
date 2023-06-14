@@ -2,10 +2,10 @@
 
 // classe requise: CodeValidation
 
+namespace PEUNC\Controleur;
+
 use PEUNC\Http\HttpRoute;
 use PEUNC\Erreur\Exception;
-
-namespace PEUNC\Controleur;
 
 class Contact extends Formulaire
 {

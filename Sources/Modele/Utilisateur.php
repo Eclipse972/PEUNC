@@ -1,8 +1,8 @@
 <?php	//
+namespace PEUNC\Modele;
+
 use PEUNC\Erreur\Exception;
 use PEUNC\Autre\BDD;
-
-namespace PEUNC\Modele;
 
 include"API_utilisateur.php";
 
