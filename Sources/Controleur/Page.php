@@ -30,7 +30,7 @@ class Page implements iPage	{
 	protected $entetePage;	// la valeur par défaut est donnée par le champ texteMenu dans le squelette
 	protected $logo			= 'logo.png';
 	protected $dossier		= '/';
-	protected $scriptSection= '<h1>Page en construction</h1>\n<p>Contactez l&apos;adminitrateur si le probl&egrave;me persiste </p>\n';
+	protected $scriptSection= "<h1>Page en construction</h1>\n<p>Contactez l&apos;adminitrateur si le probl&egrave;me persiste </p>\n";
 	protected $T_nav		= [];
 	protected $PiedDePage	= '<p>Pied de page &agrave; d&eacute;finir</p>';
 	protected $vue;
@@ -91,7 +91,7 @@ class Page implements iPage	{
  * ***************************/
 	public function getTitle()			{ return $this->titrePage; }
 
-	public function getHeaderText() 	{ return $this->entetePage . '\n'; }
+	public function getHeaderText() 	{ return $this->entetePage . "\n"; }
 
 	public function getLogo()			{ return Page::BaliseImage($this->logo,'Logo'); }
 
@@ -103,7 +103,11 @@ class Page implements iPage	{
 
 	public function getView()			{ return $this->vue; }
 
-	public function getCSS()			{ foreach($this->T_CSS as $feuilleCSS) echo'\t<link rel=\'stylesheet\' href=\'', $feuilleCSS,'\' />\n';	}
+	public function getCSS()
+	{
+		foreach($this->T_CSS as $feuilleCSS)
+			echo"\t<link rel=\'stylesheet\' href=", $feuilleCSS, " />\n";
+	}
 
 	public function getRoute()			{ return $this->route; }
 
@@ -113,16 +117,16 @@ class Page implements iPage	{
 			$code = '';
 		else
 		{
-			$code = '<nav>\n';
+			$code = "<nav>\n";
 			$n = 0; // nombre de tabultion pour indenter le code
 			foreach($this->T_nav as $ligne)
 			{
 				if($ligne == '</ul>') $n--;
-				$code .= str_repeat('\t', $n) . $ligne . '\n';
+				$code .= str_repeat("\t", $n) . $ligne . "\n";
 				if($ligne == '<ul>') $n++;
 			}
 		}
-		return $code .'</nav>\n';
+		return $code ."</nav>\n";
 	}
 
 /* ***************************
