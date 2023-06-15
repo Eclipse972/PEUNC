@@ -8,8 +8,12 @@ class Formulaire extends Page	// formulaire de PEUNC
 {
 	protected $jetonJSON;	// contient la configuration en clair sous la forme d'un objet JSON
 
+	const CONFIG = 'Config/config_chiffrement.php';
+
 	public function __construct(HttpRoute $route)
 	{
+		if(!file_exists(self::CONFIG))	throw new Exception(301);	// défini $cipher, $key et $iv
+		
 		parent::__construct($route);
 		switch($route->getMethode())
 		{
@@ -48,9 +52,7 @@ class Formulaire extends Page	// formulaire de PEUNC
 
 	public function InsererJeton()
 	{
-		if(!file_exists("config_chiffrement.php"))	throw new Exception(301);
-
-		require"config_chiffrement.php";	// défini $cipher, $key et $iv
+		require self::CONFIG;
 		$jetonchiffré = openssl_encrypt($this->jetonJSON, $cipher, $key, 0, $iv);
 		return "<input name=\"CSRF\" type=\"hidden\" value=\"" . $jetonchiffré . "\">\n";
 	}
@@ -63,9 +65,7 @@ class Formulaire extends Page	// formulaire de PEUNC
 
 	public static function DecoderJeton($jetonChiffré)
 	{
-		if(!file_exists("config_chiffrement.php"))	throw new Exception(301);
-
-		require"config_chiffrement.php";	// défini $cipher, $key et $iv
+		require self::CONFIG;
 		$jeton = openssl_decrypt($jetonChiffré, $cipher, $key, 0, $iv);// dechiffrement jeton
 		$O_jeton = json_decode($jeton);		// si erreur renvoyer null sinon renvoyer l'objet
 		return $O_jeton;
