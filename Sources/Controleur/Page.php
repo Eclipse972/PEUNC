@@ -6,7 +6,7 @@ use PEUNC\Http\HttpRoute;
 use PEUNC\Erreur\Exception;
 use PEUNC\Autre\BDD;
 
-include"API_page.php";
+include'API_page.php';
 
 class Page implements iPage	{
 // CONFIGURATION DE L'APPLICATION
@@ -25,28 +25,28 @@ class Page implements iPage	{
 	const ALPHA_MINI = 10;
 	const ALPHA_MAXI = 20;
 
-	protected $titrePage	= "Titre de la page affiché dans la barre du haut du navigateur";
+	protected $titrePage	= 'Titre de la page affiché dans la barre du haut du navigateur';
 	protected $T_CSS		= [];
 	protected $entetePage;	// la valeur par défaut est donnée par le champ texteMenu dans le squelette
-	protected $logo			= "logo.png";
-	protected $dossier		= "/";
-	protected $scriptSection= "<h1>Page en construction</h1>\n<p>Contactez l&apos;adminitrateur si le probl&egrave;me persiste </p>\n";
+	protected $logo			= 'logo.png';
+	protected $dossier		= '/';
+	protected $scriptSection= '<h1>Page en construction</h1>\n<p>Contactez l&apos;adminitrateur si le probl&egrave;me persiste </p>\n';
 	protected $T_nav		= [];
-	protected $PiedDePage	= "<p>Pied de page &agrave; d&eacute;finir</p>";
+	protected $PiedDePage	= '<p>Pied de page &agrave; d&eacute;finir</p>';
 	protected $vue;
 	protected $route;
 // FIN DE LA CONFIGURATION
 
 	public function __construct(HttpRoute $route = null)
 	{
-		$this->setView("doctype.html");
+		$this->setView('doctype.html');
 		$this->route = $route;
 		if (isset($route))
 		{	// valeur par défaut de l'en-tête
-			$this->entetePage = BDD::SELECT("texteMenu FROM Squelette WHERE alpha= ? AND beta= ? AND gamma= ? AND methode = ?",
+			$this->entetePage = BDD::SELECT('texteMenu FROM Squelette WHERE alpha= ? AND beta= ? AND gamma= ? AND methode = ?',
 									[$route->getAlpha(), $route->getBeta(), $route->getGamma(), $route->getMethode()],true);
 		}
-		else $this->entetePage = "Erreur serveur";
+		else $this->entetePage = 'Erreur serveur';
 	}
 /* ***************************
  * MUTATEURS (SETTER)
@@ -57,7 +57,7 @@ class Page implements iPage	{
 
 	public function setLogo($logo)			{ $this->logo = $logo; }			// nom de la forme /sous/dossier/fichier.extension à partir du dossier image du site
 
-	public function setDossier($dossier)	{ $this->dossier = $dossier . "/"; }
+	public function setDossier($dossier)	{ $this->dossier = $dossier . '/'; }
 
 	public function setSection($code)		{ $this->scriptSection = $code;	}
 
@@ -79,10 +79,10 @@ class Page implements iPage	{
 			$this->T_CSS[] = $feuilleCSS;	// pas de vérification sur feuille externe
 		else
 		{
-			$feuilleCSS = self::DOSSIER_CSS . $feuilleCSS . ".css";
+			$feuilleCSS = self::DOSSIER_CSS . $feuilleCSS . '.css';
 			if(file_exists($feuilleCSS))
 				$this->T_CSS[] = '/' . $feuilleCSS;
-			else throw new Exception($feuilleCSS . " n&apos;existe pas");
+			else throw new Exception($feuilleCSS . ' n&apos;existe pas');
 		}
 	}
 
@@ -91,7 +91,7 @@ class Page implements iPage	{
  * ***************************/
 	public function getTitle()			{ return $this->titrePage; }
 
-	public function getHeaderText() 	{ return $this->entetePage . "\n"; }
+	public function getHeaderText() 	{ return $this->entetePage . '\n'; }
 
 	public function getLogo()			{ return Page::BaliseImage($this->logo,'Logo'); }
 
@@ -103,26 +103,26 @@ class Page implements iPage	{
 
 	public function getView()			{ return $this->vue; }
 
-	public function getCSS()			{ foreach($this->T_CSS as $feuilleCSS) echo"\t<link rel=\"stylesheet\" href=\"", $feuilleCSS,"\" />\n";	}
+	public function getCSS()			{ foreach($this->T_CSS as $feuilleCSS) echo'\t<link rel=\'stylesheet\' href=\'', $feuilleCSS,'\' />\n';	}
 
 	public function getRoute()			{ return $this->route; }
 
 	public function getNav()
 	{
 		if(count($this->T_nav) == 0)
-			$code = "";
+			$code = '';
 		else
 		{
-			$code = "<nav>\n";
+			$code = '<nav>\n';
 			$n = 0; // nombre de tabultion pour indenter le code
 			foreach($this->T_nav as $ligne)
 			{
-				if($ligne == "</ul>") $n--;
-				$code .= str_repeat("\t", $n) . $ligne . "\n";
-				if($ligne == "<ul>") $n++;
+				if($ligne == '</ul>') $n--;
+				$code .= str_repeat('\t', $n) . $ligne . '\n';
+				if($ligne == '<ul>') $n++;
 			}
 		}
-		return $code ."</nav>\n";
+		return $code .'</nav>\n';
 	}
 
 /* ***************************
@@ -131,7 +131,7 @@ class Page implements iPage	{
 
 	public function ExecuteControleur($script)
 	{
-		if($script == "")
+		if($script == '')
 			throw new Exception(501);
 		elseif (file_exists(self::DOSSIER_CONTROLEUR. $script))	// script dans le dossier des controleurs
 			require(self::DOSSIER_CONTROLEUR . $script);
@@ -152,22 +152,22 @@ class Page implements iPage	{
 			$src = (substr($src,0,1) == '/') ? substr($src,1,strlen($src)) : self::DOSSIER_IMAGE . $src;
 			$src = (file_exists($src)) ? '/' . $src : self::IMAGE_ABSENTE;
 		}
-		return '<img src="' . $src . '" alt="' . $alt . '" ' . $code . '>';
+		return '<img src='' . $src . '' alt='' . $alt . '' ' . $code . '>';
 	}
 
 	public static function SauvegardeEtat(HttpRoute $route)
 	{
 		$URLactuelle = $route->getURL();
 
-		if ($_SESSION["PEUNC"]["URL"] != $URLactuelle) // sauvagarde s'il n'y a pas rafraichiisemnt de page
+		if ($_SESSION['PEUNC']['URL'] != $URLactuelle) // sauvagarde s'il n'y a pas rafraichiisemnt de page
 		{
-			$_SESSION["PEUNC"]["URLprecedente"] = (isset($_SESSION["PEUNC"]["URL"])) ? $_SESSION["PEUNC"]["URL"] : "/";
+			$_SESSION['PEUNC']['URLprecedente'] = (isset($_SESSION['PEUNC']['URL'])) ? $_SESSION['PEUNC']['URL'] : '/';
 
-			$_SESSION["PEUNC"]["URL"] =	$URLactuelle;
+			$_SESSION['PEUNC']['URL'] =	$URLactuelle;
 		}
 	}
 
-	public static function URLprecedente()	{ return $_SESSION["PEUNC"]["URLprecedente"]; }
+	public static function URLprecedente()	{ return $_SESSION['PEUNC']['URLprecedente']; }
 
  	public static function MENU(HttpRoute $route, $niveau, $profondeur, $alphaMini = Page::ALPHA_MINI, $alphaMaxi = Page::ALPHA_MAXI)
 	{
@@ -198,7 +198,7 @@ class Page implements iPage	{
 			{
 				Page::AjouteItem($T_code, $ligne);
 
-				if ((substr($ligne, 0, 6) == "<a id=") && ($niveau < 4) && ($profondeur > 0))	// y a-t-il un niveau inférieur à afficher?
+				if ((substr($ligne, 0, 6) == '<a id=') && ($niveau < 4) && ($profondeur > 0))	// y a-t-il un niveau inférieur à afficher?
 				//	pour	chaque ligne de code du sous-menu s'il existe			on rajoute le sous-code
 					foreach(PAGE::MENU($route, $niveau+1, $profondeur-1) as $ligne)	$T_code[] = $ligne;
 			}
@@ -207,9 +207,9 @@ class Page implements iPage	{
 		} else return [];
 	}
 
-	public static function DebutMenu(&$Tableau)	{ $Tableau[] = "<ul>"; }
+	public static function DebutMenu(&$Tableau)	{ $Tableau[] = '<ul>'; }
 
-	public static function FinMenu(&$Tableau)	{ $Tableau[] = "</ul>"; }
+	public static function FinMenu(&$Tableau)	{ $Tableau[] = '</ul>'; }
 
-	public static function AjouteItem(&$Tableau, $ligne){ $Tableau[] = "<li>" . $ligne . "</li>"; }
+	public static function AjouteItem(&$Tableau, $ligne){ $Tableau[] = '<li>' . $ligne . '</li>'; }
 }
