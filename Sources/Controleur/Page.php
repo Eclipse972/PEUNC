@@ -106,7 +106,7 @@ class Page implements iPage	{
 	public function getCSS()
 	{
 		foreach($this->T_CSS as $feuilleCSS)
-			echo"\t<link rel=\'stylesheet\' href=", $feuilleCSS, " />\n";
+			echo"\t<link rel=\"stylesheet\" href=", $feuilleCSS, " />\n";
 	}
 
 	public function getRoute()			{ return $this->route; }
