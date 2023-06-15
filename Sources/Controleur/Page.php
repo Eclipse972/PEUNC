@@ -14,7 +14,7 @@ class Page implements iPage	{
 	// dossiers pas défaut
 	const DOSSIER_MODEL		= 'Modele/';
 	const DOSSIER_VUE		= 'Application/Vue/';
-	const DOSSIER_CONTROLEUR= '/Controleur/';
+	const DOSSIER_CONTROLEUR= 'Controleur/';
 	const DOSSIER_IMAGE		= 'images/';
 	const DOSSIER_CSS		= 'CSS/';
 	const DOSSIER_JS		= 'js/';
@@ -135,13 +135,12 @@ class Page implements iPage	{
 
 	public function ExecuteControleur($script)
 	{
-		if($script == '')
-			throw new Exception(501);
-		elseif (file_exists(self::DOSSIER_CONTROLEUR. $script))	// script dans le dossier des controleurs
-			require(self::DOSSIER_CONTROLEUR . $script);
-		elseif (file_exists($script))							//	script défini de manière absolue
+		if($script == '') throw new Exception(501);
+
+		$script = self::DOSSIER_CONTROLEUR . $script;
+		if (file_exists($script))							//	script défini de manière absolue
 			require($script);
-		else throw new Exception(502);
+		else throw new Exception(502, $script);
 	}
 
 /* ***************************
@@ -156,7 +155,7 @@ class Page implements iPage	{
 			$src = (substr($src,0,1) == '/') ? substr($src,1,strlen($src)) : self::DOSSIER_IMAGE . $src;
 			$src = (file_exists($src)) ? '/' . $src : self::IMAGE_ABSENTE;
 		}
-		return '<img src='' . $src . '' alt='' . $alt . '' ' . $code . '>';
+		return '<img src=' . $src . ' alt="' . $alt . '" ' . $code . '>';
 	}
 
 	public static function SauvegardeEtat(HttpRoute $route)
