@@ -64,8 +64,7 @@ class ReponseClient
 
 		$controleur = $Treponse["controleur"];
 
-		// création de la page
-		$page = new $classePage($this->route);
+		$page = new $classePage($this->route);	// création de la page
 		$page->ExecuteControleur($controleur);
 		return $page;
 	}
