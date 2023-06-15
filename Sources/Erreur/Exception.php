@@ -43,12 +43,13 @@ class Exception extends \Exception
 	public function __construct($param, $complement = '')
 	{
 		if (is_int($param))
+		{
 			$message = array_key_exists($param, self::LISTE) ?
 						self::LISTE[$param] : 
 						self::LISTE[0] . ' code: ' . $param;
 			$message .= '<br>' . $complement;
-		else
-			$message = $param;
+		}
+		else $message = $param;
 
 		parent::__construct($message);
 	}
