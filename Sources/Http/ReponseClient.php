@@ -61,9 +61,7 @@ class ReponseClient
 								[$this->route->getAlpha(), $this->route->getBeta(), $this->route->getGamma(), $this->route->getMethode()],true);
 		$classePage = $Treponse["classePage"];
 		if (!isset($classePage))	throw new Exception(200);
-
 		$controleur = $Treponse["controleur"];
-
 		$page = new $classePage($this->route);	// création de la page
 		$page->ExecuteControleur($controleur);
 		return $page;
