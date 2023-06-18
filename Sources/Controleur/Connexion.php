@@ -4,6 +4,7 @@ namespace PEUNC\Controleur;
 use PEUNC\Http\HttpRoute;
 use PEUNC\Erreur\Exception;
 use PEUNC\Autre\BDD;
+use PEUNC\Controleur\Formulaire;
 
 class Connexion extends Formulaire
 {
@@ -18,7 +19,7 @@ class Connexion extends Formulaire
 	{	return "<p>{$texte}</p>\n<input type=password name=\"{$champ}\" />"; }
 
 // Traitement du formulaire ======================================================================
-	public function Traitement($nomClasseUtilisateur = "Utilisateur")
+	public function Traitement($nomCompletClasseUtilisateur = "Utilisateur")
 	{
 		switch(BDD::SELECT("count(*) FROM Utilisateur WHERE pseudo = ? AND hashMDP = ?", [$this->route->getParam("login"), sha1($this->route->getParam("MDP"))],true))
 		{
@@ -28,11 +29,11 @@ class Connexion extends Formulaire
 				break;
 			case 1:	// une correspondance
 				$_SESSION["PEUNC_messageConnexion"] = "";
-				$classe = "\\" . $nomClasseUtilisateur;	// ajoute \ pour être à la racine de l'espace de noms
 				$id = BDD::SELECT("ID FROM Utilisateur WHERE pseudo = ? AND hashMDP = ?",
 								[$this->route->getParam("login"), sha1($this->route->getParam("MDP"))],
 								true);
-				$_SESSION[$nomClasseUtilisateur] = serialize(new $classe($id));
+				$cle = array_pop(explode('\\', $nomCompletClasseUtilisateur));	// récupère le dernier élément du namespace
+				$_SESSION[$cle] = serialize(new $nomCompletClasseUtilisateur($id));
 				header("location: " . $this->jetonJSON->URLsuivante);	// page suivant la connexion
 				break;
 			default:// plusieurs correspondances
