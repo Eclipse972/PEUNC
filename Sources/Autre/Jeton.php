@@ -9,7 +9,7 @@ class Jeton
  * JWT simplifié: après encodage en base 64, on ajoute une signature numérique prouvant son origine
  */
 {
-    protected $liste;
+    protected $liste;   // un tableau associatif
 
     public function __construct()
     {
@@ -28,11 +28,11 @@ class Jeton
 
     public function Encode()
     {
-
+        return str_replace(['+', '/', '='], ['-', '_', ''], base64_encode(json_encode($this->liste)));
     }
 
-    public function Decode()
+    public function Decode($chaine)
     {
-
+        $this->liste = json_decode(base64_decode($chaine),true);
     }
 }
