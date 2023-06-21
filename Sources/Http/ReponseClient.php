@@ -29,7 +29,7 @@ class ReponseClient
 
 	public function Page()
 	{
-		if(($dureeCache =  $this->route->getDureeCache())==0)
+		if(($dureeCache = $this->route->getDureeCache()) == 0)
 			return $this->SansCache();
 		else
 		{	// gestion du cache
