@@ -79,7 +79,7 @@ class HttpRoute implements iHttpRoute
 		if (isset($Treponse['niveau1']))	// l'URL existe?
 		{	// la page existe
 			header("Status: 200 OK", false, 200);	// modification pour dire au navigateur que tout va bien finalement
-			return array($Treponse['niveau1'], $Treponse['niveau2'], $Treponse['niveau13']);
+			return array($Treponse['niveau1'], $Treponse['niveau2'], $Treponse['niveau3']);
 		} else throw new ServeurException(404);
 	}
 
