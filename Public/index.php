@@ -9,11 +9,13 @@ spl_autoload_register(function($classe)
 		{
 			case 'PEUNC':
 				break;
+			/* Exemple pour le futur
 			case 'VolEval':
 				$TcheminFichier[0] = 'Application';
 				break;
+			*/
 			default:
-				throw new PEUNC\Erreur\Exception('namespace inconnu: ' . $TcheminFichier[0]);
+				throw new PEUNC\Erreur\Exception('Namespace inconnu: ' . $TcheminFichier[0]);
 		}
 		$fichier = implode('/', $TcheminFichier) . '.php';
 		if(!file_exists($fichier)) throw new PEUNC\Erreur\Exception('autoloader. fichier=' . $fichier);
