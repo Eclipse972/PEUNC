@@ -19,6 +19,7 @@ class HttpRoute implements iHttpRoute
 	private $T_param;
 	private $controleur;
 	private $fonction;
+	private $dureeCache;
 
 	// pour le futur
 	private $IP;
@@ -47,11 +48,12 @@ class HttpRoute implements iHttpRoute
 		$this->methode = $_SERVER['REQUEST_METHOD'];
 
 		// Dans la table Squelette, on récupère la liste des informations utiles pour la construction de la réponse.
-		$reponseBDD = BDD::SELECT('paramAutorise, classePage, controleur FROM Squelette WHERE alpha=? AND beta=? AND gamma=? AND methode=?',
+		$reponseBDD = BDD::SELECT('paramAutorise, classePage, controleur, dureeCache FROM Squelette WHERE alpha=? AND beta=? AND gamma=? AND methode=?',
 								[$this->alpha, $this->beta, $this->gamma, $this->methode],
 								true);
 		$this->controleur = $reponseBDD['classePage'];
 		$this->fonction = $reponseBDD['controleur'];
+		$this->dureeCache = $reponseBDD['dureeCache'];
 		// On construit un nouveau tableau qui ne contient que les paramètres autorisées.
 		// Par contre un paramètre manquant ne provoque pas d'erreur. C'est au controleur de décider.
 		$TparamAutorises = json_decode($reponseBDD['paramAutorise'], true);
@@ -74,10 +76,10 @@ class HttpRoute implements iHttpRoute
 	{
 		// interrogation de la BD pour retrouver la position dans l'arborescence
 		$Treponse = BDD::SELECT("niveau1, niveau2, niveau3 FROM Vue_URLvalides WHERE URL = ?", [$URL],true);
-		if (isset($Treponse["niveau1"]))	// l'URL existe?
+		if (isset($Treponse['niveau1']))	// l'URL existe?
 		{	// la page existe
 			header("Status: 200 OK", false, 200);	// modification pour dire au navigateur que tout va bien finalement
-			return array($Treponse["niveau1"], $Treponse["niveau2"], $Treponse["niveau3"]);
+			return array($Treponse['niveau1'], $Treponse['niveau2'], $Treponse['niveau13']);
 		} else throw new ServeurException(404);
 	}
 
@@ -153,7 +155,13 @@ class HttpRoute implements iHttpRoute
 	public function getGamma()	{ return $this->gamma; }
 	public function getMethode(){ return $this->methode; }
 	public function getURL()	{ return $this->URL; }
-	public function getParam($nom = null){ return (isset($nom)) ? $this->T_param[$nom] : $this->T_param; }
+	public function getParam($nom = null)
+	{
+		return (isset($nom)) ?
+				$this->T_param[$nom] :
+				$this->T_param;
+	}
 	public function getControleur()	{ return $this->controleur; }
 	public function getFonction()	{ return $this->fonction; }
+	public function getDureeCache()	{ return $this->dureeCache; }
 }
