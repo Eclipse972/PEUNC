@@ -154,4 +154,6 @@ class HttpRoute implements iHttpRoute
 	public function getMethode(){ return $this->methode; }
 	public function getURL()	{ return $this->URL; }
 	public function getParam($nom = null){ return (isset($nom)) ? $this->T_param[$nom] : $this->T_param; }
+	public function getControleur()	{ return $this->controleur; }
+	public function getFonction()	{ return $this->fonction; }
 }
