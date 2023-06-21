@@ -67,7 +67,9 @@ class Page implements iBaseControleur	{
 
 	public function setView($fichier, $cheminParDefaut = true)
 	{
-		$fichier =  $cheminParDefaut ? self::DOSSIER_VUE . $fichier : $fichier;
+		$fichier =  $cheminParDefaut ?
+					self::DOSSIER_VUE . $fichier :
+					$fichier;
 		if (file_exists($fichier))
 			$this->vue = $fichier;
 		else throw new Exception(500);
