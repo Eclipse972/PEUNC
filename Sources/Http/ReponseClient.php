@@ -29,9 +29,7 @@ class ReponseClient
 
 	public function Page()
 	{
-		$dureeCache = BDD::SELECT("dureeCache FROM Squelette WHERE alpha=? AND beta=? AND gamma=? AND methode=?",
-				[$this->route->getAlpha(), $this->route->getBeta(), $this->route->getGamma(), $this->route->getMethode()],true);
-		if($dureeCache==0)
+		if(($dureeCache =  $this->route->getDureeCache())==0)
 			return $this->SansCache();
 		else
 		{	// gestion du cache
