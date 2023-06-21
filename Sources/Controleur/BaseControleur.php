@@ -93,7 +93,7 @@ class Page implements iBaseControleur	{
 
 	public function getHeaderText() 	{ return $this->entetePage . "\n"; }
 
-	public function getLogo()			{ return Page::BaliseImage($this->logo,'Logo'); }
+	public function getLogo()			{ return self::BaliseImage($this->logo,'Logo'); }
 
 	public function getDossier()		{ return $this->dossier; }
 
@@ -103,31 +103,11 @@ class Page implements iBaseControleur	{
 
 	public function getView()			{ return $this->vue; }
 
-	public function getCSS()
-	{
-		foreach($this->T_CSS as $feuilleCSS)
-			echo"\t<link rel=\"stylesheet\" href=", $feuilleCSS, " />\n";
-	}
+	public function getCSS()			{ return $this->T_CSS; }
 
 	public function getRoute()			{ return $this->route; }
 
-	public function getNav()
-	{
-		if(count($this->T_nav) == 0)
-			$code = '';
-		else
-		{
-			$code = "<nav>\n";
-			$n = 0; // nombre de tabultion pour indenter le code
-			foreach($this->T_nav as $ligne)
-			{
-				if($ligne == '</ul>') $n--;
-				$code .= str_repeat("\t", $n) . $ligne . "\n";
-				if($ligne == '<ul>') $n++;
-			}
-		}
-		return $code ."</nav>\n";
-	}
+	public function getNav()			{ return $this->T_nav; }
 
 /* ***************************
  * méthodes statiques
@@ -137,14 +117,17 @@ class Page implements iBaseControleur	{
 	{
 		if(substr($src,0,4) != 'http')	// fichier interne?
 		{
-			//		chemin absolu?				suppression de / au début		ajout dossier image
-			$src = (substr($src,0,1) == '/') ? substr($src,1,strlen($src)) : self::DOSSIER_IMAGE . $src;
-			$src = (file_exists($src)) ? '/' . $src : self::IMAGE_ABSENTE;
+			$src = (substr($src,0,1) == '/') ?		// chemin absolu?
+					substr($src,1,strlen($src)) :	// suppression de / au début
+					self::DOSSIER_IMAGE . $src;		// ajout dossier image
+			$src = (file_exists($src)) ?
+					'/' . $src :
+					self::IMAGE_ABSENTE;
 		}
 		return '<img src=' . $src . ' alt="' . $alt . '" ' . $code . '>';
 	}
 
- 	public static function MENU(HttpRoute $route, $niveau, $profondeur, $alphaMini = Page::ALPHA_MINI, $alphaMaxi = Page::ALPHA_MAXI)
+ 	public static function MENU(HttpRoute $route, $niveau, $profondeur, $alphaMini = self::ALPHA_MINI, $alphaMaxi = self::ALPHA_MAXI)
 	{
 		if (($niveau <= 0) || ($profondeur < 0) || ($niveau + $profondeur > 3))	throw new Exception(503);
 
@@ -168,20 +151,21 @@ class Page implements iBaseControleur	{
 		}
 		if (count($Tableau) > 0)
 		{
-			Page::DebutMenu($T_code);
+			self::DebutMenu($T_code);
 			foreach($Tableau as $i => $ligne)
 			{
-				Page::AjouteItem($T_code, $ligne);
+				self::AjouteItem($T_code, $ligne);
 
 				if ((substr($ligne, 0, 6) == '<a id=') && ($niveau < 4) && ($profondeur > 0))	// y a-t-il un niveau inférieur à afficher?
 				//	pour	chaque ligne de code du sous-menu s'il existe			on rajoute le sous-code
-					foreach(PAGE::MENU($route, $niveau+1, $profondeur-1) as $ligne)	$T_code[] = $ligne;
+					foreach(self::MENU($route, $niveau+1, $profondeur-1) as $ligne)	$T_code[] = $ligne;
 			}
-			Page::FinMenu($T_code);
+			self::FinMenu($T_code);
 			return $T_code;
 		} else return [];
 	}
 
+	// pour les méthodes suivantes le tableau en paramètre est passé par variable
 	public static function DebutMenu(&$Tableau)	{ $Tableau[] = '<ul>'; }
 
 	public static function FinMenu(&$Tableau)	{ $Tableau[] = '</ul>'; }
