@@ -4,67 +4,67 @@ session_start();
 spl_autoload_register(function($classe)
 	{	// $classe contient le namespace qui est aussi le chemin vers le fichier
 		$TcheminFichier = explode('\\', $classe);
-	
+
 		switch($TcheminFichier[0]) // inspection du premier élément
 		{
 			case 'PEUNC':
 				break;
-			/* pour le futur. Exemple 'app'
-			case 'app':
-				$TcheminFichier[0] = 'chemin/vers/app';
+			case 'VolEval':
+				$TcheminFichier[0] = 'Application';
 				break;
-			*/
 			default:
-				array_unshift($TcheminFichier, 'Modele'); // ajout dossier des classes utilisateur devant
+				throw new PEUNC\Erreur\Exception('namespace inconnu: ' . $TcheminFichier[0]);
 		}
 		$fichier = implode('/', $TcheminFichier) . '.php';
-		
-		// test existence à faire
+		if(!file_exists($fichier)) throw new PEUNC\Erreur\Exception('autoloader. fichier=' . $fichier);
 		require_once $fichier;
 	}
 );
 
 try
 {
-	$route = new PEUNC\HttpRoute;				// à partir d'une requête Http on trouve la route
+	$route = new PEUNC\Http\HttpRoute;				// à partir d'une requête Http on trouve la route
 
-	PEUNC\Page::SauvegardeEtat($route);			// sauvegarde de l'état courant
+	PEUNC\Controleur\Page::SauvegardeEtat($route);	// sauvegarde de l'état courant
 
-	$reponse = new PEUNC\ReponseClient($route);	// construction de la réponse en fonction de la route trouvée
+	$reponse = new PEUNC\Http\ReponseClient($route);// construction de la réponse en fonction de la route trouvée
 	$PAGE = $reponse->Page();
 }
-catch(PEUNC\ServeurException $e)
+catch(PEUNC\Erreur\ServeurException $e)
 {
-	$PAGE = new PEUNC\Erreur();	// il n'y a pas de route
+	$PAGE = new PEUNC\Controleur\Erreur();	// il n'y a pas de route
 	$PAGE->setTitle("Erreur serveur");
 	$PAGE->setHeaderText("<p>Erreur serveur</p>");
-	$PAGE->setSection("<h1>" . $e->getMessage() . " - code: " . $e->getCode() . "</h1>\n");
-	$PAGE->setFooter(" - <a href=/Contact>Me contacter</a>");
-	$PAGE->setView("erreur.html");
+	$PAGE->setSection("<h1>" . $e->getMessage() . " - code: " . $e->getCode() . "</h1>\n<img src=/images/serveur.png style=\"width:300px\" alt=\"Logo\" >");
+	$PAGE->setFooter("");
+	$PAGE->setView("doctype.html");
 }
 catch(PDOException $e)
 {
-	$PAGE = new PEUNC\Erreur($route);
-	$PAGE->setTitle("Erreur de base de donn&eacute;es");
+	$PAGE = new PEUNC\Controleur\Erreur($route);
+	$PAGE->setTitle("Erreur de BDD");
 	$PAGE->setHeaderText("<p>Erreur de base de donn&eacute;es</p>");
-	$PAGE->setSection("<h1>Erreur de base de donn&eacute;es</h1>\n<p>" . $e->getMessage() . "</p>");
-	$PAGE->setView("erreur.html");
+	$PAGE->setSection("<p>" . $e->getMessage() . "</p>\n" . $PAGE->NoeudArborescence());
+	$PAGE->setFooter("");
+	$PAGE->setView("doctype.html");
 }
-catch(PEUNC\Exception $e)
+catch(PEUNC\Erreur\Exception $e)
 {
-	$PAGE = new PEUNC\Erreur($route);
-	$PAGE->setTitle("Erreur de base de l&apos;application");
+	$PAGE = new PEUNC\Controleur\Erreur($route);
+	$PAGE->setTitle("Erreur de l&apos;application");
 	$PAGE->setHeaderText("<p>Erreur de l&apos;application</p>");
-	$PAGE->setSection("<h1>" . $e->getMessage() . "</h1>\n");
-	$PAGE->setView("erreur.html");
+	$PAGE->setSection("<h1>" . $e->getMessage() . "</h1>\n" . $PAGE->NoeudArborescence());
+	$PAGE->setFooter("");
+	$PAGE->setView("doctype.html");
 }
 catch(Exception $e)
 {
-	$PAGE = new PEUNC\Erreur($route);
+	$PAGE = new PEUNC\Controleur\Erreur($route);
 	$PAGE->setTitle("Erreur inconnue");
 	$PAGE->setHeaderText("<p>Erreur inconnue</p>");
-	$PAGE->SetSection("<h1>" . $e->getMessage() . "</h1>\n");
-	$PAGE->setView("erreur.html");
+	$PAGE->SetSection("<h1>" . $e->getMessage() . "</h1>\n" . $PAGE->NoeudArborescence());
+	$PAGE->setFooter("");
+	$PAGE->setView("doctype.html");
 }
 
 include $PAGE->getView(); // affichage de la vue (réponse client ou page d'erreur)
