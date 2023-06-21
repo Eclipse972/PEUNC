@@ -17,6 +17,8 @@ class HttpRoute implements iHttpRoute
 	private $methode;	// méthode Http
 	private $URL;
 	private $T_param;
+	private $controleur;
+	private $fonction;
 
 	// pour le futur
 	private $IP;
@@ -39,29 +41,27 @@ class HttpRoute implements iHttpRoute
 				throw new ServeurException($_SERVER['REDIRECT_STATUS']);
 		}
 
-		$this->URL = BDD::SELECT("URL FROM Vue_URLvalides
-									WHERE niveau1 = ? AND niveau2 = ? AND niveau3 = ?",
+		$this->URL = BDD::SELECT('URL FROM Vue_URLvalides WHERE niveau1 = ? AND niveau2 = ? AND niveau3 = ?',
 									[$this->alpha, $this->beta, $this->gamma],true
 								);
 		$this->methode = $_SERVER['REQUEST_METHOD'];
 
-		/* Dans la table Squelette on récupère la liste des paramètres autorisés.
-		 * On construit un nouveau tableau qui ne contient que les clés autorisées.
-		 * Par contre un paramètre manquant ne provoque pas d'erreur. C'est au controleur de décider. */
-		$reponse = BDD::SELECT('paramAutorise FROM Squelette WHERE alpha=? AND beta=? AND gamma=? AND methode=?',
-							[	$this->alpha,
-								$this->beta,
-								$this->gamma,
-								$this->methode
-							],true);
-		$TparamAutorises = json_decode($reponse, true);
+		// Dans la table Squelette, on récupère la liste des informations utiles pour la construction de la réponse.
+		$reponseBDD = BDD::SELECT('paramAutorise, classePage, controleur FROM Squelette WHERE alpha=? AND beta=? AND gamma=? AND methode=?',
+								[$this->alpha, $this->beta, $this->gamma, $this->methode],
+								true);
+		$this->controleur = $reponseBDD['classePage'];
+		$this->fonction = $reponseBDD['controleur'];
+		// On construit un nouveau tableau qui ne contient que les paramètres autorisées.
+		// Par contre un paramètre manquant ne provoque pas d'erreur. C'est au controleur de décider.
+		$TparamAutorises = json_decode($reponseBDD['paramAutorise'], true);
 
 		$Treponse = [];
 		foreach ($TparamAutorises as $clé)
-			if (isset($this->T_param[$clé]))			// seules les clés autorisées sont prises en compte
-				$Treponse[$clé] = $this->T_param[$clé];	// la valeur a déjà été nettoyée
+			if (array_key_exists($clé, $this->T_param))	// seules les clés autorisées sont prises en compte
+				$Treponse[$clé] = $this->T_param[$clé];	// la valeur a déjà été nettoyée lors de la création de la liste
 		$this->T_param = $Treponse;
-	}
+	}	
 
 //	Renvoie la position dans l'arborescence sous la forme [alpha, beta, gamma] ===================
 
