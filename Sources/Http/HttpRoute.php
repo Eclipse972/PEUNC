@@ -30,13 +30,13 @@ class HttpRoute implements iHttpRoute
 		switch($_SERVER['REDIRECT_STATUS'])
 		{	// Toutes les erreurs serveur sont traitées ici via le script index.php. Cf .htaccess
 			case 200:	// le script est lancé sans redirection
-				list($this->alpha, $this->beta, $this->gamma) = HttpRoute::SansRedirection();
-				$this->T_param = HttpRoute::ExtraireParamRacine();
+				list($this->alpha, $this->beta, $this->gamma) = self::SansRedirection();
+				$this->T_param = self::ExtraireParamRacine();
 				break;
 			case 404:
 				list($URL, $reste) = explode("?", $_SERVER['REQUEST_URI'], 2);
-				list($this->alpha, $this->beta, $this->gamma) = HttpRoute::Redirection404($URL);
-				$this->T_param = HttpRoute::ExtraireParamURL();
+				list($this->alpha, $this->beta, $this->gamma) = self::Redirection404($URL);
+				$this->T_param = self::ExtraireParamURL();
 				break;
 			default:
 				throw new ServeurException($_SERVER['REDIRECT_STATUS']);
