@@ -148,6 +148,21 @@ class HttpRoute implements iHttpRoute
 		return $T_param;
 	}
 
+	public static function SauvegardeEtat(HttpRoute $route)
+	{
+		$URLactuelle = $route->getURL();
+
+		if ($_SESSION['PEUNC']['URL'] != $URLactuelle) // sauvagarde s'il n'y a pas rafraichiisemnt de page
+		{
+			$_SESSION['PEUNC']['URLprecedente'] = (isset($_SESSION['PEUNC']['URL'])) ? $_SESSION['PEUNC']['URL'] : '/';
+
+			$_SESSION['PEUNC']['URL'] =	$URLactuelle;
+		}
+	}
+
+	public static function URLprecedente()	{ return $_SESSION['PEUNC']['URLprecedente']; }
+
+
 //	Accesseurs ===================================================================================
 
 	public function getAlpha()	{ return $this->alpha; }

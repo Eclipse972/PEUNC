@@ -40,8 +40,6 @@ interface iBaseControleur
 // méthodes statiques
 	public static function MENU(HttpRoute $route, $niveau, $profondeur, $alphaMini, $alphaMaxi); // génère un menu à partir de l'arborescence avec un niveau et une profondeur
 	public static function BaliseImage($src, $alt, $code);	// insère une image en tenant compte du répertoire image. Seul le premier paramètre est obligatoire
-	public static function SauvegardeEtat(HttpRoute $route);// sauvegarde l'état courant dans la session
-	public static function URLprecedente();					// URL de la page précédete sauf si cette page est spéciale (alpha < 0)
 
 // Autre
 	public function ExecuteControleur($script);	// execute le script du controleur

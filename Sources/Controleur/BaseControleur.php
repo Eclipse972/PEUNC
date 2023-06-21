@@ -144,20 +144,6 @@ class Page implements iBaseControleur	{
 		return '<img src=' . $src . ' alt="' . $alt . '" ' . $code . '>';
 	}
 
-	public static function SauvegardeEtat(HttpRoute $route)
-	{
-		$URLactuelle = $route->getURL();
-
-		if ($_SESSION['PEUNC']['URL'] != $URLactuelle) // sauvagarde s'il n'y a pas rafraichiisemnt de page
-		{
-			$_SESSION['PEUNC']['URLprecedente'] = (isset($_SESSION['PEUNC']['URL'])) ? $_SESSION['PEUNC']['URL'] : '/';
-
-			$_SESSION['PEUNC']['URL'] =	$URLactuelle;
-		}
-	}
-
-	public static function URLprecedente()	{ return $_SESSION['PEUNC']['URLprecedente']; }
-
  	public static function MENU(HttpRoute $route, $niveau, $profondeur, $alphaMini = Page::ALPHA_MINI, $alphaMaxi = Page::ALPHA_MAXI)
 	{
 		if (($niveau <= 0) || ($profondeur < 0) || ($niveau + $profondeur > 3))	throw new Exception(503);

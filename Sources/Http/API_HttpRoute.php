@@ -23,4 +23,6 @@ interface iHttpRoute
 	public function getMethode();	// méthode http de la requête
 	public function getURL();		// URL
 	public function getParam($nom);	// renvoie le paramètre nommé s'il est précisé et la liste des parmètres sinon
+	public static function SauvegardeEtat(HttpRoute $route);
+	public static function URLprecedente();
 }
