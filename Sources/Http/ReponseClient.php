@@ -57,13 +57,10 @@ class ReponseClient
 
 	public function SansCache()
 	{	// trouver les infos pour construire la réponse
-		$Treponse = BDD::SELECT("classePage, controleur FROM Squelette WHERE alpha=? AND beta=? AND gamma=? AND methode=?",
-								[$this->route->getAlpha(), $this->route->getBeta(), $this->route->getGamma(), $this->route->getMethode()],true);
-		$classePage = $Treponse["classePage"];
-		if (!isset($classePage))	throw new Exception(200);
-		$controleur = $Treponse["controleur"];
-		$page = new $classePage($this->route);	// création de la page
-		$page->ExecuteControleur($controleur);
+		$controleur = $this->route->getControleur();
+		if (!isset($controleur))	throw new Exception(200);
+		$page = new $controleur($this->route);	// création de la page
+		$page->ExecuteControleur($this->route->getFonction());
 		return $page;
 	}
 }
