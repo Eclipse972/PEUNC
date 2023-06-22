@@ -1,29 +1,30 @@
 <?php
 namespace PEUNC\Autre;
 
-use PEUNC\Http\HttpRoute;
-
 class JetonCSRF extends Jeton
 {
-    const CONFIG = 'Config/config_chiffrement.php';
+    require 'Config/config_chiffrement.php';
+    /* fichier qui ne doit pas être suivi par git et défini les constantes
+     * CIPHER
+     * KEY
+     * IV
+     */
 
-    public function __construct(HttpRoute $route)
+    public function __construct()
     {
         $this->liste = array(
                 'date' => time(),
-                'URL' => $route->getURL();
+                // d'autres paramètres doivent être ajoutés comme l'URL de traitement
             );
     }
 
     public function Chiffre()
     {
-        require self::CONFIG;
-        return openssl_encrypt(json_encode($this->liste), $cipher, $key, 0, $iv);
+        return openssl_encrypt(json_encode($this->liste), self::CIPHER, self::KEY, 0, self::IV);
     }
 
     public function Dechiffre($chaine)
     {
-        require self::CONFIG;
-        $this->liste = json_decode(openssl_decrypt($chaine, $cipher, $key, 0, $iv),true);
+        $this->liste = json_decode(openssl_decrypt($chaine, self::CIPHER, self::KEY, 0, self::IV),true);
     }
 }
