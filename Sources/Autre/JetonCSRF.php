@@ -27,4 +27,11 @@ class JetonCSRF extends Jeton
     {
         $this->liste = json_decode(openssl_decrypt($chaine, self::CIPHER, self::KEY, 0, self::IV),true);
     }
+
+    public function InsererJeton()
+    {
+        $jeton = $this->Chiffre();
+        $_SESSION['PEUNC']['CSRF'] = $jeton;
+        return '<input name="CSRF" type="hidden" value="' . $jeton . '">' . "\n";
+    }
 }
