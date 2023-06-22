@@ -28,11 +28,21 @@ class Jeton
 
     public function Encode()
     {
-        return str_replace(['+', '/', '='], ['-', '_', ''], base64_encode(json_encode($this->liste)));
+        return self::EncodeURL(json_encode($this->liste));
     }
 
     public function Decode($chaine)
     {
-        $this->liste = json_decode(base64_decode($chaine),true);
+        $this->liste = json_decode(self::DecodeURL($chaine),true);
+    }
+
+    public static function EncodeURL($chaine)
+    {
+        return str_replace(['+', '/', '='], ['-', '_', ''], base64_encode(j$chaine));
+    }
+
+    public static function DecodeURL($chaine)
+    {
+        return base64_decode($chaine);
     }
 }
