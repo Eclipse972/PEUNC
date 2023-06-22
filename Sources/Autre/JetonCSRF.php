@@ -14,7 +14,7 @@ class JetonCSRF extends Jeton
     {
         $this->liste = array(
                 'date' => time(),
-                // d'autres paramètres doivent être ajoutés comme l'URL de traitement
+                // d'autres paramètres doivent être ajoutés comme l'URL de traitement et les paramètre pour le code de validation
             );
     }
 
