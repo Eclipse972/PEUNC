@@ -5,9 +5,9 @@ class JetonCSRF extends Jeton
 {
     require 'Config/config_chiffrement.php';
     /* fichier qui ne doit pas être suivi par git et défini les constantes
-     * CIPHER
-     * KEY
-     * IV
+     * const CIPHER = algo
+     * const KEY = chaine de caractères
+     * const IV = chaine de caractères
      */
 
     public function __construct()
