@@ -26,35 +26,33 @@ class HttpRoute implements iHttpRoute
 	public function __construct()
 	{
 		// recherche de la position dans l'arborescence stockée en BD
-		switch($_SERVER['REDIRECT_STATUS'])
-		{	// Toutes les erreurs serveur sont traitées ici via le script index.php. Cf .htaccess
-			case 200:	// le script est lancé sans redirection
-				list($this->alpha, $this->beta, $this->gamma) = self::SansRedirection();
-				$this->T_param = self::ExtraireParamRacine();
-				break;
-			case 404:
-				list($URL, $reste) = explode("?", $_SERVER['REQUEST_URI'], 2);
-				list($this->alpha, $this->beta, $this->gamma) = self::Redirection404($URL);
-				$this->T_param = self::ExtraireParamURL();
-				break;
-			default:
-				throw new ServeurException($_SERVER['REDIRECT_STATUS']);
+		list($URL, $reste) = explode('?', $_SERVER['REQUEST_URI'], 2);
+		if(in_array($URL, ['/' ,'/index.php']))
+		{
+			list($this->alpha, $this->beta, $this->gamma) = self::SansRedirection();
+			$this->T_param = self::ExtraireParamRacine();
 		}
-
-		$this->URL = BDD::SELECT('URL FROM Vue_URLvalides WHERE niveau1 = ? AND niveau2 = ? AND niveau3 = ?',
-									[$this->alpha, $this->beta, $this->gamma],true
-								);
+		else
+		{	// on arrive ici à cause d'une redirection 404 Cf .htaccess
+			list($this->alpha, $this->beta, $this->gamma) = self::Redirection404($URL);
+			$this->T_param = self::ExtraireParamURL($reste);
+		}
+		
+		$this->URL = $URL;
 		$this->methode = $_SERVER['REQUEST_METHOD'];
 
-		// Dans la table Squelette, on récupère la liste des informations utiles pour la construction de la réponse.
+		/* Dans la table Squelette, on récupère la liste des informations utiles pour la  
+		 * construction du controleur puis de la réponse envoyé au client.					 */
 		$reponseBDD = BDD::SELECT('paramAutorise, classePage, controleur, dureeCache FROM Squelette WHERE alpha=? AND beta=? AND gamma=? AND methode=?',
 								[$this->alpha, $this->beta, $this->gamma, $this->methode],
 								true);
+		if(is_null($reponseBDD)) throw new ServeurException(404);
 		$this->controleur = $reponseBDD['classePage'];
 		$this->fonction = $reponseBDD['controleur'];
 		$this->dureeCache = $reponseBDD['dureeCache'];
-		// On construit un nouveau tableau qui ne contient que les paramètres autorisées.
-		// Par contre un paramètre manquant ne provoque pas d'erreur. C'est au controleur de décider.
+
+		/* On construit un nouveau tableau qui ne contient que les paramètres autorisées.
+		 * Par contre un paramètre manquant ne provoque pas d'erreur. C'est au controleur de décider. */
 		$TparamAutorises = json_decode($reponseBDD['paramAutorise'], true);
 
 		$Treponse = [];
@@ -73,13 +71,36 @@ class HttpRoute implements iHttpRoute
 	 * À partir d'une URL, Cette fonction renvoie la position dans l'arborescence du site.
 	*/
 	{
-		// interrogation de la BD pour retrouver la position dans l'arborescence
-		$Treponse = BDD::SELECT("niveau1, niveau2, niveau3 FROM Vue_URLvalides WHERE URL = ?", [$URL],true);
-		if (isset($Treponse['niveau1']))	// l'URL existe?
-		{	// la page existe
-			header("Status: 200 OK", false, 200);	// modification pour dire au navigateur que tout va bien finalement
-			return array($Treponse['niveau1'], $Treponse['niveau2'], $Treponse['niveau3']);
-		} else throw new ServeurException(404);
+		header('Status: 200 OK', false, 200);	// modification pour dire au navigateur que tout va bien finalement
+
+		list($vide, $niveau1, $niveau2, $niveau3) = explode('/', $URL, 4);	// décomposition de l'URL
+		
+		// recherche du niveau 1
+		$alpha = BDD::SELECT('alpha FROM Squelette WHERE ptiNom=? AND beta=0 AND gamma=0 LIMIT 1',
+							[$niveau1],true);
+		if(is_null($alpha))	throw new ServeurException(404);
+		$alpha = (int)$alpha;
+		
+		// recherche niveau 2
+		if(isset($niveau2))
+		{
+			$beta = BDD::SELECT('beta FROM Squelette WHERE ptiNom=? AND alpha=? AND gamma=0 LIMIT 1',
+								[$niveau2, $alpha],true);
+			if(is_null($beta))	throw new ServeurException(404);
+			$beta = (int)$beta;
+		}
+		else $beta = 0;
+
+		// recherche de niveau 3
+		if(isset($niveau3))
+		{
+			$gamma = BDD::SELECT('gamma FROM Squelette WHERE ptiNom=? AND alpha=? AND beta=? LIMIT 1',
+								[$niveau3, $alpha, $beta],true);
+			if(is_null($gamma))	throw new ServeurException(404);
+			$gamma = (int)$gamma;
+		}
+		else $gamma = 0;
+		return [$alpha, $beta, $gamma];
 	}
 
 	private static function SansRedirection()
@@ -110,14 +131,13 @@ class HttpRoute implements iHttpRoute
 
 //	Renvoie les paramètres $_GET ou $_POST nettoyés ==============================================
 
-	private static function ExtraireParamURL()
+	private static function ExtraireParamURL($reste)
 	/* Extraction des paramètres suite à une redirection 404.
-	 * $_GET n'existe pas, il faut donc décoder l'URL manuellement.
-	 * $_POST n'existe pas dans ce cas.
-	*/
-	{	// découpe de l'URL
-		list($URL, $reste) = explode("?", $_SERVER['REQUEST_URI'], 2);
-		list($paramURL, $ancre) = explode("#", $reste, 2);
+	 * $_GET et $_POST n'existent pas, il faut donc décoder l'URL manuellement.
+	 *  n'existe pas dans ce cas.
+	 */
+	{
+		list($paramURL, $ancre) = explode('#', $reste, 2);
 
 		$T_param = [];
 		foreach (explode('&', $paramURL) as $instruction)
