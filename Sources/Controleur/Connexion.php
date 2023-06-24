@@ -30,7 +30,7 @@ class Connexion extends Formulaire
 			case 1:	// une correspondance
 				$_SESSION["PEUNC_messageConnexion"] = "";
 				$id = BDD::SELECT("ID FROM Utilisateur WHERE pseudo = ? AND hashMDP = ?",
-								[$this->route->getParam("login"), sha1($this->route->getParam("MDP"))],
+								[$this->route->getParam("login"), sha256($this->route->getParam("MDP"))],
 								true);
 				$cle = array_pop(explode('\\', $nomCompletClasseUtilisateur));	// récupère le dernier élément du namespace
 				$_SESSION[$cle] = serialize(new $nomCompletClasseUtilisateur($id));
