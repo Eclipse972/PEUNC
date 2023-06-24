@@ -73,34 +73,11 @@ class HttpRoute implements iHttpRoute
 	{
 		header('Status: 200 OK', false, 200);	// modification pour dire au navigateur que tout va bien finalement
 
-		list($vide, $niveau1, $niveau2, $niveau3) = explode('/', $URL, 4);	// décomposition de l'URL
+		$reponse = BDD::SELECT('alpha, beta, gamma FROM Squelette WHERE URL=? AND methode=?',
+								[$URL, $_SERVER['REQUEST_METHOD']],true);
+		if(is_null($reponse))	throw new ServeurException(404);
 		
-		// recherche du niveau 1
-		$alpha = BDD::SELECT('alpha FROM Squelette WHERE ptiNom=? AND beta=0 AND gamma=0 LIMIT 1',
-							[$niveau1],true);
-		if(is_null($alpha))	throw new ServeurException(404);
-		$alpha = (int)$alpha;
-		
-		// recherche niveau 2
-		if(isset($niveau2))
-		{
-			$beta = BDD::SELECT('beta FROM Squelette WHERE ptiNom=? AND alpha=? AND gamma=0 LIMIT 1',
-								[$niveau2, $alpha],true);
-			if(is_null($beta))	throw new ServeurException(404);
-			$beta = (int)$beta;
-		}
-		else $beta = 0;
-
-		// recherche de niveau 3
-		if(isset($niveau3))
-		{
-			$gamma = BDD::SELECT('gamma FROM Squelette WHERE ptiNom=? AND alpha=? AND beta=? LIMIT 1',
-								[$niveau3, $alpha, $beta],true);
-			if(is_null($gamma))	throw new ServeurException(404);
-			$gamma = (int)$gamma;
-		}
-		else $gamma = 0;
-		return [$alpha, $beta, $gamma];
+		return array($reponse['alpha'], $reponse['beta'], $reponse['gamma']);
 	}
 
 	private static function SansRedirection()
