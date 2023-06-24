@@ -21,7 +21,9 @@ class Connexion extends Formulaire
 // Traitement du formulaire ======================================================================
 	public function Traitement($nomCompletClasseUtilisateur = "Utilisateur")
 	{
-		switch(BDD::SELECT("count(*) FROM Utilisateur WHERE pseudo = ? AND hashMDP = ?", [$this->route->getParam("login"), sha256($this->route->getParam("MDP"))],true))
+		$login = $this->route->getParam('login');
+		$hashMDP = hash('sha256', $this->route->getParam('MDP'));
+		switch(BDD::SELECT("count(*) FROM Utilisateur WHERE pseudo = ? AND hashMDP = ?", [$login, $hashMDP],true))
 		{
 			case 0:	// aucune correspondance
 				$_SESSION["PEUNC_messageConnexion"] = "La connexion a &eacute;chou&eacute;e!";
@@ -30,7 +32,7 @@ class Connexion extends Formulaire
 			case 1:	// une correspondance
 				$_SESSION["PEUNC_messageConnexion"] = "";
 				$id = BDD::SELECT("ID FROM Utilisateur WHERE pseudo = ? AND hashMDP = ?",
-								[$this->route->getParam("login"), sha256($this->route->getParam("MDP"))],
+								[$login, $hashMDP],
 								true);
 				$cle = array_pop(explode('\\', $nomCompletClasseUtilisateur));	// récupère le dernier élément du namespace
 				$_SESSION[$cle] = serialize(new $nomCompletClasseUtilisateur($id));
