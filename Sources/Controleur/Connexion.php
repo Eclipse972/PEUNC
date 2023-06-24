@@ -31,9 +31,7 @@ class Connexion extends Formulaire
 				break;
 			case 1:	// une correspondance
 				$_SESSION["PEUNC_messageConnexion"] = "";
-				$id = BDD::SELECT("ID FROM Utilisateur WHERE pseudo = ? AND hashMDP = ?",
-								[$login, $hashMDP],
-								true);
+				$id = BDD::SELECT("ID FROM Utilisateur WHERE pseudo = ? AND hashMDP = ?", [$login, $hashMDP], true);
 				$cle = array_pop(explode('\\', $nomCompletClasseUtilisateur));	// récupère le dernier élément du namespace
 				$_SESSION[$cle] = serialize(new $nomCompletClasseUtilisateur($id));
 				header("location: " . $this->jetonJSON->URLsuivante);	// page suivant la connexion
