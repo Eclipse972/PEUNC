@@ -5,8 +5,7 @@ use PEUNC\Erreur\ServeurException;
 use PEUNC\Erreur\Exception;
 use PEUNC\Autre\BDD;
 use PEUNC\Controleur\Formulaire;
-
-include'API_HttpRoute.php';
+use PEUNC\Http\iHttpRoute;
 
 class HttpRoute implements iHttpRoute
 {
