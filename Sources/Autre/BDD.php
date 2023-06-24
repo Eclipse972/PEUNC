@@ -2,8 +2,7 @@
 namespace PEUNC\Autre;
 
 use PEUNC\Erreur\Exception;
-
-include"API_BDD.php";
+use PEUNC\Autre\iBDD;
 
 class BDD implements iBDD
 {

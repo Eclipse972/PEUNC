@@ -5,8 +5,7 @@ namespace PEUNC\Controleur;
 use PEUNC\Http\HttpRoute;
 use PEUNC\Erreur\Exception;
 use PEUNC\Autre\BDD;
-
-include'API_page.php';
+use PEUNC\Controleur\iPage;
 
 class Page implements iPage	{
 // CONFIGURATION DE L'APPLICATION
