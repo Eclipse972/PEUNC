@@ -21,7 +21,7 @@ class Connexion extends Formulaire
 // Traitement du formulaire ======================================================================
 	public function Traitement($nomCompletClasseUtilisateur = "Utilisateur")
 	{
-		switch(BDD::SELECT("count(*) FROM Utilisateur WHERE pseudo = ? AND hashMDP = ?", [$this->route->getParam("login"), sha1($this->route->getParam("MDP"))],true))
+		switch(BDD::SELECT("count(*) FROM Utilisateur WHERE pseudo = ? AND hashMDP = ?", [$this->route->getParam("login"), sha256($this->route->getParam("MDP"))],true))
 		{
 			case 0:	// aucune correspondance
 				$_SESSION["PEUNC_messageConnexion"] = "La connexion a &eacute;chou&eacute;e!";
