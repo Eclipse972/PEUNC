@@ -90,9 +90,9 @@ class Page implements iPage	{
  * ***************************/
 	public function getTitle()			{ return $this->titrePage; }
 
-	public function getHeaderText() 	{ return $this->entetePage . "\n"; }
+	public function getHeaderText() 	{ return $this->entetePage; }
 
-	public function getLogo()			{ return Page::BaliseImage($this->logo,'Logo'); }
+	public function getLogo()			{ return $this->logo; }
 
 	public function getDossier()		{ return $this->dossier; }
 
@@ -102,31 +102,11 @@ class Page implements iPage	{
 
 	public function getView()			{ return $this->vue; }
 
-	public function getCSS()
-	{
-		foreach($this->T_CSS as $feuilleCSS)
-			echo"\t<link rel=\"stylesheet\" href=", $feuilleCSS, " />\n";
-	}
+	public function getCSS()			{ return $this->T_CSS; }
 
 	public function getRoute()			{ return $this->route; }
 
-	public function getNav()
-	{
-		if(count($this->T_nav) == 0)
-			$code = '';
-		else
-		{
-			$code = "<nav>\n";
-			$n = 0; // nombre de tabultion pour indenter le code
-			foreach($this->T_nav as $ligne)
-			{
-				if($ligne == '</ul>') $n--;
-				$code .= str_repeat("\t", $n) . $ligne . "\n";
-				if($ligne == '<ul>') $n++;
-			}
-		}
-		return $code ."</nav>\n";
-	}
+	public function getNav()			{ return $this->T_nav; }
 
 /* ***************************
  * AUTRE

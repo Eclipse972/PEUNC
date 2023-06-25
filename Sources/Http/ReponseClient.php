@@ -2,7 +2,6 @@
 namespace PEUNC\Http;
 
 use PEUNC\Erreur\Exception;
-use PEUNC\Http\HttpRoute;
 use PEUNC\Autre\BDD;
 
 class ReponseClient
@@ -12,22 +11,22 @@ class ReponseClient
 {
 	const DOSSIER_CACHE = "cache/";
 
-	private $route;
+	private $controleur;
 
-	public function __construct(HttpRoute $route)
+	public function __construct($controleur)
 	{
 		/* pour le moment toutes les pages peuvent être mise en cache.
 		 * Or ce pas possible pour les pages posesdant des paramètres car on ne peut les connaitre
 		 * tousà l'avance.
 		 * La liste des paramètres de chaque page est diponible dans la table squellette
 		 * Une age peut est 'cachée' si la méthode http =GET  et pas de paramètre */
-		$this->route = $route;
+		$this->controleur = $controleur;
 
 		/* Remarque: dans le cas d'un traitement de formulaire, la redirection devrait provoquer
 		 * une nouvelle requête qui générera une nouvelle réponse. A VÉRIFIER */
 	}
 
-	public function Page()
+	/*public function Page()
 	{
 		if(($dureeCache = $this->route->getDureeCache()) == 0)
 			return $this->SansCache();
@@ -61,4 +60,72 @@ class ReponseClient
 		$page->ExecuteControleur($this->route->getFonction());
 		return $page;
 	}
+	*/
+
+	public function View()
+	{
+		return $this->controleur->getView();
+	}
+
+	// balise générique
+	private static function Balise($balise, $contenu, $avecBalise)
+	{
+		if($avecBalise)	echo "<", $balise, ">\n";
+		echo  $contenu, "\n";
+		if($avecBalise)	echo "</", $balise, ">\n";
+	}
+	
+	// écriture des balises pour la vue
+	public function Title()
+	{
+		echo $this->controleur->getTitle();
+	}
+
+	public function HeaderText()
+	{
+		echo $this->controleur->getHeaderText(), "\n";
+	}
+
+	public function Logo()
+	{
+		echo Page::BaliseImage($this->controleur->getLogo(),'Logo');
+	}
+
+	// pas d'implémentation de getDossier()?
+
+	public function CSS()
+	{
+		$Liste = $this->controleur->getCSS();
+
+		foreach($Liste as $feuilleCSS)
+			echo "\t" , '<link rel="stylesheet" href="', $feuilleCSS, '"/>', "\n";
+	}
+
+	public function Nav($avecBalise = false)
+	{
+		$Liste = $this->controleur->getNav();
+		if(count($Liste) > 0)
+		{
+			if($avecBalise)	echo "<nav>\n";
+			$n = 0; // nombre de tabulation pour indenter le code
+			foreach($Liste as $ligne)
+			{
+				if($ligne == '</ul>') $n--;
+				echo str_repeat("\t", $n), $ligne, "\n";
+				if($ligne == '<ul>') $n++;
+			}
+			if($avecBalise)	echo "</nav>\n";
+		}
+	}
+
+	public function Section($avecBalise = false)
+	{
+		self::Balise('section', $this->controleur->getSection(), $avecBalise);
+	}
+	
+	public function Footer($avecBalise = false)
+	{
+		self::Balise('footer', $this->controleur->getFooter(), $avecBalise);
+	}
+	
 }
