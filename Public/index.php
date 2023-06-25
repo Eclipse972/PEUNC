@@ -9,13 +9,11 @@ spl_autoload_register(function($classe)
 		{
 			case 'PEUNC':
 				break;
-			/* Exemple pour le futur
 			case 'VolEval':
 				$TcheminFichier[0] = 'Application';
 				break;
-			*/
 			default:
-				throw new PEUNC\Erreur\Exception('Namespace inconnu: ' . $TcheminFichier[0]);
+				throw new PEUNC\Erreur\Exception('namespace inconnu: ' . $TcheminFichier[0]);
 		}
 		$fichier = implode('/', $TcheminFichier) . '.php';
 		if(!file_exists($fichier)) throw new PEUNC\Erreur\Exception('autoloader. fichier=' . $fichier);
@@ -29,8 +27,11 @@ try
 
 	PEUNC\Controleur\Page::SauvegardeEtat($route);	// sauvegarde de l'état courant
 
-	$reponse = new PEUNC\Http\ReponseClient($route);// construction de la réponse en fonction de la route trouvée
-	$PAGE = $reponse->Page();
+	$controleur = $route->getControleur();
+	if (!isset($controleur))	throw new PEUNC\Erreur\Exception(200);
+	$PAGE = new $controleur($route);	// création de la page
+	$PAGE->ExecuteControleur($route->getFonction());
+	
 }
 catch(PEUNC\Erreur\ServeurException $e)
 {
@@ -69,4 +70,5 @@ catch(Exception $e)
 	$PAGE->setView("doctype.html");
 }
 
-include $PAGE->getView(); // affichage de la vue (réponse client ou page d'erreur)
+$reponse = new PEUNC\Http\ReponseClient($PAGE);// construction de la réponse en fonction de la route trouvée
+include $reponse->View(); //$reponse->Afficher(); // affichage de la vue (réponse client ou page d'erreur)
