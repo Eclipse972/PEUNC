@@ -51,15 +51,6 @@ class ReponseClient
 			return $PAGE;
 		}
 	}
-
-	public function SansCache()
-	{	// trouver les infos pour construire la réponse
-		$controleur = $this->route->getControleur();
-		if (!isset($controleur))	throw new Exception(200);
-		$page = new $controleur($this->route);	// création de la page
-		$page->ExecuteControleur($this->route->getFonction());
-		return $page;
-	}
 	*/
 
 	public function View()
