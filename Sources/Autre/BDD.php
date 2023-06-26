@@ -3,7 +3,8 @@ namespace PEUNC\Autre;
 
 use PEUNC\Erreur\Exception;
 use PEUNC\Autre\iBDD;
-// Ajouter "use votre_applicatio\Configuration\connexionBDD;" dans index.php
+
+use VolEval\Configuration\connexionBDD;	// à modifier selon votre application
 
 class BDD implements iBDD
 {
