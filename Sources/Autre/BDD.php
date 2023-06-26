@@ -3,7 +3,7 @@ namespace PEUNC\Autre;
 
 use PEUNC\Erreur\Exception;
 use PEUNC\Autre\iBDD;
-use VolEval\Configuration\configBDD; // namespace à redéfinir dans votre application
+// Ajouter "use votre_applicatio\Configuration\connexionBDD;" dans index.php
 
 class BDD implements iBDD
 {
@@ -12,7 +12,7 @@ class BDD implements iBDD
 
 	private function __construct()
 	{
-		$this->BD = new \PDO('mysql:host' . configBDD::host . ';dbname='  . configBDD::dbname . ';charset=utf8', $user , $pwd);
+		$this->BD = new \PDO('mysql:host' . connexionBDD::host . ';dbname='  . connexionBDD::dbname . ';charset=utf8', $user , $pwd);
 		if (isset($this->BD))
 		{
 			$this->BD->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE,	\PDO::FETCH_ASSOC);
