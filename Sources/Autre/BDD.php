@@ -2,7 +2,6 @@
 namespace PEUNC\Autre;
 
 use PEUNC\Erreur\Exception;
-use PEUNC\Autre\iBDD;
 
 use VolEval\Configuration\connexionBDD;	// à modifier selon votre application
 

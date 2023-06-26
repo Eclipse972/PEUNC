@@ -4,7 +4,6 @@ namespace PEUNC\Controleur;
 use PEUNC\Http\HttpRoute;
 use PEUNC\Erreur\Exception;
 use PEUNC\Autre\BDD;
-use PEUNC\Controleur\Formulaire;
 
 class Connexion extends Formulaire
 {
