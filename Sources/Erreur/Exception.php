@@ -14,7 +14,6 @@ class Exception extends \Exception
 
 		// Formulaire
 		300 => 'Méthode inatendue pour un formulaire',
-		301 => 'Configuration chifrement absente',
 
 		// Connexion
 		400 => 'Utilisateur en doublon',
