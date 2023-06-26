@@ -1,5 +1,5 @@
 <?php
-// classe-mère des pages de PEUNC
+// classe-mère des controleurs de PEUNC
 namespace PEUNC\Controleur;
 
 use PEUNC\Http\HttpRoute;
@@ -8,151 +8,46 @@ use PEUNC\Autre\BDD;
 
 class BaseControleur implements iBaseControleur
 {
-	protected $titrePage	= 'Titre de la page affiché dans la barre du haut du navigateur';
-	protected $T_CSS		= [];
-	protected $entetePage;	// la valeur par défaut est donnée par le champ texteMenu dans le squelette
-	protected $logo			= 'logo.png';
-	protected $dossier		= '/';
-	protected $scriptSection= "<h1>Page en construction</h1>\n<p>Contactez l&apos;adminitrateur si le probl&egrave;me persiste </p>\n";
-	protected $T_nav		= [];
-	protected $PiedDePage	= '<p>Pied de page &agrave; d&eacute;finir</p>';
-	protected $vue;
-	protected $route;
+	// des listes
+	protected $T_CSS	= [];	// feuilles CSS
+	protected $T_nav	= [];	// intructions d'un menu qui est une liste de listes (<ul>, <li>) 
+	protected $T_element= [];	// tableau asociatif des éléments simples à afficher (chaîne de caractères ou nombre)
+	
+	protected $vue;		// la vue pour l'affichage
+	protected $route;	// la route http
 
 	public function __construct(HttpRoute $route = null)
 	{
-		$this->setView('doctype.html');
+		$this->vue = 'Application/Vue/doctype.html';
 		$this->route = $route;
-		if (isset($route))
-		{	// valeur par défaut de l'en-tête
-			$this->entetePage = BDD::SELECT('texteMenu FROM Squelette WHERE alpha= ? AND beta= ? AND gamma= ? AND methode = ?',
-									[$route->getAlpha(), $route->getBeta(), $route->getGamma(), $route->getMethode()],true);
-		}
-		else $this->entetePage = 'Erreur serveur';
 	}
 /* ***************************
  * MUTATEURS (SETTER)
  * ***************************/
-	public function setTitle($titre)		{ $this->titrePage = $titre; }
-
-	public function setHeaderText($texte)	{ $this->entetePage = $texte; }
-
-	public function setLogo($logo)			{ $this->logo = $logo; }			// nom de la forme /sous/dossier/fichier.extension à partir du dossier image du site
-
-	public function setDossier($dossier)	{ $this->dossier = $dossier . '/'; }
-
-	public function setSection($code)		{ $this->scriptSection = $code;	}
-
 	public function setNav(array $code)		{ $this->T_nav = $code;	}
 
-	public function setFooter($code)		{ $this->PiedDePage = $code; }
-
-	public function setView($fichier, $cheminParDefaut = true)
-	{
-		$fichier =  $cheminParDefaut ?
-					self::DOSSIER_VUE . $fichier :
-					$fichier;
-		if (file_exists($fichier))
-			$this->vue = $fichier;
-		else throw new Exception(500);
-	}
-
-	public function setCSS($feuilleCSS)
-	{
-		if(substr($feuilleCSS,0,4) == 'http')
-			$this->T_CSS[] = $feuilleCSS;	// pas de vérification sur feuille externe
-		else
-		{
-			$feuilleCSS = self::DOSSIER_CSS . $feuilleCSS . '.css';
-			if(file_exists($feuilleCSS))
-				$this->T_CSS[] = '/' . $feuilleCSS;
-			else throw new Exception($feuilleCSS . ' n&apos;existe pas');
-		}
-	}
+	public function setView($nomCompletFifichier)	{ $this->vue = $nomCompletFifichier; }
 
 /* ***************************
  * ASSESSURS (GETTER)
  * ***************************/
-	public function getTitle()			{ return $this->titrePage; }
+	public function getView()	{ return $this->vue; }
 
-	public function getHeaderText() 	{ return $this->entetePage . "\n"; }
+	public function getCSS()	{ return $this->T_CSS; }
 
-	public function getLogo()			{ return self::BaliseImage($this->logo,'Logo'); }
+	public function getNav()	{ return $this->T_nav; }
 
-	public function getDossier()		{ return $this->dossier; }
-
-	public function getSection()		{ return $this->scriptSection; }
-
-	public function getFooter()			{ return $this->PiedDePage; }
-
-	public function getView()			{ return $this->vue; }
-
-	public function getCSS()			{ return $this->T_CSS; }
-
-	public function getRoute()			{ return $this->route; }
-
-	public function getNav()			{ return $this->T_nav; }
-
-/* ***************************
- * méthodes statiques
- * ***************************/
-
-	public static function BaliseImage($src, $alt = '<b>Image ici</b>', $code = '')
+	public function get($clé)
 	{
-		if(substr($src,0,4) != 'http')	// fichier interne?
-		{
-			$src = (substr($src,0,1) == '/') ?		// chemin absolu?
-					substr($src,1,strlen($src)) :	// suppression de / au début
-					self::DOSSIER_IMAGE . $src;		// ajout dossier image
-			$src = (file_exists($src)) ?
-					'/' . $src :
-					self::IMAGE_ABSENTE;
-		}
-		return '<img src=' . $src . ' alt="' . $alt . '" ' . $code . '>';
+		if(array_key_exists($clé, $T_element))
+			return $T_element[$clé];
+		else throw new PEUNC\Erreur\Exception('Controleur: clé ' . $clé . ' inexistante');
 	}
-
- 	public static function MENU(HttpRoute $route, $niveau, $profondeur, $alphaMini = self::ALPHA_MINI, $alphaMaxi = self::ALPHA_MAXI)
+/*****************************
+ * Autres
+ *****************************/	
+	public function AjouteCSS($nomCompletFeuilleCSS)
 	{
-		if (($niveau <= 0) || ($profondeur < 0) || ($niveau + $profondeur > 3))	throw new Exception(503);
-
-		switch($niveau)
-		{
-			case 1:
-				$ancienTableau = BDD::Liste_niveau($route->getAlpha());
-				// suppression des lignes en dehors de l'intervalle
-				$Tableau = [];
-				foreach($ancienTableau as $i => $ligne)
-					if(($i >= $alphaMini) && ($i <= $alphaMaxi))
-						$Tableau[$i] = $ligne;
-				break;
-			case 2:
-				$Tableau = BDD::Liste_niveau($route->getBeta(), $route->getAlpha());
-				break;
-			case 3:
-				$Tableau = BDD::Liste_niveau($route->getGamma(), $route->getAlpha(), $route->getBeta());
-				break;
-			default: throw new Exception(504);
-		}
-		if (count($Tableau) > 0)
-		{
-			self::DebutMenu($T_code);
-			foreach($Tableau as $i => $ligne)
-			{
-				self::AjouteItem($T_code, $ligne);
-
-				if ((substr($ligne, 0, 6) == '<a id=') && ($niveau < 4) && ($profondeur > 0))	// y a-t-il un niveau inférieur à afficher?
-				//	pour	chaque ligne de code du sous-menu s'il existe			on rajoute le sous-code
-					foreach(self::MENU($route, $niveau+1, $profondeur-1) as $ligne)	$T_code[] = $ligne;
-			}
-			self::FinMenu($T_code);
-			return $T_code;
-		} else return [];
+		$this->T_CSS[] = $nomCompletFeuilleCSS;	// pas de vérification
 	}
-
-	// pour les méthodes suivantes le tableau en paramètre est passé par variable
-	public static function DebutMenu(&$Tableau)	{ $Tableau[] = '<ul>'; }
-
-	public static function FinMenu(&$Tableau)	{ $Tableau[] = '</ul>'; }
-
-	public static function AjouteItem(&$Tableau, $ligne){ $Tableau[] = '<li>' . $ligne . '</li>'; }
 }
