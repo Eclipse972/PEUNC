@@ -6,25 +6,8 @@ use PEUNC\Http\HttpRoute;
 use PEUNC\Erreur\Exception;
 use PEUNC\Autre\BDD;
 
-include'interfaceBaseControleur.php';
-
-class Page implements iBaseControleur	{
-// CONFIGURATION DE L'APPLICATION
-
-	// dossiers pas défaut
-	const DOSSIER_MODEL		= 'Modele/';
-	const DOSSIER_VUE		= 'Application/Vue/';
-	const DOSSIER_CONTROLEUR= 'Controleur/';
-	const DOSSIER_IMAGE		= 'images/';
-	const DOSSIER_CSS		= 'CSS/';
-	const DOSSIER_JS		= 'js/';
-	const DOSSIER_VIDEO		= 'video/';
-	const IMAGE_ABSENTE		= '/images/image_absente.png';
-
-	// Intervalle pour  le niveau alpha (les onglets)
-	const ALPHA_MINI = 10;
-	const ALPHA_MAXI = 20;
-
+class Page implements iBaseControleur
+{
 	protected $titrePage	= 'Titre de la page affiché dans la barre du haut du navigateur';
 	protected $T_CSS		= [];
 	protected $entetePage;	// la valeur par défaut est donnée par le champ texteMenu dans le squelette
@@ -35,7 +18,6 @@ class Page implements iBaseControleur	{
 	protected $PiedDePage	= '<p>Pied de page &agrave; d&eacute;finir</p>';
 	protected $vue;
 	protected $route;
-// FIN DE LA CONFIGURATION
 
 	public function __construct(HttpRoute $route = null)
 	{
