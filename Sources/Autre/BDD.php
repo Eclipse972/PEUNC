@@ -13,9 +13,6 @@ class BDD implements iBDD
 
 	private function __construct()
 	{
-///
-//exit('pdo=' . $param1 . ' - ' . connexionBDD::user . ' - ' . connexionBDD::pwd);
-///
 		$this->BD = new \PDO('mysql:host=' . connexionBDD::host . ';dbname='  . connexionBDD::dbname . ';charset=utf8', connexionBDD::user , connexionBDD::pwd);
 		if (isset($this->BD))
 		{
