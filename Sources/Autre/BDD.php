@@ -3,7 +3,7 @@ namespace PEUNC\Autre;
 
 use PEUNC\Erreur\Exception;
 use PEUNC\Autre\iBDD;
-use Application\Configuration\configBDD; // namespace à redéfinir dans votre application
+use VolEval\Configuration\configBDD; // namespace à redéfinir dans votre application
 
 class BDD implements iBDD
 {
