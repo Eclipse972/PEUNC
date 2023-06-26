@@ -6,7 +6,7 @@ use PEUNC\Http\HttpRoute;
 use PEUNC\Erreur\Exception;
 use PEUNC\Autre\BDD;
 
-class Page implements iBaseControleur
+class BaseControleur implements iBaseControleur
 {
 	protected $titrePage	= 'Titre de la page affiché dans la barre du haut du navigateur';
 	protected $T_CSS		= [];
