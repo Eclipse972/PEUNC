@@ -3,7 +3,8 @@ namespace PEUNC\Controleur;
 
 use PEUNC\Http\HttpRoute;
 use PEUNC\Erreur\Exception;
-use VolEval\Configuration\Chiffrement;
+
+use VolEval\Configuration\Chiffrement; // à modifier selon votre application
 
 class Formulaire extends Page	// formulaire de PEUNC
 {
