@@ -48,6 +48,6 @@ class BaseControleur implements iBaseControleur
  *****************************/	
 	public function AjouteCSS($nomCompletFeuilleCSS)
 	{
-		$this->T_CSS[] = $nomCompletFeuilleCSS;	// pas de vérification
+		$this->T_CSS[] = $nomCompletFeuilleCSS;	// ajout d'un CSS à la liste sans vérification
 	}
 }
