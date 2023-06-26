@@ -14,7 +14,7 @@ namespace PEUNC\Configuration;
  */
 class Chiffrement
 {
-    const cipher = 'AES-128-CBC';
-    const key ='clé_de_chiffrement';
-    const iv = "vecteur_d_initialisation";
+    const cipher= 'AES-128-CBC';
+    const key   = 'clé_de_chiffrement';
+    const iv    = "vecteur_d_initialisation";
 }

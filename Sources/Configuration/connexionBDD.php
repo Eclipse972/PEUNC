@@ -14,8 +14,8 @@ namespace PEUNC\Configuration;
  */
 class connexionBDD
 {
-    const host = 'serveur.fr';
-    const dbname ='base_de_données';
-    const user = 'utilisateur';
-    const pwd = 'mot_de_passe';
+    const host  = 'serveur.fr';
+    const dbname= 'base_de_données';
+    const user  = 'utilisateur';
+    const pwd   = 'mot_de_passe';
 }
