@@ -25,6 +25,10 @@ class HttpRoute implements iHttpRoute
 
 	public function __construct()
 	{
+		/**
+		 * Il faudra avoir accès à REDIRECT_STATUS pour traiter les erreurs serveur autre que 404
+		 * Il faudra surement installer php-fpm
+		 */
 		// recherche de la position dans l'arborescence stockée en BD
 		list($URL, $reste) = explode('?', $_SERVER['REQUEST_URI'], 2);
 		if(in_array($URL, ['/' ,'/index.php']))
