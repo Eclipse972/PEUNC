@@ -16,14 +16,14 @@
 
 interface iBaseControleur
 {
-// Mutateur (getters)
-	public function get($clé);	// retourne l'élément référencé par la clé
-	public function getCSS();	// affiche le code pour utiliser toutes les feuilles CSS associée à la page
-	public function getView();	// chemin de la vue associée à la page
-	public function getNav();
-
-// Assesseurs (setters)
-	public function setCSS($feuilleCSS);	// ajoute une feuille CSS associée à la page. Répétables plusieurs fois
-	public function setNav(array $code);	// affiche la liste des instructions de la barre de navigation avec <nav> car cette balise est optionnelle
-	public function setView($fichier);		// définit le chemin de la vue
+	public function get($nom);				// retourne l'élément nommé
+	private function set($nom, $valeur);	// ajoute ou écrase l'élément nommé. c'est une méthode privée
+	/**
+	 * Listes des noms déjà pris
+	 * T_CSS: tableau contenant la liste des feuilles CSS
+	 * dossierCSS: emplacement des feuilles CSS
+	 * T_nav: liste des instruction html pour le menu
+	 * vue: nom complet de la vue à afficher
+	 */
+	private function AjouteCSS($FeuilleCSS);// sans l'extension
 }
