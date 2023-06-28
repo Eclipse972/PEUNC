@@ -21,7 +21,7 @@ interface iBaseControleur
 	/**
 	 * Listes des noms déjà pris
 	 * T_CSS: tableau contenant la liste des feuilles CSS
-	 * dossierCSS: emplacement des feuilles CSS
+	 * dossierCSS: emplacement des feuilles se style. Par défaut = CSS
 	 * T_nav: liste des instruction html pour le menu
 	 * vue: nom complet de la vue à afficher
 	 */
