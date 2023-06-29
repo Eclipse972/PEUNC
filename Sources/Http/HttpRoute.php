@@ -8,6 +8,9 @@ use PEUNC\Controleur\Formulaire;
 use PEUNC\Http\iHttpRoute;
 
 class HttpRoute implements iHttpRoute
+/* J'utilise une pseudo-réécriture d'URL qui exploite la redirection 404 Cf .htaccess
+ * Ma source d'inspiration: http://urlrewriting.fr/tutoriel-urlrewriting-sans-moteur-rewrite.htm Merci à son auteur.
+ */
 {
 // position dans l'arborescence
 private $alpha;
@@ -25,17 +28,20 @@ private $IP;
 
 public function __construct()
 {
-	// Retrouver tous les composants de la route
+	// décodage URI
+	list($URL, $reste) = explode('?', $_SERVER['REQUEST_URI']);
+	list($paramURL, $ancre) = explode('#', $reste, 2);
+
+	// construire la requête pour retrouver tous les composants de la route
 	switch ($_GET['serverError']) {
 		case null:// sans redirection
-			list($this->alpha, $this->beta, $this->gamma) = self::SansRedirection();
-			$this->T_param = self::ExtraireParamRacine();
+			list($clauseWhereRequeteRoute, $TparamRequeteRoute) = self::SansRedirection();
 			break;
 		
-		case 404:// on arrive ici à cause d'une redirection 404 Cf .htaccess
-			list($URL, $reste) = explode('?', $_SERVER['REQUEST_URI']);
-			list($this->alpha, $this->beta, $this->gamma) = self::Redirection404($URL);
-			$this->T_param = self::ExtraireParamURL($reste);
+		case 404:
+			header('Status: 200 OK', false, 200);	// modification pour dire au navigateur que tout va bien finalement
+			$clauseWhereRequeteRoute = 'URL=? AND methode=?';
+			$TparamRequeteRoute = [$URL, $_SERVER['REQUEST_METHOD']];
 			break;
 		
 		case 403:
@@ -48,60 +54,46 @@ public function __construct()
 			throw new Exception('Erreur de route'); // .htaccess est à vérifier
 			break;
 	}
-	
+	// extraction des données de la table Squelette
+	$reponseBDD = BDD::SELECT('alpha, beta, gamma, texteMenu, paramAutorise, classePage, controleur, dureeCache
+								FROM Squelette WHERE ' . $clauseWhereRequeteRoute,
+								$TparamRequeteRoute, true);
+	if(is_null($reponseBDD)) throw new ServeurException(404);
+
+	// construction de l'objet
+	$this->alpha = $reponseBDD['alpha'];
+	$this->beta = $reponseBDD['beta'];
+	$this->gamma = $reponseBDD['gamma'];
+	$this->texteMenu = $reponseBDD['texteMenu'];
 	$this->URL = $URL;
 	$this->methode = $_SERVER['REQUEST_METHOD'];
-
-	/* Dans la table Squelette, on récupère la liste des informations utiles pour la  
-		* construction du controleur puis de la réponse envoyé au client.					 */
-	$reponseBDD = BDD::SELECT('paramAutorise, classePage, controleur, dureeCache FROM Squelette WHERE alpha=? AND beta=? AND gamma=? AND methode=?',
-							[$this->alpha, $this->beta, $this->gamma, $this->methode],
-							true);
-	if(is_null($reponseBDD)) throw new ServeurException(404);
 	$this->controleur = $reponseBDD['classePage'];
 	$this->fonction = $reponseBDD['controleur'];
 	$this->dureeCache = $reponseBDD['dureeCache'];
-
-	/* On construit un nouveau tableau qui ne contient que les paramètres autorisées.
-		* Par contre un paramètre manquant ne provoque pas d'erreur. C'est au controleur de décider. */
+	
+	// construction de la liste des paramètres
 	$TparamAutorises = json_decode($reponseBDD['paramAutorise'], true);
-
-	$Treponse = [];
+	$TparamTransmis = ($this->URL == '/') || ($this->URL == '/home') ? // on est à la racine
+					self::ExtraireParamRacine() :
+					self::ExtraireParamURL($paramURL);
+	$this->T_param = [];
 	foreach ($TparamAutorises as $clé)
-		if (array_key_exists($clé, $this->T_param))	// seules les clés autorisées sont prises en compte
-			$Treponse[$clé] = $this->T_param[$clé];	// la valeur a déjà été nettoyée lors de la création de la liste
-	$this->T_param = $Treponse;
+		if (array_key_exists($clé, $TparamTransmis))	// seules les clés autorisées sont prises en compte
+			$this->T_param[$clé] = $TparamTransmis[$clé];	// la valeur a déjà été nettoyée lors de la création de la liste
 }	
 
-//	Renvoie la position dans l'arborescence sous la forme [alpha, beta, gamma] ===================
-
-private static function Redirection404($URL)
-/* Cette fonction est appelé suite à une erreur 404. C'est cette redirection que j'exploite pour gérer ma pseudo-réécriture d'URL.
-	* Ma source d'inspiration: http://urlrewriting.fr/tutoriel-urlrewriting-sans-moteur-rewrite.htm Merci à son auteur.
-	*
-	* À partir d'une URL, Cette fonction renvoie la position dans l'arborescence du site.
-*/
-{
-	header('Status: 200 OK', false, 200);	// modification pour dire au navigateur que tout va bien finalement
-
-	$reponse = BDD::SELECT('alpha, beta, gamma FROM Squelette WHERE URL=? AND methode=?',
-							[$URL, $_SERVER['REQUEST_METHOD']],true);
-	if(is_null($reponse))	throw new ServeurException(404);
-	
-	return array($reponse['alpha'], $reponse['beta'], $reponse['gamma']);
-}
-
 private static function SansRedirection()
-{	/*	Un appel direct de index.php.
-		La pseudo réécriture d'URL ne fonctionne pas avec le script action de formulaire.
-		J'ai choisi de repasser par index.php pour traiter tous les formulaires.
-	*/
+{
 	switch($_SERVER['REQUEST_METHOD'])
 	{
-		case"GET":
-			return [0, 0, 0];	// un appel ordinaire vers la page d'accueil
+		case 'GET':
+			$Tparam = [0, 0, 0];	// un appel ordinaire vers la page d'accueil
 			break;
-		case"POST":	// le jeton CSRF contient des infos sur le formuaire notemment sa position dans l'arborescence
+		case 'POST':	// 
+			/* La pseudo réécriture d'URL ne fonctionne pas avec le script action de formulaire.
+			 * J'ai choisi de repasser par index.php pour traiter tous les formulaires.
+			 * le jeton CSRF contient des infos sur le formuaire notemment sa position dans l'arborescence
+			 */
 			if (!isset($_POST["CSRF"]))	// si le fomulaire ne contient pas de jeton CSRF
 				throw new Exception(101);
 
@@ -109,23 +101,23 @@ private static function SansRedirection()
 
 			if (!isset($jeton->noeud))	// si le jeton est invalide
 				throw new Exception(102);
-
-			return $jeton->noeud;	// renvoie la position du formulaire
+			
+			$Tparam = $jeton->noeud;// renvoie la position du formulaire dans l'arborescence
 			break;
 		default:
 			throw new ServeurException(405);// erreur 405!
 	}
+	$Tparam[] = $_SERVER['REQUEST_METHOD'];
+	return array('alpha=? AND beta=? AND gamma=? AND methode=?',$Tparam);
 }
 
 //	Renvoie les paramètres $_GET ou $_POST nettoyés ==============================================
 
-private static function ExtraireParamURL($reste)
+private static function ExtraireParamURL($paramURL)
 /* Extraction des paramètres suite à une redirection 404.
 	* $_GET et $_POST n'existent pas, il faut donc décoder l'URL manuellement.
 	*/
 {
-	list($paramURL, $ancre) = explode('#', $reste, 2);
-
 	$T_param = [];
 	foreach (explode('&', $paramURL) as $instruction)
 	{
@@ -168,21 +160,22 @@ public static function SauvegardeEtat(HttpRoute $route)
 
 public static function URLprecedente()	{ return $_SESSION['PEUNC']['URLprecedente']; }
 
-
 //	Accesseurs ===================================================================================
 
-public function getAlpha()	{ return $this->alpha; }
-public function getBeta()	{ return $this->beta; }
-public function getGamma()	{ return $this->gamma; }
-public function getMethode(){ return $this->methode; }
-public function getURL()	{ return $this->URL; }
-public function getParam($nom = null)
-{
-	return (isset($nom)) ?
-			$this->T_param[$nom] :
-			$this->T_param;
-}
+public function getAlpha()		{ return $this->alpha; }
+public function getBeta()		{ return $this->beta; }
+public function getGamma()		{ return $this->gamma; }
+public function getMethode()	{ return $this->methode; }
+public function getURL()		{ return $this->URL; }
 public function getControleur()	{ return $this->controleur; }
 public function getFonction()	{ return $this->fonction; }
 public function getDureeCache()	{ return $this->dureeCache; }
+public function getTexteMenu()	{ return $this->texteMenu; }
+
+public function getParam($nom = null)	// renvoie les paramètres $_GET, $_POST suivant les cas
+{
+	return (isset($nom)) ?
+			$this->T_param[$nom] :	// renvoie le paramètre demandé
+			$this->T_param;			// renvoie tout le tableau
+}
 }
