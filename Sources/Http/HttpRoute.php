@@ -152,12 +152,12 @@ public static function URLprecedente()	{ return $_SESSION['PEUNC']['URLprecedent
 public function getAlpha()		{ return $this->Tchamp['alpha']; }
 public function getBeta()		{ return $this->Tchamp['beta']; }
 public function getGamma()		{ return $this->Tchamp['gamma']; }
-public function getMethodeHttp(){ return $this->Tchamp['methodeHtp']; }
+public function getMethodeHttp(){ return $this->Tchamp['methodeHttp']; }
 public function getURL()		{ return $this->Tchamp['URL']; }
 public function getControleur()	{ return $this->Tchamp['classePage']; }
 public function getFonction()	{ return $this->Tchamp['controleur']; }
 public function getDureeCache()	{ return $this->Tchamp['dureeCache']; }
-public function getTitre()	{ return $this->Tchamp['titre']; }
+public function getTitre()		{ return $this->Tchamp['titre']; }
 
 public function getParam($nom = null)	// renvoie les paramètres $_GET, $_POST suivant les cas
 {
