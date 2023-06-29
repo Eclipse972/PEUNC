@@ -5,21 +5,16 @@ namespace PEUNC\Controleur;
 use PEUNC\Http\HttpRoute;
 use PEUNC\Erreur\Exception;
 use PEUNC\Autre\BDD;
-use PEUNC\Controleur\iPage;
 
 class Page implements iPage	{
 // CONFIGURATION DE L'APPLICATION
 
 	// dossiers pas défaut. Il devront être déplacés dans un fichier de config ou dans une classe
-	const DOSSIER_MODEL		= 'Modele/';
 	const DOSSIER_VUE		= 'Application/Vue/';
 	const DOSSIER_CONTROLEUR= 'Controleur/';
-	const DOSSIER_IMAGE		= 'images/';// a supprimer car dans PEUNC\Macro\Balise
 	const DOSSIER_CSS		= 'CSS/';
-	const DOSSIER_JS		= 'js/';
-	const DOSSIER_VIDEO		= 'video/';
-	const IMAGE_ABSENTE		= '/images/image_absente.png';// a supprimer car dans PEUNC\Macro\Balise
-
+	
+	// variable membre
 	protected $titrePage	= 'Titre de la page affiché dans la barre du haut du navigateur';
 	protected $T_CSS		= [];
 	protected $entetePage;	// la valeur par défaut est donnée par le champ titre dans le squelette
