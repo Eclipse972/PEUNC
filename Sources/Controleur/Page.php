@@ -10,15 +10,15 @@ use PEUNC\Controleur\iPage;
 class Page implements iPage	{
 // CONFIGURATION DE L'APPLICATION
 
-	// dossiers pas défaut
+	// dossiers pas défaut. Il devront être déplacés dans un fichier de config ou dans une classe
 	const DOSSIER_MODEL		= 'Modele/';
 	const DOSSIER_VUE		= 'Application/Vue/';
 	const DOSSIER_CONTROLEUR= 'Controleur/';
-	const DOSSIER_IMAGE		= 'images/';
+	const DOSSIER_IMAGE		= 'images/';// a supprimer car dans PEUNC\Macro\Balise
 	const DOSSIER_CSS		= 'CSS/';
 	const DOSSIER_JS		= 'js/';
 	const DOSSIER_VIDEO		= 'video/';
-	const IMAGE_ABSENTE		= '/images/image_absente.png';
+	const IMAGE_ABSENTE		= '/images/image_absente.png';// a supprimer car dans PEUNC\Macro\Balise
 
 	// Intervalle pour  le niveau alpha (les onglets)
 	const ALPHA_MINI = 10;
