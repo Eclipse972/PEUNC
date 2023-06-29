@@ -12,19 +12,20 @@ class HttpRoute implements iHttpRoute
  * Ma source d'inspiration: http://urlrewriting.fr/tutoriel-urlrewriting-sans-moteur-rewrite.htm Merci à son auteur.
  */
 {
-// position dans l'arborescence
-private $alpha;
-private $beta;
-private $gamma;
-private $methode;	// méthode Http
-private $URL;
-private $T_param;
-private $controleur;
-private $fonction;
-private $dureeCache;
+private $Tchamp;
+/** Liste des champs tirés de la table Squelette
+ * alpha position dans l'arborescence
+ * beta
+ * gamma
+ * methode;	// méthode Http
+ * URL
+ * texteMenu
+ * controleur
+ * fonction
+ * dureeCache;
+ */
 
-// pour le futur
-private $IP;
+private $T_param;
 
 public function __construct()
 {
@@ -55,25 +56,14 @@ public function __construct()
 			break;
 	}
 	// extraction des données de la table Squelette
-	$reponseBDD = BDD::SELECT('alpha, beta, gamma, texteMenu, paramAutorise, classePage, controleur, dureeCache
-								FROM Squelette WHERE ' . $clauseWhereRequeteRoute,
+	$this->Tchamp = BDD::SELECT('alpha, beta, gamma, URL, methode, texteMenu, paramAutorise, classePage, controleur, dureeCache
+									FROM Squelette WHERE ' . $clauseWhereRequeteRoute,
 								$TparamRequeteRoute, true);
-	if(is_null($reponseBDD)) throw new ServeurException(404);
-
-	// construction de l'objet
-	$this->alpha = $reponseBDD['alpha'];
-	$this->beta = $reponseBDD['beta'];
-	$this->gamma = $reponseBDD['gamma'];
-	$this->texteMenu = $reponseBDD['texteMenu'];
-	$this->URL = $URL;
-	$this->methode = $_SERVER['REQUEST_METHOD'];
-	$this->controleur = $reponseBDD['classePage'];
-	$this->fonction = $reponseBDD['controleur'];
-	$this->dureeCache = $reponseBDD['dureeCache'];
+	if(is_null($this->Tchamp)) throw new ServeurException(404);
 	
 	// construction de la liste des paramètres
-	$TparamAutorises = json_decode($reponseBDD['paramAutorise'], true);
-	$TparamTransmis = ($this->URL == '/') || ($this->URL == '/home') ? // on est à la racine
+	$TparamAutorises = json_decode($this->Tchamp['paramAutorise'], true);
+	$TparamTransmis = ($URL == '/') || ($URL == '/home') ? // on est à la racine
 					self::ExtraireParamRacine() :
 					self::ExtraireParamURL($paramURL);
 	$this->T_param = [];
@@ -159,15 +149,15 @@ public static function URLprecedente()	{ return $_SESSION['PEUNC']['URLprecedent
 
 //	Accesseurs ===================================================================================
 
-public function getAlpha()		{ return $this->alpha; }
-public function getBeta()		{ return $this->beta; }
-public function getGamma()		{ return $this->gamma; }
-public function getMethode()	{ return $this->methode; }
-public function getURL()		{ return $this->URL; }
-public function getControleur()	{ return $this->controleur; }
-public function getFonction()	{ return $this->fonction; }
-public function getDureeCache()	{ return $this->dureeCache; }
-public function getTexteMenu()	{ return $this->texteMenu; }
+public function getAlpha()		{ return $this->Tchamp['alpha']; }
+public function getBeta()		{ return $this->Tchamp['beta']; }
+public function getGamma()		{ return $this->Tchamp['gamma']; }
+public function getMethode()	{ return $this->Tchamp['methode']; }
+public function getURL()		{ return $this->Tchamp['URL']; }
+public function getControleur()	{ return $this->Tchamp['classePage']; }
+public function getFonction()	{ return $this->Tchamp['controleur']; }
+public function getDureeCache()	{ return $this->Tchamp['dureeCache']; }
+public function getTexteMenu()	{ return $this->Tchamp['texteMenu']; }
 
 public function getParam($nom = null)	// renvoie les paramètres $_GET, $_POST suivant les cas
 {
