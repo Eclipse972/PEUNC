@@ -25,11 +25,6 @@ class HttpRoute implements iHttpRoute
 
 	public function __construct()
 	{
-		/**
-		 * Il faudra avoir accès à REDIRECT_STATUS pour traiter les erreurs serveur autre que 404
-		 * Il faudra surement installer php-fpm
-		 * En attendant il faut rajouter un paramètre serverError dans .htaccess. Exemple: index.php?serverError=500
-		 */
 		// Retrouver tous les composants de la route
 		switch ($_GET['serverError']) {
 			case null:// sans redirection
