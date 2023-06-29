@@ -33,8 +33,8 @@ public function get($clé)
 
 private function AjouteCSS($feuilleCSS)
 {
-	$fichier = '/' . self::dossierCSS . '/' . $feuilleCSS . '.css';
+	$fichier = self::dossierCSS . '/' . $feuilleCSS . '.css';
 	// A faire: vérification de l'existence
-	$this->T_element['T_CSS'][] = $fichier;	// ajout d'un CSS à la liste
+	$this->T_element['T_CSS'][] = '/' . $fichier;	// ajout d'un CSS à la liste
 }
 }
