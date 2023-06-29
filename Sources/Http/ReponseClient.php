@@ -12,16 +12,16 @@ class ReponseClient
 {
 	const DOSSIER_CACHE = "cache/";
 
-	private $controleur;
+	private $controller;
 
-	public function __construct($controleur)
+	public function __construct($controller)
 	{
 		/* pour le moment toutes les pages peuvent être mise en cache.
 		 * Or ce pas possible pour les pages posesdant des paramètres car on ne peut les connaitre
 		 * tousà l'avance.
 		 * La liste des paramètres de chaque page est diponible dans la table squellette
 		 * Une age peut est 'cachée' si la méthode http =GET  et pas de paramètre */
-		$this->controleur = $controleur;
+		$this->controller = $controller;
 
 		/* Remarque: dans le cas d'un traitement de formulaire, la redirection devrait provoquer
 		 * une nouvelle requête qui générera une nouvelle réponse. A VÉRIFIER */
@@ -56,7 +56,7 @@ class ReponseClient
 
 	public function View()
 	{
-		return $this->controleur->getView();
+		return $this->controller->getView();
 	}
 
 	// balise générique
@@ -70,24 +70,24 @@ class ReponseClient
 	// écriture des balises pour la vue
 	public function Title()
 	{
-		echo $this->controleur->getTitle();
+		echo $this->controller->getTitle();
 	}
 
 	public function HeaderText()
 	{
-		echo $this->controleur->getHeaderText(), "\n";
+		echo $this->controller->getHeaderText(), "\n";
 	}
 
 	public function Logo()
 	{
-		echo Balise::Image($this->controleur->getLogo(),'Logo');
+		echo Balise::Image($this->controller->getLogo(),'Logo');
 	}
 
 	// pas d'implémentation de getDossier()?
 
 	public function CSS()
 	{
-		$Liste = $this->controleur->getCSS();
+		$Liste = $this->controller->getCSS();
 
 		foreach($Liste as $feuilleCSS)
 			echo "\t" , '<link rel="stylesheet" href="', $feuilleCSS, '"/>', "\n";
@@ -95,7 +95,7 @@ class ReponseClient
 
 	public function Nav($avecBalise = false)
 	{
-		$Liste = $this->controleur->getNav();
+		$Liste = $this->controller->getNav();
 		if(count($Liste) > 0)
 		{
 			if($avecBalise)	echo "<nav>\n";
@@ -112,12 +112,12 @@ class ReponseClient
 
 	public function Section($avecBalise = false)
 	{
-		self::Balise('section', $this->controleur->getSection(), $avecBalise);
+		self::Balise('section', $this->controller->getSection(), $avecBalise);
 	}
 	
 	public function Footer($avecBalise = false)
 	{
-		self::Balise('footer', $this->controleur->getFooter(), $avecBalise);
+		self::Balise('footer', $this->controller->getFooter(), $avecBalise);
 	}
 	
 }
