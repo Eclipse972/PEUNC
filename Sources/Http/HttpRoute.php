@@ -79,7 +79,7 @@ public function __construct()
 	$this->T_param = [];
 	foreach ($TparamAutorises as $clé)
 		if (array_key_exists($clé, $TparamTransmis))	// seules les clés autorisées sont prises en compte
-			$this->T_param[$clé] = $TparamTransmis[$clé];	// la valeur a déjà été nettoyée lors de la création de la liste
+			$this->T_param[$clé] = strip_tags($TparamTransmis[$clé]);	// la valeur est nettoyée
 }	
 
 private static function SansRedirection()
@@ -122,7 +122,7 @@ private static function ExtraireParamURL($paramURL)
 	foreach (explode('&', $paramURL) as $instruction)
 	{
 		$param = explode("=", $instruction);
-		if ($param) $T_param[urldecode($param[0])] = strip_tags(urldecode($param[1]));
+		if ($param) $T_param[urldecode($param[0])] = urldecode($param[1]);
 	}
 	return $T_param;
 }
@@ -140,10 +140,7 @@ private static function ExtraireParamRacine()
 		default:
 			throw new Exception(100);
 	}
-	$T_param = [];
-	foreach($tableau as $cle => $valeur)
-		$T_param[$cle] = strip_tags($valeur);
-	return $T_param;
+	return $tableau;
 }
 
 public static function SauvegardeEtat(HttpRoute $route)
