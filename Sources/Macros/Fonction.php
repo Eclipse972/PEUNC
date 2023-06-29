@@ -3,7 +3,7 @@ namespace PEUNC\Macros;
 
 use PEUNC\Erreur\Exception;
 
-class Fonctions
+class Fonction
 {
 // Intervalle pour  le niveau alpha (les onglets)
 const ALPHA_MINI = 10;
