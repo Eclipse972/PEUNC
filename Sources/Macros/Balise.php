@@ -16,4 +16,9 @@ public static function Image($src, $alt = '<b>Image ici</b>', $code = '')
     }
     return '<img src=' . $src . ' alt="' . $alt . '" ' . $code . '>';
 }
+
+public static function CSS($nomCompletFichier)
+{
+    return "\t" . '<link rel="stylesheet" href="' . $nomCompletFichier . '"/>'  . "\n";
+}
 }
