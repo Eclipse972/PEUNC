@@ -3,6 +3,7 @@ namespace PEUNC\Http;
 
 use PEUNC\Erreur\Exception;
 use PEUNC\Autre\BDD;
+use PEUNC\Macro\Balise;
 
 class ReponseClient
 /* Réponse à servir au client en fonction de la route trouvée suite à la requête http.
@@ -79,7 +80,7 @@ class ReponseClient
 
 	public function Logo()
 	{
-		echo Page::BaliseImage($this->controleur->getLogo(),'Logo');
+		echo Balise::Image($this->controleur->getLogo(),'Logo');
 	}
 
 	// pas d'implémentation de getDossier()?
