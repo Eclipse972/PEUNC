@@ -95,8 +95,6 @@ class Page implements iPage	{
 
 	public function getCSS()			{ return $this->T_CSS; }
 
-	public function getRoute()			{ return $this->route; }
-
 	public function getNav()			{ return $this->T_nav; }
 
 /* ***************************
