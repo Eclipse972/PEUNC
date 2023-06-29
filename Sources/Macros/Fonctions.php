@@ -3,20 +3,6 @@ namespace PEUNC\Macros;
 
 class Fonctions
 {
-    public static function BaliseImage($src, $alt = '<b>Image ici</b>', $code = '')
-	{
-		if(substr($src,0,4) != 'http')	// fichier interne?
-		{
-			$src = (substr($src,0,1) == '/') ?		// chemin absolu?
-					substr($src,1,strlen($src)) :	// suppression de / au début
-					self::DOSSIER_IMAGE . $src;		// ajout dossier image
-			$src = (file_exists($src)) ?
-					'/' . $src :
-					self::IMAGE_ABSENTE;
-		}
-		return '<img src=' . $src . ' alt="' . $alt . '" ' . $code . '>';
-	}
-
  	public static function MENU(HttpRoute $route, $niveau, $profondeur, $alphaMini = self::ALPHA_MINI, $alphaMaxi = self::ALPHA_MAXI)
 	{
 		if (($niveau <= 0) || ($profondeur < 0) || ($niveau + $profondeur > 3))	throw new Exception(503);
