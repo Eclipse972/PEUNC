@@ -56,7 +56,7 @@ public function __construct()
 			break;
 	}
 	// extraction des données de la table Squelette
-	$this->Tchamp = BDD::SELECT('alpha, beta, gamma, URL, methodeHttp, titre, paramAutorise, classePage, controleur, dureeCache
+	$this->Tchamp = BDD::SELECT('alpha, beta, gamma, URL, methodeHttp, titre, paramAutorise, controleur, methodeControleur, dureeCache
 									FROM Squelette WHERE ' . $clauseWhereRequeteRoute,
 								$TparamRequeteRoute, true);
 	if(is_null($this->Tchamp)) throw new ServeurException(404);
@@ -154,8 +154,8 @@ public function getBeta()		{ return $this->Tchamp['beta']; }
 public function getGamma()		{ return $this->Tchamp['gamma']; }
 public function getMethodeHttp(){ return $this->Tchamp['methodeHttp']; }
 public function getURL()		{ return $this->Tchamp['URL']; }
-public function getControleur()	{ return $this->Tchamp['classePage']; }
-public function getFonction()	{ return $this->Tchamp['controleur']; }
+public function getControleur()	{ return $this->Tchamp['controleur']; }
+public function getFonction()	{ return $this->Tchamp['methodeControleur']; }
 public function getDureeCache()	{ return $this->Tchamp['dureeCache']; }
 public function getTitre()		{ return $this->Tchamp['titre']; }
 
