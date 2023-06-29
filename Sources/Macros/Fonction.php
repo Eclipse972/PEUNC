@@ -2,6 +2,8 @@
 namespace PEUNC\Macros;
 
 use PEUNC\Erreur\Exception;
+use PEUNC\Http\HttpRoute;
+use PEUNC\Autre\BDD;
 
 class Fonction
 {
