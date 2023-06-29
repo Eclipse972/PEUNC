@@ -30,17 +30,28 @@ class HttpRoute implements iHttpRoute
 		 * Il faudra surement installer php-fpm
 		 * En attendant il faut rajouter un paramètre serverError dans .htaccess. Exemple: index.php?serverError=500
 		 */
-		// recherche de la position dans l'arborescence stockée en BD
-		list($URL, $reste) = explode('?', $_SERVER['REQUEST_URI'], 2);
-		if(in_array($URL, ['/' ,'/index.php']))
-		{
-			list($this->alpha, $this->beta, $this->gamma) = self::SansRedirection();
-			$this->T_param = self::ExtraireParamRacine();
-		}
-		else
-		{	// on arrive ici à cause d'une redirection 404 Cf .htaccess
-			list($this->alpha, $this->beta, $this->gamma) = self::Redirection404($URL);
-			$this->T_param = self::ExtraireParamURL($reste);
+		// Retrouver tous les composants de la route
+		switch ($_GET['serverError']) {
+			case null:// sans redirection
+				list($this->alpha, $this->beta, $this->gamma) = self::SansRedirection();
+				$this->T_param = self::ExtraireParamRacine();
+				break;
+			
+			case 404:// on arrive ici à cause d'une redirection 404 Cf .htaccess
+				list($URL, $reste) = explode('?', $_SERVER['REQUEST_URI']);
+				list($this->alpha, $this->beta, $this->gamma) = self::Redirection404($URL);
+				$this->T_param = self::ExtraireParamURL($reste);
+				break;
+			
+			case 403:
+			case 405:
+			case 500:
+				throw new ServeurException((int)$_GET['serverError']);
+				break;
+			
+			default:
+				throw new Exception('Erreur de route'); // .htaccess est à vérifier
+				break;
 		}
 		
 		$this->URL = $URL;
