@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `Squelette` (
   `alpha` int(11) NOT NULL,
   `beta` int(11) NOT NULL default '0',
   `gamma` int(11) NOT NULL default '0',
-  `texteMenu` varchar(99) collate latin1_general_ci NOT NULL,
+  `titre` varchar(99) collate latin1_general_ci NOT NULL,
   `imageMenu` varchar(99) collate latin1_general_ci NOT NULL default 'Vue/images/nom_du_fichier.png' COMMENT 'associée à la page',
   `ptiNom` varchar(99) collate latin1_general_ci NOT NULL,
   `classePage` varchar(99) collate latin1_general_ci NOT NULL default 'Page',

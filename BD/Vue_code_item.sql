@@ -7,11 +7,11 @@ SELECT
 	gamma,
 	(SELECT URL FROM Vue_URLvalides WHERE niveau1 = alpha AND niveau2 = beta AND niveau3 = gamma) AS URL,
 	imageMenu AS image,
-	texteMenu AS texte,
+	titre AS texte,
 	CONCAT(
 		'<a href=',(SELECT URL),'>',
-		IF(imageMenu = '','',CONCAT('<img src=/images/',imageMenu,' alt="',texteMenu,'">')), #-- code de l'image si elle est définie
-		texteMenu,'</a>'
+		IF(imageMenu = '','',CONCAT('<img src=/images/',imageMenu,' alt="',titre,'">')), #-- code de l'image si elle est définie
+		titre,'</a>'
 	) AS code
 FROM Squelette
 WHERE methodeHttp = 'GET'

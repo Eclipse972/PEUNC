@@ -26,7 +26,7 @@ class Page implements iPage	{
 
 	protected $titrePage	= 'Titre de la page affiché dans la barre du haut du navigateur';
 	protected $T_CSS		= [];
-	protected $entetePage;	// la valeur par défaut est donnée par le champ texteMenu dans le squelette
+	protected $entetePage;	// la valeur par défaut est donnée par le champ titre dans le squelette
 	protected $logo			= 'logo.png';
 	protected $dossier		= '/';
 	protected $scriptSection= "<h1>Page en construction</h1>\n<p>Contactez l&apos;adminitrateur si le probl&egrave;me persiste </p>\n";
@@ -40,7 +40,7 @@ class Page implements iPage	{
 	{
 		$this->setView('doctype.html');
 		$this->route = $route;
-		$this->entetePage = isset($route) ? $route->getTexteMenu() : 'Erreur serveur';
+		$this->entetePage = isset($route) ? $route->getTitre() : 'Erreur serveur';
 	}
 /* ***************************
  * MUTATEURS (SETTER)

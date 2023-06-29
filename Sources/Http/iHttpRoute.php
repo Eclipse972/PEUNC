@@ -29,7 +29,7 @@ interface iHttpRoute
 	public function getControleur();// le nomdu controleur à utiliser
 	public function getFonction();	// fonction du controleur à exécuter
 	public function getDureeCache();// durée du cache e secondes
-	public function getTexteMenu();	// titre de la page
+	public function getTitre();	// titre de la page
 	public static function SauvegardeEtat(HttpRoute $route);	// sauvegarde l'URL associée à la route
 	public static function URLprecedente();						// retrouve l'URL précédente sauvegardée en session
 }

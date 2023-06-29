@@ -232,7 +232,7 @@ Remarque: pourle moment seules les méthode GET et POST sont gérées. De plus c
       <rich_text>Sont extraits de la BDD les éléments pour construire la réponse:
 - classePage
 - controleur
-- texteMenu
+- titre
 - durée de vie du cache
 etc
 
