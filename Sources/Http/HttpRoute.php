@@ -28,6 +28,7 @@ class HttpRoute implements iHttpRoute
 		/**
 		 * Il faudra avoir accès à REDIRECT_STATUS pour traiter les erreurs serveur autre que 404
 		 * Il faudra surement installer php-fpm
+		 * En attendant il faut rajouter un paramètre serverError dans .htaccess. Exemple: index.php?serverError=500
 		 */
 		// recherche de la position dans l'arborescence stockée en BD
 		list($URL, $reste) = explode('?', $_SERVER['REQUEST_URI'], 2);
