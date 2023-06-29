@@ -20,10 +20,6 @@ class Page implements iPage	{
 	const DOSSIER_VIDEO		= 'video/';
 	const IMAGE_ABSENTE		= '/images/image_absente.png';// a supprimer car dans PEUNC\Macro\Balise
 
-	// Intervalle pour  le niveau alpha (les onglets)
-	const ALPHA_MINI = 10;
-	const ALPHA_MAXI = 20;
-
 	protected $titrePage	= 'Titre de la page affiché dans la barre du haut du navigateur';
 	protected $T_CSS		= [];
 	protected $entetePage;	// la valeur par défaut est donnée par le champ titre dans le squelette
@@ -145,48 +141,4 @@ class Page implements iPage	{
 	}
 
 	public static function URLprecedente()	{ return $_SESSION['PEUNC']['URLprecedente']; }
-
- 	public static function MENU(HttpRoute $route, $niveau, $profondeur, $alphaMini = Page::ALPHA_MINI, $alphaMaxi = Page::ALPHA_MAXI)
-	{
-		if (($niveau <= 0) || ($profondeur < 0) || ($niveau + $profondeur > 3))	throw new Exception(503);
-
-		switch($niveau)
-		{
-			case 1:
-				$ancienTableau = BDD::Liste_niveau($route->getAlpha());
-				// suppression des lignes en dehors de l'intervalle
-				$Tableau = [];
-				foreach($ancienTableau as $i => $ligne)
-					if(($i >= $alphaMini) && ($i <= $alphaMaxi))
-						$Tableau[$i] = $ligne;
-				break;
-			case 2:
-				$Tableau = BDD::Liste_niveau($route->getBeta(), $route->getAlpha());
-				break;
-			case 3:
-				$Tableau = BDD::Liste_niveau($route->getGamma(), $route->getAlpha(), $route->getBeta());
-				break;
-			default: throw new Exception(504);
-		}
-		if (count($Tableau) > 0)
-		{
-			Page::DebutMenu($T_code);
-			foreach($Tableau as $i => $ligne)
-			{
-				Page::AjouteItem($T_code, $ligne);
-
-				if ((substr($ligne, 0, 6) == '<a id=') && ($niveau < 4) && ($profondeur > 0))	// y a-t-il un niveau inférieur à afficher?
-				//	pour	chaque ligne de code du sous-menu s'il existe			on rajoute le sous-code
-					foreach(PAGE::MENU($route, $niveau+1, $profondeur-1) as $ligne)	$T_code[] = $ligne;
-			}
-			Page::FinMenu($T_code);
-			return $T_code;
-		} else return [];
-	}
-
-	public static function DebutMenu(&$Tableau)	{ $Tableau[] = '<ul>'; }
-
-	public static function FinMenu(&$Tableau)	{ $Tableau[] = '</ul>'; }
-
-	public static function AjouteItem(&$Tableau, $ligne){ $Tableau[] = '<li>' . $ligne . '</li>'; }
 }

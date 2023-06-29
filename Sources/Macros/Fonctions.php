@@ -1,8 +1,14 @@
 <?php
 namespace PEUNC\Macros;
 
+use PEUNC\Erreur\Exception;
+
 class Fonctions
 {
+// Intervalle pour  le niveau alpha (les onglets)
+const ALPHA_MINI = 10;
+const ALPHA_MAXI = 20;
+
 public static function MENU(HttpRoute $route, $niveau, $profondeur, $alphaMini = self::ALPHA_MINI, $alphaMaxi = self::ALPHA_MAXI)
 {
 	if (($niveau <= 0) || ($profondeur < 0) || ($niveau + $profondeur > 3))	throw new Exception(503);
