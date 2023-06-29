@@ -13,7 +13,7 @@ class Formulaire extends Page	// formulaire de PEUNC
 	public function __construct(HttpRoute $route)
 	{
 		parent::__construct($route);
-		switch($route->getMethode())
+		switch($route->getMethodeHttp())
 		{
 			case "GET":
 				// création du jeton qui sauvegarde l'état lors de la création du formulaire

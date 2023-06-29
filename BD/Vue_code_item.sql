@@ -14,5 +14,5 @@ SELECT
 		texteMenu,'</a>'
 	) AS code
 FROM Squelette
-WHERE methode = 'GET'
+WHERE methodeHttp = 'GET'
 ORDER BY alpha ASC, beta ASC, gamma ASC

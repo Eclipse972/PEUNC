@@ -18,7 +18,7 @@ class Erreur extends Page
 	{	// permet d'afficher le noeud dans la vue s'il existe
 		if (isset($this->route))
 			$code = "<p>Noeud : " . $this->route->getAlpha() . " - " . $this->route->getBeta() . " - " . $this->route->getGamma()
-					. " m&eacute;thode http:" . $this->route->getMethode() . "</p>\n";
+					. " m&eacute;thode http:" . $this->route->getMethodeHttp() . "</p>\n";
 		else $code ="";	// pas de route http pour les erreurs serveurs
 		return $code;
 	}

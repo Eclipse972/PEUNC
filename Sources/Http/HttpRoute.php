@@ -17,7 +17,7 @@ private $Tchamp;
  * alpha position dans l'arborescence
  * beta
  * gamma
- * methode;	// méthode Http
+ * methodeHttp
  * URL
  * texteMenu
  * controleur
@@ -41,7 +41,7 @@ public function __construct()
 		
 		case 404:
 			header('Status: 200 OK', false, 200);	// modification pour dire au navigateur que tout va bien finalement
-			$clauseWhereRequeteRoute = 'URL=? AND methode=?';
+			$clauseWhereRequeteRoute = 'URL=? AND methodeHttp=?';
 			$TparamRequeteRoute = [$URL, $_SERVER['REQUEST_METHOD']];
 			break;
 		
@@ -56,7 +56,7 @@ public function __construct()
 			break;
 	}
 	// extraction des données de la table Squelette
-	$this->Tchamp = BDD::SELECT('alpha, beta, gamma, URL, methode, texteMenu, paramAutorise, classePage, controleur, dureeCache
+	$this->Tchamp = BDD::SELECT('alpha, beta, gamma, URL, methodeHttp, texteMenu, paramAutorise, classePage, controleur, dureeCache
 									FROM Squelette WHERE ' . $clauseWhereRequeteRoute,
 								$TparamRequeteRoute, true);
 	if(is_null($this->Tchamp)) throw new ServeurException(404);
@@ -98,7 +98,7 @@ private static function SansRedirection()
 			throw new ServeurException(405);// erreur 405!
 	}
 	$Tparam[] = $_SERVER['REQUEST_METHOD'];
-	return array('alpha=? AND beta=? AND gamma=? AND methode=?',$Tparam);
+	return array('alpha=? AND beta=? AND gamma=? AND methodeHttp=?',$Tparam);
 }
 
 //	Renvoie les paramètres $_GET ou $_POST nettoyés ==============================================
@@ -152,7 +152,7 @@ public static function URLprecedente()	{ return $_SESSION['PEUNC']['URLprecedent
 public function getAlpha()		{ return $this->Tchamp['alpha']; }
 public function getBeta()		{ return $this->Tchamp['beta']; }
 public function getGamma()		{ return $this->Tchamp['gamma']; }
-public function getMethode()	{ return $this->Tchamp['methode']; }
+public function getMethodeHttp()	{ return $this->Tchamp['methodeHtp']; }
 public function getURL()		{ return $this->Tchamp['URL']; }
 public function getControleur()	{ return $this->Tchamp['classePage']; }
 public function getFonction()	{ return $this->Tchamp['controleur']; }

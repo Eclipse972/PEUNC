@@ -40,12 +40,7 @@ class Page implements iPage	{
 	{
 		$this->setView('doctype.html');
 		$this->route = $route;
-		if (isset($route))
-		{	// valeur par défaut de l'en-tête
-			$this->entetePage = BDD::SELECT('texteMenu FROM Squelette WHERE alpha= ? AND beta= ? AND gamma= ? AND methode = ?',
-									[$route->getAlpha(), $route->getBeta(), $route->getGamma(), $route->getMethode()],true);
-		}
-		else $this->entetePage = 'Erreur serveur';
+		$this->entetePage = isset($route) ? $route->getTexteMenu() : 'Erreur serveur';
 	}
 /* ***************************
  * MUTATEURS (SETTER)

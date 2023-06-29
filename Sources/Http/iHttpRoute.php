@@ -23,12 +23,13 @@ interface iHttpRoute
 	public function getAlpha();		// alpha (1er niveau)
 	public function getBeta();		// beta (2e niveau)
 	public function getGamma();		// gamma (3e niveau)
-	public function getMethode();	// méthode http de la requête
+	public function getMethodeHttp();// méthode http de la requête
 	public function getURL();		// URL
 	public function getParam($nom);	// renvoie le paramètre nommé s'il est précisé et la liste des parmètres sinon
 	public function getControleur();// le nomdu controleur à utiliser
 	public function getFonction();	// fonction du controleur à exécuter
 	public function getDureeCache();// durée du cache e secondes
+	public function getTexteMenu();	// titre de la page
 	public static function SauvegardeEtat(HttpRoute $route);	// sauvegarde l'URL associée à la route
 	public static function URLprecedente();						// retrouve l'URL précédente sauvegardée en session
 }
