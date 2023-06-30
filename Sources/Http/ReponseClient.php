@@ -12,7 +12,7 @@ class ReponseClient
 {
 	const DOSSIER_CACHE = "cache/";
 
-	private $controller;
+	protected $controller;
 
 	public function __construct($controller)
 	{
