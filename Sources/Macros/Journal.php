@@ -1,9 +1,11 @@
 <?php
-namespace PEUNC\Macro;
+namespace PEUNC\Macros;
+
+use PEUNC\Autre\BDD;
 
 class Journal
 {
-const $table = 'JournalRequete';
+const table = 'JournalRequete';
 
 public static function Inscrire($auteur, $titre, $contenu)
 {
