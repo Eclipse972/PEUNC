@@ -1,6 +1,3 @@
-# dossier de configuration
-Sources/Configuration
-
 # les archives zip dont certaines dépassent les 100Mo. Limite de github
 *.zip
 
