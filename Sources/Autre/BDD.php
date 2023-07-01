@@ -12,7 +12,7 @@ class BDD implements iBDD
 
 	private function __construct()
 	{
-		$this->BD = new \PDO('mysql:host=' . connexionBDD::host . ';dbname='  . connexionBDD::dbname . ';charset=utf8', connexionBDD::user , connexionBDD::pwd);
+		$this->BD = new \PDO('mysql:host=' . connexionBDD::host() . ';dbname='  . connexionBDD::dbname() . ';charset=utf8', connexionBDD::user() , connexionBDD::pwd());
 		if (isset($this->BD))
 		{
 			$this->BD->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE,	\PDO::FETCH_ASSOC);
