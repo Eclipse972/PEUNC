@@ -3,16 +3,23 @@
 DROP VIEW IF EXISTS Vue_URLvalides;
 CREATE VIEW Vue_URLvalides AS
 SELECT
-	ID,
 	alpha AS niveau1,
 	beta AS niveau2,
 	gamma AS niveau3,
-	(SELECT ptiNom FROM Squelette WHERE alpha=(SELECT niveau1) AND beta=(SELECT niveau2) AND beta>0 AND gamma=0 AND methodeHttp='GET') AS texte2,
-	(SELECT ptiNom FROM Squelette WHERE alpha=(SELECT niveau1) AND beta=(SELECT niveau2) AND beta>0 AND gamma=(SELECT niveau3) AND gamma>0 AND methodeHttp='GET') AS texte3,
-	CONCAT('/', (SELECT ptiNom FROM Squelette WHERE alpha = (SELECT niveau1) AND beta=0 AND gamma=0 AND methodeHttp='GET'),
-			IF(ISNULL((SELECT texte2)),'',CONCAT('/',(SELECT texte2))),
-			IF(ISNULL((SELECT texte3)),'',CONCAT('/',(SELECT texte3))) )
-	AS URL
+	CONCAT('/',
+		-- niveau 1
+		(SELECT ptiNom FROM Squelette WHERE alpha = (SELECT niveau1) AND beta=0 AND gamma=0 AND methodeHttp='GET'),
+		-- niveau 2
+		IFNULL((SELECT CONCAT('/',ptiNom)
+				FROM Squelette
+				WHERE alpha=(SELECT niveau1) AND beta=(SELECT niveau2) AND beta>0 AND gamma=0 AND methodeHttp='GET'),
+			''),
+		-- niveau 3
+		IFNULL((SELECT CONCAT('/',ptiNom)
+				FROM Squelette
+				WHERE alpha=(SELECT niveau1) AND beta=(SELECT niveau2) AND beta>0 AND gamma=(SELECT niveau3) AND gamma>0
+						AND methodeHttp='GET'),
+			'')
+	) AS URL
 FROM Squelette
 WHERE methodeHttp='GET'
-ORDER BY niveau1, niveau2, niveau3
