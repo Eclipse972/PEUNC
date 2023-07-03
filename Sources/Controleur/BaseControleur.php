@@ -11,7 +11,7 @@ const dossierCSS = 'CSS';
 const dossierVue = 'Application/Vue';
 
 protected $T_element;	// tableau asociatif des éléments simples à afficher (chaîne de caractères ou nombre)
-protected $vue = 'doctype.html';			// chemin vers la vue
+protected $vue = 'doctype.html';	// chemin vers la vue
 protected $T_CSS = [];	// liste des feuilles CSS
 protected $T_nav = [];	// 
 protected $route;	// la route http
