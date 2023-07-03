@@ -4,8 +4,6 @@ namespace PEUNC\Modele;
 use PEUNC\Erreur\Exception;
 use PEUNC\Autre\BDD;
 
-include"API_utilisateur.php";
-
 class Utilisateur implements iUtilisateur
 {
 	protected $ID;
