@@ -8,9 +8,10 @@ use PEUNC\Erreur\Exception;
 class BaseControleur implements iBaseControleur
 {
 const dossierCSS = 'CSS';
+const dossierVue = 'Application/Vue';
 
 protected $T_element;	// tableau asociatif des éléments simples à afficher (chaîne de caractères ou nombre)
-
+protected $vue;			// chemin vers la vue
 protected $route;	// la route http
 
 public function __construct(HttpRoute $route = null)
@@ -37,4 +38,13 @@ private function AjouteCSS($feuilleCSS)
 	// A faire: vérification de l'existence
 	$this->T_element['T_CSS'][] = '/' . $fichier;	// ajout d'un CSS à la liste
 }
+
+public function setVue($fichier)
+{
+	$fichier = self::dossierVue . $fichier;
+	// test existence à faire
+	
+	$this->vue = $fichier;
+}
+public function Vue()			{ return $this->vue; }
 }
