@@ -13,13 +13,11 @@ const dossierVue = 'Application/Vue';
 protected $T_element;	// tableau asociatif des éléments simples à afficher (chaîne de caractères ou nombre)
 protected $vue = 'doctype.html';			// chemin vers la vue
 protected $T_CSS = [];	// liste des feuilles CSS
+protected $T_nav = [];	// 
 protected $route;	// la route http
 
 public function __construct(HttpRoute $route = null)
 {
-	$T_element= array(
-		'T_nav'	=> [],	// liste du code pour le menu en liste de listes (ul)
-	);
 	$this->route = $route;
 }
 
