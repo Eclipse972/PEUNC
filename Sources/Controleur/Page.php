@@ -128,12 +128,12 @@ class Page implements iPage	{
 
 	public static function URLprecedente()	{ return $_SESSION['PEUNC']['URLprecedente']; }
 
-	public static function MenuAlphaBeta(HttpRoute $route)
+	public static function MenuAlphaBeta(HttpRoute $route, $alphaMini, $alphaMaxi)
 	{
 		$Liste = // recueille la liste des items du menu et du sous-menu
 			BDD::SELECT('	alpha, beta, CONCAT("<li><a href=",URL,">",titre,"</a></li>") AS lien
 							FROM Squelette
-							WHERE (alpha>='.self::ALPHA_MINI.' AND alpha<='.self::ALPHA_MAXI.' AND beta=0 AND gamma=0) OR (alpha=? AND beta>0 AND gamma=0)
+							WHERE (alpha>='.$alphaMini.' AND alpha<='.$alphaMaxi.' AND beta=0 AND gamma=0) OR (alpha=? AND beta>0 AND gamma=0)
 							ORDER BY alpha, beta, gamma',
 							[$route->getAlpha()]);
 		$T_menu = ['<nav>', '<ul>'];
