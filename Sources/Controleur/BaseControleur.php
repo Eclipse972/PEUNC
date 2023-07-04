@@ -44,4 +44,43 @@ public function setVue($fichier)
 	$this->vue = $fichier;
 }
 public function Vue()			{ return $this->vue; }
+
+// méthodes pour les menus extraits de l'arboresence
+public function MenuAlphaBeta($alphaMini, $alphaMaxi)
+{	// menu niveau 1 et 2
+	$Liste = // recueille la liste des items du menu et du sous-menu
+		BDD::SELECT('	alpha, beta, CONCAT("<li><a href=",URL,">",titre,"</a></li>") AS lien
+						FROM Squelette
+						WHERE (alpha>='.$alphaMini.' AND alpha<='.$alphaMaxi.' AND beta=0 AND gamma=0) OR (alpha=? AND beta>0 AND gamma=0)
+						ORDER BY alpha, beta, gamma',
+						[$this->route->getAlpha()]);
+	$T_menu = ['<nav>', '<ul>'];
+	for ($i=0; $i < count($Liste); $i++)
+	{ 
+		if ($i>0) // à partir de la 2e ligne
+		{
+			if (($Liste[$i-1]['beta'] == 0) && ($Liste[$i]['beta'] > 0))
+				$T_menu[] = '<ul>';
+			elseif (($Liste[$i-1]['beta'] > 0) && ($Liste[$i]['beta'] == 0))
+				$T_menu[] = '</ul>';
+		}
+		$instruction = $Liste[$i]['lien'];
+		if ($Liste[$i]['alpha'] == $route->getAlpha())
+		{
+			if ($Liste[$i]['beta'] == 0)
+				$instruction = str_replace('<a href', '<a id=alpha_actif href' , $instruction);
+			elseif ($Liste[$i]['beta'] == $route->getBeta())
+				$instruction = str_replace('<a href', '<a id=beta_actif href' , $instruction);
+		}
+		$T_menu[] = $instruction;
+	}
+	$T_menu[] = '</ul>';
+	$T_menu[] = '</nav>';
+	return $T_menu;
+}
+
+public function MenuBetaGamma($alphaMini, $alphaMaxi)
+{
+	// menu niveai 2 et 3
+}
 }
