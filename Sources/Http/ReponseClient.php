@@ -93,23 +93,6 @@ class ReponseClient
 			echo "\t" , '<link rel="stylesheet" href="', $feuilleCSS, '"/>', "\n";
 	}
 
-	public function Nav($avecBalise = false)
-	{
-		$Liste = $this->controller->getNav();
-		if(count($Liste) > 0)
-		{
-			if($avecBalise)	echo "<nav>\n";
-			$n = 0; // nombre de tabulation pour indenter le code
-			foreach($Liste as $ligne)
-			{
-				if($ligne == '</ul>') $n--;
-				echo str_repeat("\t", $n), $ligne, "\n";
-				if($ligne == '<ul>') $n++;
-			}
-			if($avecBalise)	echo "</nav>\n";
-		}
-	}
-
 	public function Section($avecBalise = false)
 	{
 		self::Balise('section', $this->controller->getSection(), $avecBalise);
