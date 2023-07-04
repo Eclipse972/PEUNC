@@ -4,6 +4,7 @@ namespace PEUNC\Http;
 use PEUNC\Erreur\Exception;
 use PEUNC\Autre\BDD;
 use PEUNC\Macro\Balise;
+use PEUNC\Controleur\Page;
 
 class ReponseClient
 /* Réponse à servir au client en fonction de la route trouvée suite à la requête http.
@@ -75,5 +76,14 @@ class ReponseClient
 	{
 		self::Balise('footer', $this->controller->getFooter(), $avecBalise);
 	}
-	
+
+	public function getMenu($alphaMini, $alphaMaxi)
+	{
+		$Liste = Page::MenuAlphaBeta($this->controller->getRoute(), $alphaMini, $alphaMaxi);
+		$code = '';
+		foreach ($Liste as $ligne) {
+			$code .= $ligne . "\n";
+		}
+		return $code;
+	}
 }
