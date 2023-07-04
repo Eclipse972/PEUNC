@@ -13,6 +13,9 @@ class Page implements iPage	{
 	const DOSSIER_VUE		= 'Application/Vue/';
 	const DOSSIER_CONTROLEUR= 'Controleur/';
 	const DOSSIER_CSS		= 'CSS/';
+	// pour le menu
+	const ALPHA_MINI=10;
+	const ALPHA_MAXI=15;
 	
 	// variable membre
 	protected $titrePage	= 'Titre de la page affiché dans la barre du haut du navigateur';
@@ -130,7 +133,7 @@ class Page implements iPage	{
 		$Liste = // recueille la liste des items du menu et du sous-menu
 			BDD::SELECT('	alpha, beta, CONCAT("<li><a href=",URL,">",titre,"</a></li>") AS lien
 							FROM Squelette
-							WHERE (alpha>9 AND alpha<14 AND beta=0 AND gamma=0) OR (alpha=? AND beta>0 AND gamma=0)
+							WHERE (alpha>='.self::ALPHA_MINI.' AND alpha<='.self::ALPHA_MAXI.' AND beta=0 AND gamma=0) OR (alpha=? AND beta>0 AND gamma=0)
 							ORDER BY alpha, beta, gamma',
 							[$route->getAlpha()]);
 		$T_menu = ['<nav>', '<ul>'];
