@@ -10,7 +10,7 @@ class BaseControleur implements iBaseControleur
 const dossierCSS = 'CSS';
 const dossierVue = 'Application/Vue';
 
-protected $T_element;	// tableau asociatif des éléments simples à afficher (chaîne de caractères ou nombre)
+protected $T_element = [];	// tableau asociatif des éléments simples à afficher (chaîne de caractères ou nombre)
 protected $vue = 'doctype.html';	// chemin vers la vue
 protected $T_CSS = [];	// liste des feuilles CSS
 protected $T_nav = [];	// 
@@ -33,7 +33,7 @@ private function AjouteCSS($feuilleCSS)
 {
 	$fichier = self::dossierCSS . '/' . $feuilleCSS . '.css';
 	// A faire: vérification de l'existence
-	$this->T_CSS[] = '/' . $fichier;	// ajout d'un CSS à la liste
+	$this->T_CSS[] = $fichier;	// ajout d'un CSS à la liste
 }
 
 public function setVue($fichier)
