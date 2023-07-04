@@ -14,9 +14,6 @@ class Page implements iPage
 const DOSSIER_VUE		= 'Application/Vue/';
 const DOSSIER_CONTROLEUR= 'Controleur/';
 const DOSSIER_CSS		= 'CSS/';
-// pour le menu
-const ALPHA_MINI=10;
-const ALPHA_MAXI=15;
 
 // variable membre
 protected $titrePage	= 'Titre de la page affiché dans la barre du haut du navigateur';
