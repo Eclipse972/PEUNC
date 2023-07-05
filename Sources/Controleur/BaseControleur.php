@@ -45,9 +45,12 @@ public function setVue($fichier)
 }
 public function Vue()			{ return $this->vue; }
 
-// méthodes pour les menus extraits de l'arboresence
+/**
+ * Méthodes pour créer des menus automatiquement à partir du Squelette et d'une route http
+ * Le menu est une liste de liste de liens en html (balises ul, li et a)
+ */
 public function MenuAlphaBeta($alphaMini, $alphaMaxi)
-{	// menu niveau 1 et 2
+{	// menu sur 2 niveaux: premier alpha et deuxième beta
 	$Liste = // recueille la liste des items du menu et du sous-menu
 		BDD::SELECT('	alpha, beta, CONCAT("<li><a href=",URL,">",titre,"</a></li>") AS lien
 						FROM Squelette
@@ -82,5 +85,21 @@ public function MenuAlphaBeta($alphaMini, $alphaMaxi)
 public function MenuBetaGamma($alphaMini, $alphaMaxi)
 {
 	// menu niveai 2 et 3
+}
+
+public function MenuDeuxNiveaux($niveau1, $where, $Tparametre)
+{	// factorisation des menu aplha-beta et beta-gamma
+	switch ($niveau1)
+	{
+		case 1:
+			$champsRequete = 'alpha, beta';
+			break;
+		case 2:
+			$champsRequete = 'beta, gamma';
+			break;
+		default:
+			die('erreur construction du menu'); // à remplacer par une exception
+			break;
+	}
 }
 }
