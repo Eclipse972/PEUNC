@@ -2,15 +2,15 @@
 <html lang="fr">
 <head>
 	<meta charset="UTF-8" />
-	<?='CSS'?>
-	<?=$titre?>
+<?=$reponse->CSS()?>
+<?=$reponse->Element('titre')?>
 </head>
 
 <body>
 
 <div id=conteneur>
 <header>
-<?='header à définir'?>
+<?=$reponse->Element('header')?>
 </header>
 
 <main role="main">
@@ -25,8 +25,7 @@
 <input type=submit value="Soumettre" />
 <a href=/oubliMDP title="Le logiciel Keepass est fait pour vous !">Mot de passe oubl&eacute;</a>
 <a href=/inscription title="en quelques minutes">S&apos;inscrire</a>
-<?=$complement?>
-<input name="CSRF" type="hidden" value="<?=$jetonCSRF?>">
+<input name="CSRF" type="hidden" value=<?=$reponse->Element('jetonCSRF')?>
 </form>
 
 </section>
