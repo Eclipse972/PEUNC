@@ -71,9 +71,9 @@ public function MenuAlphaBeta($alphaMini, $alphaMaxi)
 		if ($Liste[$i]['niveau1'] == $route->getAlpha())
 		{
 			if ($Liste[$i]['niveau2'] == 0)
-				$instruction = str_replace('<a href', '<a id=alpha_actif href' , $instruction);
+				$instruction = str_replace('<a href', '<a id=item_actif href' , $instruction);
 			elseif ($Liste[$i]['niveau2'] == $route->getBeta())
-				$instruction = str_replace('<a href', '<a id=beta_actif href' , $instruction);
+				$instruction = str_replace('<a href', '<a id=item_actif href' , $instruction);
 		}
 		$T_menu[] = $instruction;
 	}
