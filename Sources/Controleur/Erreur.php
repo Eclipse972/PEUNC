@@ -10,16 +10,21 @@ namespace PEUNC\Controleur;
  * */
 use PEUNC\Http\HttpRoute;
 
-class Erreur extends Page
+class Erreur extends BaseControleur
 {
-	public function __construct(HttpRoute $route = null)	{ parent::__construct($route); }
+public function __construct(HttpRoute $route)	{ parent::__construct($route); }
 
-	public function NoeudArborescence()
-	{	// permet d'afficher le noeud dans la vue s'il existe
-		if (isset($this->route))
-			$code = "<p>Noeud : " . $this->route->getAlpha() . " - " . $this->route->getBeta() . " - " . $this->route->getGamma()
-					. " m&eacute;thode http:" . $this->route->getMethodeHttp() . "</p>\n";
-		else $code ="";	// pas de route http pour les erreurs serveurs
-		return $code;
-	}
+public function NoeudArborescence()
+{	// permet d'afficher le noeud dans la vue s'il existe
+	if (isset($this->route))
+		$code = "<p>Noeud : " . $this->route->getAlpha() . " - " . $this->route->getBeta() . " - " . $this->route->getGamma()
+				. " m&eacute;thode http:" . $this->route->getMethodeHttp() . "</p>\n";
+	else $code ="";	// pas de route http pour les erreurs serveurs
+	return $code;
+}
+
+// vue erreur à concevoir
+
+public function Prepare()
+{}
 }
