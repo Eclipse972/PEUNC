@@ -1,11 +1,12 @@
 <?php
 namespace PEUNC\Autre;
 
+use PEUNC\Http\HttpRoute;
 use VolEval\Configuration\Chiffrement;
 /**
  * Remplacer VomEval par votre application
  * Classe chargée automatiquement par l'autoloader
- * définit les constantes CIPHER, KEY et IV
+ * définit les constantes cipher, key et iv
  */
 class JetonCSRF extends Jeton
 {
@@ -21,17 +22,17 @@ public function Chiffre()
 {
     return openssl_encrypt(
         json_encode($this->liste),
-        Chiffrement::CIPHER,
-        Chiffrement::KEY,
+        Chiffrement::cipher,
+        Chiffrement::key,
         0,
-        Chiffrement::IV
+        Chiffrement::iv
     );
 }
 
 public function Dechiffre($chaine)
 {
     return  json_decode(
-        openssl_decrypt($chaine, Chiffrement::CIPHER, Chiffrement::KEY, 0, Chiffrement::IV),
+        openssl_decrypt($chaine, Chiffrement::cipher, Chiffrement::key, 0, Chiffrement::iv),
         true
     );
 }
