@@ -17,7 +17,7 @@
 interface iBaseControleur
 {
 	public function get($nom);				// retourne l'élément nommé
-	private function set($nom, $valeur);	// ajoute ou écrase l'élément nommé. c'est une méthode privée
+	public function set($nom, $valeur);	// ajoute ou écrase l'élément nommé. c'est une méthode privée
 	/**
 	 * Listes des noms déjà pris
 	 * T_CSS: tableau contenant la liste des feuilles CSS

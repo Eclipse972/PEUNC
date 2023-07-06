@@ -21,7 +21,7 @@ public function __construct(HttpRoute $route = null)
 	$this->route = $route;
 }
 
-private function set($nom, $valeur)	 { $this->T_element[$nom] = $valeur; }
+public function set($nom, $valeur)	 { $this->T_element[$nom] = $valeur; }
 
 public function get($clé)
 {
