@@ -127,30 +127,28 @@ public static function SauvegardeEtat(HttpRoute $route)
 public static function URLprecedente()	{ return $_SESSION['PEUNC']['URLprecedente']; }
 
 public static function MenuAlphaBeta(HttpRoute $route, $alphaMini, $alphaMaxi)
-{
+{	// menu sur 2 niveaux: premier alpha et deuxième beta
 	$Liste = // recueille la liste des items du menu et du sous-menu
-		BDD::SELECT('	alpha, beta, CONCAT("<li><a href=",URL,">",titre,"</a></li>") AS lien
+		BDD::SELECT('	alpha AS niveau1, beta AS niveau2, CONCAT("<li><a href=",URL,">",titre,"</a></li>") AS lien
 						FROM Squelette
 						WHERE (alpha>='.$alphaMini.' AND alpha<='.$alphaMaxi.' AND beta=0 AND gamma=0) OR (alpha=? AND beta>0 AND gamma=0)
-						ORDER BY alpha, beta, gamma',
+						ORDER BY alpha, beta',
 						[$route->getAlpha()]);
 	$T_menu = ['<nav>', '<ul>'];
 	for ($i=0; $i < count($Liste); $i++)
 	{ 
 		if ($i>0) // à partir de la 2e ligne
 		{
-			if (($Liste[$i-1]['beta'] == 0) && ($Liste[$i]['beta'] > 0))
+			if (($Liste[$i-1]['niveau2'] == 0) && ($Liste[$i]['niveau2'] > 0))
 				$T_menu[] = '<ul>';
-			elseif (($Liste[$i-1]['beta'] > 0) && ($Liste[$i]['beta'] == 0))
+			elseif (($Liste[$i-1]['niveau2'] > 0) && ($Liste[$i]['niveau2'] == 0))
 				$T_menu[] = '</ul>';
 		}
 		$instruction = $Liste[$i]['lien'];
-		if ($Liste[$i]['alpha'] == $route->getAlpha())
+		if (($Liste[$i]['niveau1'] == $route->getAlpha())
+			&& (($Liste[$i]['niveau2'] == 0) || ($Liste[$i]['niveau2'] == $route->getBeta())))
 		{
-			if ($Liste[$i]['beta'] == 0)
-				$instruction = str_replace('<a href', '<a id=alpha_actif href' , $instruction);
-			elseif ($Liste[$i]['beta'] == $route->getBeta())
-				$instruction = str_replace('<a href', '<a id=beta_actif href' , $instruction);
+				$instruction = str_replace('<a href', '<a id=item_actif href' , $instruction);
 		}
 		$T_menu[] = $instruction;
 	}
