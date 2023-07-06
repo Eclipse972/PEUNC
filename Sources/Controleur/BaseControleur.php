@@ -68,10 +68,10 @@ public function MenuAlphaBeta($alphaMini, $alphaMaxi)
 				$T_menu[] = '</ul>';
 		}
 		$instruction = $Liste[$i]['lien'];
-		if ($Liste[$i]['niveau1'] == $route->getAlpha())
+		if(($Liste[$i]['niveau1'] == $this->route->getAlpha())
+			&& (($Liste[$i]['niveau2'] == 0) || ($Liste[$i]['niveau2'] == $this->route->getBeta())))
 		{
-			if (($Liste[$i]['niveau2'] == 0) || ($Liste[$i]['niveau2'] == $route->getBeta()))
-				$instruction = str_replace('<a href', '<a id=item_actif href' , $instruction);
+			$instruction = str_replace('<a href', '<a id=item_actif href' , $instruction);
 		}
 		$T_menu[] = $instruction;
 	}

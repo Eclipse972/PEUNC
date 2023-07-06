@@ -156,4 +156,29 @@ public static function MenuAlphaBeta(HttpRoute $route, $alphaMini, $alphaMaxi)
 	$T_menu[] = '</nav>';
 	return $T_menu;
 }
+
+public static function ConversionEnMenu(array $Liste, $selectionNiveau1, $selectionNiveau2)
+[
+	$T_menu = ['<nav>', '<ul>'];
+	for ($i=0; $i < count($Liste); $i++)
+	{ 
+		if ($i>0) // à partir de la 2e ligne
+		{
+			if (($Liste[$i-1]['niveau2'] == 0) && ($Liste[$i]['niveau2'] > 0))
+				$T_menu[] = '<ul>';
+			elseif (($Liste[$i-1]['niveau2'] > 0) && ($Liste[$i]['niveau2'] == 0))
+				$T_menu[] = '</ul>';
+		}
+		$instruction = $Liste[$i]['lien'];
+		if (($Liste[$i]['niveau1'] == $selectionNiveau1)
+			&& (($Liste[$i]['niveau2'] == 0) || ($Liste[$i]['niveau2'] == $selectionNiveau2)))
+		{
+				$instruction = str_replace('<a href', '<a id=item_actif href' , $instruction);
+		}
+		$T_menu[] = $instruction;
+	}
+	$T_menu[] = '</ul>';
+	$T_menu[] = '</nav>';
+	return $T_menu;
+]
 }
