@@ -38,6 +38,7 @@ public function ToutRecuperer()
 		'T_CSS'		=> $T_CSS,
 		'T_nav'		=> $T_nav,
 		'route'		=> $route
+	);
 }
 
 public function AjouteCSS($feuilleCSS)
