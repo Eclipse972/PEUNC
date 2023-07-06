@@ -13,6 +13,7 @@
 	Les mutateurs permettent de définir le contenu. Les accesseurs restituent seulement le code 
 	sans le mettre en forme sous la forme d'une variable texte ou un tabkeau. C'est l'objet RéponseClient qui s'en chargera.
 */
+namespace PEUNC\Controleur;
 
 interface iBaseControleur
 {
