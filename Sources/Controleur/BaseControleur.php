@@ -30,6 +30,16 @@ public function get($clé)
 	return $this->T_element[$clé];
 }
 
+public function ToutRecuperer()
+{
+	return array(
+		'T_element' => $T_element,
+		'vue'		=> $vue,
+		'T_CSS'		=> $T_CSS,
+		'T_nav'		=> $T_nav,
+		'route'		=> $route
+}
+
 public function AjouteCSS($feuilleCSS)
 {
 	$fichier = self::dossierCSS . '/' . $feuilleCSS . '.css';
