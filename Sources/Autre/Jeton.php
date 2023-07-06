@@ -38,7 +38,7 @@ class Jeton
 
     public static function EncodeURL($chaine)
     {
-        return str_replace(['+', '/', '='], ['-', '_', ''], base64_encode(j$chaine));
+        return str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($chaine));
     }
 
     public static function DecodeURL($chaine)
