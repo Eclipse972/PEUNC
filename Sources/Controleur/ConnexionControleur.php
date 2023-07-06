@@ -19,8 +19,8 @@ public function Afficher()
     $this->set('titre', 'Titre de la page (dans le navigateur');
     $this->set('header', 'En-tête de la page');
     $this->set('complement', 'insérer ici du code html à rajouter sous le formulaire');
-    $jeton = new jetonCSRF;
-
+    $jeton = new jetonCSRF($this->route);
+    $this->set('jetonCSRF', $jeton->InsererJeton());
 }
 
 public function Traitement()
