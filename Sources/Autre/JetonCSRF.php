@@ -1,37 +1,45 @@
 <?php
 namespace PEUNC\Autre;
 
+use VolEval\Configuration\Chiffrement;
+/**
+ * Remplacer VomEval par votre application
+ * Classe chargée automatiquement par l'autoloader
+ * définit les constantes CIPHER, KEY et IV
+ */
 class JetonCSRF extends Jeton
 {
-    require 'Config/config_chiffrement.php';
-    /* fichier qui ne doit pas être suivi par git et défini les constantes
-     * const CIPHER = algo
-     * const KEY = chaine de caractères
-     * const IV = chaine de caractères
-     */
+public function __construct(HttpRoute $route)
+{
+    $this->liste = array(
+            'date' => time(),
+            'noeud' => [$route->getAlpha(), $route->getBeta(), $route->getGamma()] // position dans l'arborescence
+        );
+}
 
-    public function __construct()
-    {
-        $this->liste = array(
-                'date' => time(),
-                // d'autres paramètres doivent être ajoutés comme l'URL de traitement et les paramètre pour le code de validation
-            );
-    }
+public function Chiffre()
+{
+    return openssl_encrypt(
+        json_encode($this->liste),
+        Chiffrement::CIPHER,
+        Chiffrement::KEY,
+        0,
+        Chiffrement::IV
+    );
+}
 
-    public function Chiffre()
-    {
-        return openssl_encrypt(json_encode($this->liste), self::CIPHER, self::KEY, 0, self::IV);
-    }
+public function Dechiffre($chaine)
+{
+    return  json_decode(
+        openssl_decrypt($chaine, Chiffrement::CIPHER, Chiffrement::KEY, 0, Chiffrement::IV),
+        true
+    );
+}
 
-    public function Dechiffre($chaine)
-    {
-        $this->liste = json_decode(openssl_decrypt($chaine, self::CIPHER, self::KEY, 0, self::IV),true);
-    }
-
-    public function InsererJeton()
-    {
-        $jeton = $this->Chiffre();
-        $_SESSION['PEUNC']['CSRF'] = $jeton;
-        return '<input name="CSRF" type="hidden" value="' . $jeton . '">' . "\n";
-    }
+public function InsererJeton()
+{
+    $jeton = $this->Chiffre();
+    $_SESSION['PEUNC']['CSRF'] = $jeton;
+    return '<input name="CSRF" type="hidden" value="' . $jeton . '">' . "\n";
+}
 }
