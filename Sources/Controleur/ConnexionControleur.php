@@ -1,6 +1,8 @@
 <?php
 namespace PEUNC\Controleur;
 
+use PEUNC\Http\HttpRoute;
+
 class ConnexionControleur extends BaseControleur
 {
 /**
