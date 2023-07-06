@@ -112,20 +112,4 @@ public static function ConversionEnMenu(array $Liste, $selectionNiveau1, $select
 	$T_menu[] = '</nav>';
 	return $T_menu;
 }
-
-public function MenuDeuxNiveaux($niveau1, $where, $Tparametre)
-{	// factorisation des menu aplha-beta et beta-gamma
-	switch ($niveau1)
-	{
-		case 1:
-			$champsRequete = 'alpha, beta';
-			break;
-		case 2:
-			$champsRequete = 'beta, gamma';
-			break;
-		default:
-			die('erreur construction du menu'); // à remplacer par une exception
-			break;
-	}
-}
 }
