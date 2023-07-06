@@ -29,7 +29,7 @@ public function get($clé)
 	return $this->T_element[$clé];
 }
 
-private function AjouteCSS($feuilleCSS)
+public function AjouteCSS($feuilleCSS)
 {
 	$fichier = self::dossierCSS . '/' . $feuilleCSS . '.css';
 	// A faire: vérification de l'existence

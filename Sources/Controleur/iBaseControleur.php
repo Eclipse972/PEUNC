@@ -25,5 +25,5 @@ interface iBaseControleur
 	 * T_nav: liste des instruction html pour le menu
 	 * vue: nom complet de la vue à afficher
 	 */
-	private function AjouteCSS($FeuilleCSS);// sans l'extension
+	public function AjouteCSS($FeuilleCSS);// sans l'extension
 }
