@@ -1,18 +1,17 @@
-<?php		// 
-/*
-    Interface du controleur de base
+<?php
+/**
+ * Interface du controleur de base
+ * Le controleur de base permet de créer et restituer tous les moceaux d'une page HTML. Et ne fait rien d'autre.
+ * Les controleurs de l'utiisateur hériteront de celui-ci.
+ * Les decendants pourront définir d'autes méthodes pour contruire la page.
+ * 
+ * Chacune de ces méthodes ne devra pas avoir de paramètre puisqu'on ne les connais pas d'avance.
+ * Par contre la route avec toutes ses informations est passée au constructeur.
+ * Cette route peut contenir des paramètes exploitable par le controleur.
+ *
+ *  C'est l'objet RéponseClient qui se chargera de placer chaque morceau dans la vue avec éventuellement une mise en page.
+ * */
 
-    Le controleur de bas e permet de créer et restituer toutes les partie d'une page HTML.
-    Il ne sait rien faire d'autre. Les controleur de l'utiisateur devront hériter de celui-ci.
-    Les decendants pourront définir des méthodes qui contruiront la page.
-
-    Chacune de ces méthode ne devra pas avoirs de paramètre puisqu'on ne les connais pas d'avance.
-    Par contre la route avec toutes ses information est passée au constructeur. Cette route
-    peut contenir des paramètes exploitable par le controleur.
-
-	Les mutateurs permettent de définir le contenu. Les accesseurs restituent seulement le code 
-	sans le mettre en forme sous la forme d'une variable texte ou un tabkeau. C'est l'objet RéponseClient qui s'en chargera.
-*/
 namespace PEUNC\Controleur;
 
 interface iBaseControleur
