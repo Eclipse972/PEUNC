@@ -55,7 +55,7 @@ public function MenuAlphaBeta($alphaMini, $alphaMaxi)
 		BDD::SELECT('	alpha, beta, CONCAT("<li><a href=",URL,">",titre,"</a></li>") AS lien
 						FROM Squelette
 						WHERE (alpha>='.$alphaMini.' AND alpha<='.$alphaMaxi.' AND beta=0 AND gamma=0) OR (alpha=? AND beta>0 AND gamma=0)
-						ORDER BY alpha, beta, gamma',
+						ORDER BY alpha, beta',
 						[$this->route->getAlpha()]);
 	$T_menu = ['<nav>', '<ul>'];
 	for ($i=0; $i < count($Liste); $i++)
