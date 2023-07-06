@@ -26,4 +26,5 @@ interface iBaseControleur
 	 * vue: nom complet de la vue à afficher
 	 */
 	public function AjouteCSS($FeuilleCSS);// sans l'extension
+	public function setVue($fichier);
 }

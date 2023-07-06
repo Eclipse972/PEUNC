@@ -21,6 +21,7 @@ public function __construct(HttpRoute $route = null)
 	$this->route = $route;
 }
 
+// implémetation de l'interface
 public function set($nom, $valeur)	 { $this->T_element[$nom] = $valeur; }
 
 public function get($clé)
@@ -43,6 +44,8 @@ public function setVue($fichier)
 	
 	$this->vue = $fichier;
 }
+// fin de l'implémentation de l'interface
+
 public function Vue()			{ return $this->vue; }
 
 /**
