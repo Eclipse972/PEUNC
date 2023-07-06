@@ -2,6 +2,7 @@
 namespace PEUNC\Controleur;
 
 use PEUNC\Http\HttpRoute;
+use PEUNC\Autre\JetonCSRF;
 
 class ConnexionControleur extends BaseControleur
 {
@@ -21,7 +22,7 @@ public function Afficher()
     $this->set('titre', 'Titre de la page (dans le navigateur');
     $this->set('header', 'En-tête de la page');
     $this->set('complement', 'insérer ici du code html à rajouter sous le formulaire');
-    $jeton = new jetonCSRF($this->route);
+    $jeton = new JetonCSRF($this->route);
     $this->set('jetonCSRF', $jeton->InsererJeton());
 }
 
