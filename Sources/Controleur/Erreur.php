@@ -25,6 +25,17 @@ public function NoeudArborescence()
 
 // vue erreur à concevoir
 
-public function Prepare()
+// Les différents types d'erreur
+public function Serveur()
 {}
+
+public function Applixation()
+{}
+
+public function BDD()
+{}
+
+public function Exception()
+{}
+
 }
