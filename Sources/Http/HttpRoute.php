@@ -27,10 +27,10 @@ private $Tchamp;
 
 private $T_param;
 
-public function __construct()
+public function __construct($URI)
 {
 	// décodage URI
-	list($URL, $reste) = explode('?', $_SERVER['REQUEST_URI']);
+	list($URL, $reste) = explode('?', $URI);
 	list($paramURL, $ancre) = explode('#', $reste, 2);
 
 	// construire la requête pour retrouver tous les composants de la route
