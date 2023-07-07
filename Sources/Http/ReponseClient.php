@@ -29,12 +29,12 @@ public function __construct($controller)
 }
 
 // Implémentation de l'interface =====================================================================
-
-// Fin de l'implémentation de l'interface ============================================================
 public function View()
 {
 	return $this->controller->getView();
 }
+// Fin de l'implémentation de l'interface ============================================================
+
 
 // balise générique
 private static function Balise($balise, $contenu, $avecBalise)
