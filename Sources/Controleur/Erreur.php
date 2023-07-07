@@ -12,9 +12,15 @@ use PEUNC\Http\HttpRoute;
 
 class Erreur extends BaseControleur
 {
-public function __construct(HttpRoute $route)
+// informations fournies par l'exception attrappée par index.php
+private $message;
+private $code;
+
+public function __construct(HttpRoute $route, $message, $code)
 {
 	parent::__construct($route);
+	$this->message = $message;
+	$this->code = $code;
 	$this->setVue('erreur.html'); // vue par défaut
 }
 
@@ -27,27 +33,33 @@ public function NoeudArborescence()
 	return $code;
 }
 
-// vue erreur à concevoir
-
 // Les différents types d'erreur
 public function Serveur()
 {
 	$this->set('type', 'serveur');
+	$this->set('titre', $this->code);
+	$this->set('contenu', '<p>'.$this->message."\n<img src=/images/serveur.png style=\"width:300px\" alt=\"Logo\" >");
 }
 
 public function Application()
 {
 	$this->set('type', 'application');
+	$this->set('titre', 'Erreur de l&apos;application');
+	$this->set('contenu', '<p>'.$this->message."</p>\n".self::NoeudArborescence());
 }
 
 public function BDD()
 {
 	$this->set('type', 'base de donn&eacute;es');
+	$this->set('titre', $this->message);
+	$this->set('contenu', self::NoeudArborescence());
 }
 
 public function Exception()
 {
 	$this->set('type', 'inonnue');
+	$this->set('titre', $this->message);
+	$this->set('contenu', self::NoeudArborescence());
 }
 
 }
