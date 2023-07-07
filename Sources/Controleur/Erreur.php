@@ -12,7 +12,11 @@ use PEUNC\Http\HttpRoute;
 
 class Erreur extends BaseControleur
 {
-public function __construct(HttpRoute $route)	{ parent::__construct($route); }
+public function __construct(HttpRoute $route)
+{
+	parent::__construct($route);
+	$this->setVue('erreur.html'); // vue par défaut
+}
 
 public function NoeudArborescence()
 {	// permet d'afficher le noeud dans la vue s'il existe
