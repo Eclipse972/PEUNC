@@ -25,7 +25,7 @@ private $Tchamp;
  * dureeCache;
  */
 
-private $T_param;
+private $T_param;	// paramètres $_GET ou $_POST
 
 public function __construct($URI = null)
 {
