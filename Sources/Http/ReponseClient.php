@@ -42,6 +42,19 @@ public function CSS()
 		echo "\t" , '<link rel="stylesheet" href="', $feuilleCSS, '"/>', "\n";
 }
 
+public function Menu()
+{
+	$code = '';
+	$nbTabulation = 0;
+	foreach ($thiss->controleur->getNav() as $ligne)
+	{
+		if($ligne == '</ul>') $nbTabulation--;
+		$code .= str_repeat("\t", $nbTabulation) . $ligne . "\n";
+		if($ligne == '<ul>') $nbTabulation++;
+	}
+	return $code;
+}
+
 // Fin de l'implémentation de l'interface ============================================================
 
 
@@ -81,14 +94,4 @@ public function Footer($avecBalise = false)
 	self::Balise('footer', $this->controller->getFooter(), $avecBalise);
 }
 
-public function getMenu($alphaMini, $alphaMaxi)
-{
-	$Liste = Page::MenuAlphaBeta($this->controller->getRoute(), $alphaMini, $alphaMaxi);
-	$code = '';
-	foreach ($Liste as $ligne)
-	{
-		$code .= $ligne . "\n";
-	}
-	return $code;
-}
 }
