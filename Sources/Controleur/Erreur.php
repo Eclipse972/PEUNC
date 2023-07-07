@@ -38,8 +38,8 @@ public function NoeudArborescence()
 public function Serveur()
 {
 	$this->set('type', 'serveur');
-	$this->set('titre', $this->code);
-	$this->set('contenu', '<p>'.$this->message."\n<img src=/images/serveur.png style=\"width:300px\" alt=\"Logo\" >");
+	$this->set('titre', $this->code.': '.$this->message);
+	$this->set('contenu', '<img src=/images/serveur.png style="width:300px" alt="serveur" >');
 }
 
 public function Application()
