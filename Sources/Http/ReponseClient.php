@@ -55,6 +55,12 @@ public function Menu()
 	return $code;
 }
 
+public function Element($nom)
+{
+	$Telement =  $this->controleur->getElement();
+	if (!array_key_exists($nom, $Telement)) throw new Exception('Reponse: élément inexistant');
+	return $Telement[$nom];
+}
 // Fin de l'implémentation de l'interface ============================================================
 
 /* futur méthode à éliminer
