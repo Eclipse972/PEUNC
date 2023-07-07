@@ -33,6 +33,15 @@ public function View()
 {
 	return $this->controller->getView();
 }
+
+public function CSS()
+{
+	$Liste = $this->controller->getCSS();
+
+	foreach($Liste as $feuilleCSS)
+		echo "\t" , '<link rel="stylesheet" href="', $feuilleCSS, '"/>', "\n";
+}
+
 // Fin de l'implémentation de l'interface ============================================================
 
 
@@ -61,14 +70,6 @@ public function Logo()
 }
 
 // pas d'implémentation de getDossier()?
-
-public function CSS()
-{
-	$Liste = $this->controller->getCSS();
-
-	foreach($Liste as $feuilleCSS)
-		echo "\t" , '<link rel="stylesheet" href="', $feuilleCSS, '"/>', "\n";
-}
 
 public function Section($avecBalise = false)
 {
