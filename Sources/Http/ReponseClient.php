@@ -46,7 +46,7 @@ public function Menu()
 {
 	$code = '';
 	$nbTabulation = 0;
-	foreach ($thiss->controleur->getNav() as $ligne)
+	foreach ($this->controller->getNav() as $ligne)
 	{
 		if($ligne == '</ul>') $nbTabulation--;
 		$code .= str_repeat("\t", $nbTabulation) . $ligne . "\n";
@@ -57,9 +57,7 @@ public function Menu()
 
 public function Element($nom)
 {
-	$Telement = $this->controleur->getElement();
-	if (!array_key_exists($nom, $Telement)) throw new Exception('Reponse: élément inexistant');
-	return $Telement[$nom];
+	return $this->controller->get($nom);
 }
 // Fin de l'implémentation de l'interface ============================================================
 
