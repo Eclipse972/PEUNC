@@ -29,6 +29,12 @@ private $T_param;
 
 public function __construct($URI)
 {
+	if (is_null($URI))
+	{
+		$this->T_param = [];
+		return;
+	}
+
 	// décodage URI
 	list($URL, $reste) = explode('?', $URI);
 	list($paramURL, $ancre) = explode('#', $reste, 2);
