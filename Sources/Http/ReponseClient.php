@@ -31,7 +31,7 @@ public function __construct($controller)
 // Implémentation de l'interface =====================================================================
 public function View()
 {
-	return $this->controller->getView();
+	return $this->controller->Vue();
 }
 
 public function CSS()
@@ -57,7 +57,7 @@ public function Menu()
 
 public function Element($nom)
 {
-	$Telement =  $this->controleur->getElement();
+	$Telement = $this->controleur->getElement();
 	if (!array_key_exists($nom, $Telement)) throw new Exception('Reponse: élément inexistant');
 	return $Telement[$nom];
 }
