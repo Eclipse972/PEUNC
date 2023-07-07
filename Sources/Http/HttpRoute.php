@@ -27,7 +27,7 @@ private $Tchamp;
 
 private $T_param;
 
-public function __construct($URI)
+public function __construct($URI = null)
 {
 	if (is_null($URI))
 	{
