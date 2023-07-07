@@ -31,15 +31,23 @@ public function NoeudArborescence()
 
 // Les différents types d'erreur
 public function Serveur()
-{}
+{
+	$this->set('type', 'serveur');
+}
 
-public function Applixation()
-{}
+public function Application()
+{
+	$this->set('type', 'application');
+}
 
 public function BDD()
-{}
+{
+	$this->set('type', 'base de donn&eacute;es');
+}
 
 public function Exception()
-{}
+{
+	$this->set('type', 'inonnue');
+}
 
 }
