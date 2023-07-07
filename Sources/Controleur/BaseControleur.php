@@ -50,7 +50,7 @@ public function AjouteCSS($feuilleCSS)
 
 public function setVue($fichier)
 {
-	$fichier = self::dossierVue . $fichier;
+	$fichier = self::dossierVue . '/' . $fichier;
 	// test existence à faire
 	
 	$this->vue = $fichier;
