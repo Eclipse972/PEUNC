@@ -57,7 +57,7 @@ public function Menu()
 
 // Fin de l'implémentation de l'interface ============================================================
 
-
+/* futur méthode à éliminer
 // balise générique
 private static function Balise($balise, $contenu, $avecBalise)
 {
@@ -93,5 +93,5 @@ public function Footer($avecBalise = false)
 {
 	self::Balise('footer', $this->controller->getFooter(), $avecBalise);
 }
-
+*/
 }
