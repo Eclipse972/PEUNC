@@ -5,7 +5,6 @@ use PEUNC\Erreur\ServeurException;
 use PEUNC\Erreur\Exception;
 use PEUNC\Autre\BDD;
 use PEUNC\Controleur\Formulaire;
-use PEUNC\Http\iHttpRoute;
 
 class HttpRoute implements iHttpRoute
 /* J'utilise une pseudo-réécriture d'URL qui exploite la redirection 404 Cf .htaccess
