@@ -6,7 +6,7 @@ use PEUNC\Autre\BDD;
 use PEUNC\Macro\Balise;
 use PEUNC\Controleur\Page;
 
-class ReponseClient
+class ReponseClient implements iReponseClient
 /* Réponse à servir au client en fonction de la route trouvée suite à la requête http.
  * Classe nécesaire: HttpRoute chargée par l'autoloader
 */
@@ -28,6 +28,9 @@ public function __construct($controller)
 		* une nouvelle requête qui générera une nouvelle réponse. A VÉRIFIER */
 }
 
+// Implémentation de l'interface =====================================================================
+
+// Fin de l'implémentation de l'interface ============================================================
 public function View()
 {
 	return $this->controller->getView();
