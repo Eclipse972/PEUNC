@@ -60,42 +60,5 @@ public function Element($nom)
 	return $this->controleur->get($nom);
 }
 // Fin de l'implémentation de l'interface ============================================================
-
-/* futur méthode à éliminer
-// balise générique
-private static function Balise($balise, $contenu, $avecBalise)
-{
-	if($avecBalise)	echo "<", $balise, ">\n";
-	echo  $contenu, "\n";
-	if($avecBalise)	echo "</", $balise, ">\n";
 }
 
-// écriture des balises pour la vue
-public function Title()
-{
-	echo $this->controleur->getTitle();
-}
-
-public function HeaderText()
-{
-	echo $this->controleur->getHeaderText(), "\n";
-}
-
-public function Logo()
-{
-	echo Balise::Image($this->controleur->getLogo(),'Logo');
-}
-
-// pas d'implémentation de getDossier()?
-
-public function Section($avecBalise = false)
-{
-	self::Balise('section', $this->controleur->getSection(), $avecBalise);
-}
-
-public function Footer($avecBalise = false)
-{
-	self::Balise('footer', $this->controleur->getFooter(), $avecBalise);
-}
-*/
-}
