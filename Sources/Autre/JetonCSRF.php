@@ -43,4 +43,9 @@ public function InsererJeton()
     $_SESSION['PEUNC']['CSRF'] = $jeton;
     return '<input name="CSRF" type="hidden" value="' . $jeton . '">' . "\n";
 }
+
+public static function Verifier($chaine)
+{
+    return ($_SESSION['PEUNC']['CSRF'] != $chaine);
+}
 }
