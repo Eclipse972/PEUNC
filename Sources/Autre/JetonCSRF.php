@@ -18,7 +18,7 @@ public function __construct(HttpRoute $route)
         );
 }
 
-public static function Chiffre()
+public function Chiffre()
 {
     return openssl_encrypt(
         json_encode($this->liste),
