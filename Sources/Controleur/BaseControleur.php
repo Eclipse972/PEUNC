@@ -11,17 +11,20 @@ const dossierCSS = 'CSS';
 const dossierVue = 'Application/Vue';
 
 protected $T_element = [];	// tableau asociatif des éléments simples à afficher (chaîne de caractères ou nombre)
-protected $vue = 'doctype.html';	// chemin vers la vue
-protected $T_CSS = [];	// liste des feuilles CSS
-protected $T_nav = [];	// 
-protected $route;	// la route http
+protected $vue;				// chemin vers la vue
+protected $T_CSS = [];		// liste des feuilles CSS
+protected $T_nav = [];		// 
+protected $route;			// la route http
 
 public function __construct(HttpRoute $route)
 {
 	$this->route = $route;
+	$this->setVue('doctype.html');
 }
 
-// implémentation de l'interface
+// implémentation de l'interface ==========================================================================
+
+// les éléments
 public function set($nom, $valeur)	 { $this->T_element[$nom] = $valeur; }
 
 public function get($clé)
@@ -30,6 +33,7 @@ public function get($clé)
 	return $this->T_element[$clé];
 }
 
+// feuille de style
 public function AjouteCSS($feuilleCSS)
 {
 	$fichier = self::dossierCSS . '/' . $feuilleCSS . '.css';
@@ -37,6 +41,9 @@ public function AjouteCSS($feuilleCSS)
 	$this->T_CSS[] = $fichier;	// ajout d'un CSS à la liste
 }
 
+public function getCSS()	{ return $this->T_CSS; }
+
+// vue
 public function setVue($fichier)
 {
 	$fichier = self::dossierVue . '/' . $fichier;
@@ -44,7 +51,8 @@ public function setVue($fichier)
 	
 	$this->vue = $fichier;
 }
+
+public function getVue()	{ return $this->vue; }
 // fin de l'implémentation de l'interface
 
-public function Vue()			{ return $this->vue; }
 }
