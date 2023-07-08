@@ -4,7 +4,7 @@ namespace PEUNC\Http;
 use PEUNC\Erreur\ServeurException;
 use PEUNC\Erreur\Exception;
 use PEUNC\Autre\BDD;
-use PEUNC\Controleur\Formulaire;
+use PEUNC\Autre\JetonCSRF;
 
 class HttpRoute implements iHttpRoute
 /* J'utilise une pseudo-réécriture d'URL qui exploite la redirection 404 Cf .htaccess
@@ -95,7 +95,7 @@ private static function SansRedirection()
 			if (!JetonCSRF::Verifier($_POST['CSRF']))
 				throw new Exception(102);
 				
-			$jeton = Formulaire::DecoderJeton($_POST['CSRF']);
+			$jeton = JetonCSRF::Dechiffre($_POST['CSRF']);
 
 			$Tparam = $jeton->noeud;// renvoie la position du formulaire dans l'arborescence
 			break;
