@@ -13,8 +13,8 @@ class JetonCSRF extends Jeton
 public function __construct(HttpRoute $route)
 {
     $this->liste = array(
-            'date' => time(),
-            'noeud' => [$route->getAlpha(), $route->getBeta(), $route->getGamma()] // position dans l'arborescence
+            'date'  => time(),
+            'URL'   => $route->getURL() // URL du formulaire
         );
 }
 
