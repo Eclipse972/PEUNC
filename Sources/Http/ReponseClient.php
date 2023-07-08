@@ -13,16 +13,16 @@ class ReponseClient implements iReponseClient
 {
 const DOSSIER_CACHE = "cache/";
 
-protected $controller;
+protected $controleur;
 
-public function __construct($controller)
+public function __construct($controleur)
 {
 	/* pour le moment toutes les pages peuvent être mise en cache.
 		* Or ce pas possible pour les pages posesdant des paramètres car on ne peut les connaitre
 		* tousà l'avance.
 		* La liste des paramètres de chaque page est diponible dans la table squellette
 		* Une age peut est 'cachée' si la méthode http =GET  et pas de paramètre */
-	$this->controller = $controller;
+	$this->controleur = $controleur;
 
 	/* Remarque: dans le cas d'un traitement de formulaire, la redirection devrait provoquer
 		* une nouvelle requête qui générera une nouvelle réponse. A VÉRIFIER */
@@ -31,12 +31,12 @@ public function __construct($controller)
 // Implémentation de l'interface =====================================================================
 public function View()
 {
-	return $this->controller->Vue();
+	return $this->controleur->Vue();
 }
 
 public function CSS()
 {
-	$Liste = $this->controller->getCSS();
+	$Liste = $this->controleur->getCSS();
 
 	foreach($Liste as $feuilleCSS)
 		echo "\t" , '<link rel="stylesheet" href="', $feuilleCSS, '"/>', "\n";
@@ -46,7 +46,7 @@ public function Menu()
 {
 	$code = '';
 	$nbTabulation = 0;
-	foreach ($this->controller->getNav() as $ligne)
+	foreach ($this->controleur->getNav() as $ligne)
 	{
 		if($ligne == '</ul>') $nbTabulation--;
 		$code .= str_repeat("\t", $nbTabulation) . $ligne . "\n";
@@ -57,7 +57,7 @@ public function Menu()
 
 public function Element($nom)
 {
-	return $this->controller->get($nom);
+	return $this->controleur->get($nom);
 }
 // Fin de l'implémentation de l'interface ============================================================
 
@@ -73,29 +73,29 @@ private static function Balise($balise, $contenu, $avecBalise)
 // écriture des balises pour la vue
 public function Title()
 {
-	echo $this->controller->getTitle();
+	echo $this->controleur->getTitle();
 }
 
 public function HeaderText()
 {
-	echo $this->controller->getHeaderText(), "\n";
+	echo $this->controleur->getHeaderText(), "\n";
 }
 
 public function Logo()
 {
-	echo Balise::Image($this->controller->getLogo(),'Logo');
+	echo Balise::Image($this->controleur->getLogo(),'Logo');
 }
 
 // pas d'implémentation de getDossier()?
 
 public function Section($avecBalise = false)
 {
-	self::Balise('section', $this->controller->getSection(), $avecBalise);
+	self::Balise('section', $this->controleur->getSection(), $avecBalise);
 }
 
 public function Footer($avecBalise = false)
 {
-	self::Balise('footer', $this->controller->getFooter(), $avecBalise);
+	self::Balise('footer', $this->controleur->getFooter(), $avecBalise);
 }
 */
 }
