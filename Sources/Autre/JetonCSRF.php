@@ -18,7 +18,7 @@ public function __construct(HttpRoute $route)
         );
 }
 
-public function Chiffre()
+public static function Chiffre()
 {
     return openssl_encrypt(
         json_encode($this->liste),
@@ -29,7 +29,7 @@ public function Chiffre()
     );
 }
 
-public function Dechiffre($chaine)
+public static function Dechiffre($chaine)
 {
     return  json_decode(
         openssl_decrypt($chaine, Chiffrement::cipher, Chiffrement::key, 0, Chiffrement::iv),
