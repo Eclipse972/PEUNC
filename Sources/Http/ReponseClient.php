@@ -31,7 +31,7 @@ public function __construct($controleur)
 // Implémentation de l'interface =====================================================================
 public function View()
 {
-	return $this->controleur->Vue();
+	return $this->controleur->getVue();
 }
 
 public function CSS()
