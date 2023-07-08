@@ -16,13 +16,16 @@ namespace PEUNC\Controleur;
 
 interface iBaseControleur
 {
+	// les éléments définis par le developpeur
 	public function get($nom);			// retourne l'élément nommé
 	public function set($nom, $valeur);	// ajoute ou écrase l'élément nommé. c'est une méthode privée
 	
-	// les éléments spécifiques
-	public function AjouteCSS($FeuilleCSS);	// sans l'extension
+	// les éléments incontournables
+	public function AjouteCSS($FeuilleCSS);	// sans extension ni dossier
 	public function getCSS();				// retourne la liste des liens CSS
 
-	public function setVue($fichier);	// nom du fichier sans le répertoire par défaut
+	public function setVue($fichier);	// nom du fichier sans le dossier par défaut
 	public function getVue();			// renvoie le chimn complet vers la vue
+
+	public function getNav();	// renvoie la liste des instructions html de la balise nav
 }

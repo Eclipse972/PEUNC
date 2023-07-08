@@ -13,7 +13,7 @@ const dossierVue = 'Application/Vue';
 protected $T_element = [];	// tableau asociatif des éléments simples à afficher (chaîne de caractères ou nombre)
 protected $vue;				// chemin vers la vue
 protected $T_CSS = [];		// liste des feuilles CSS
-protected $T_nav = [];		// 
+protected $T_nav = [];		// liste des instructions html de la balise nav
 protected $route;			// la route http
 
 public function __construct(HttpRoute $route)
@@ -53,6 +53,10 @@ public function setVue($fichier)
 }
 
 public function getVue()	{ return $this->vue; }
+
+// balise nav
+public function getNav()	{ return $this->T_nav; }
+
 // fin de l'implémentation de l'interface
 
 }
