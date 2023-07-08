@@ -27,5 +27,4 @@ interface iBaseControleur
 	 */
 	public function AjouteCSS($FeuilleCSS);// sans l'extension
 	public function setVue($fichier);
-	public function ToutRecuperer();	// renvoie tout les élément pour compléter la page
 }
