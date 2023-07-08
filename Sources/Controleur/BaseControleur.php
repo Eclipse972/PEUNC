@@ -16,12 +16,12 @@ protected $T_CSS = [];	// liste des feuilles CSS
 protected $T_nav = [];	// 
 protected $route;	// la route http
 
-public function __construct(HttpRoute $route = null)
+public function __construct(HttpRoute $route)
 {
 	$this->route = $route;
 }
 
-// implémetation de l'interface
+// implémentation de l'interface
 public function set($nom, $valeur)	 { $this->T_element[$nom] = $valeur; }
 
 public function get($clé)
