@@ -89,11 +89,8 @@ private static function SansRedirection()
 			 * J'ai choisi de repasser par index.php pour traiter tous les formulaires.
 			 * le jeton CSRF contient des infos sur le formuaire notemment sa position dans l'arborescence
 			 */
-			if (!isset($_POST['CSRF']))	// si le fomulaire ne contient pas de jeton CSRF
-				throw new Exception(101);
-
 			if (!JetonCSRF::Verifier($_POST['CSRF']))
-				throw new Exception(102);
+				throw new Exception(101);
 							
 			$jeton = JetonCSRF::Dechiffre($_POST['CSRF']);
 			$Tparam = $jeton['noeud'];// renvoie la position du formulaire dans l'arborescence

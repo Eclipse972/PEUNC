@@ -6,8 +6,7 @@ class Exception extends \Exception
 	const LISTE = array(
 		// HttpRoute
 		100 => 'M&eacute;thode non prise en charge',
-		101 => 'Jeton CSRF inexistant',
-		102 => 'Jeton CSRF invalide',
+		101 => 'Jeton CSRF inexistant ou invalide',
 
 		// ReponseClient
 		200 => 'La classe de page n&apos;est pas d&eacute;finie dans le squelette.',
