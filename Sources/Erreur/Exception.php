@@ -17,7 +17,7 @@ class Exception extends \Exception
 		// Connexion
 		400 => 'Utilisateur en doublon',
 
-		// Page
+		// Controleur
 		500 => 'Vue inexistante',
 		501 => 'Controleur non d&eacute;fini',
 		502 => 'Controleur inexistant',
