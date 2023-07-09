@@ -48,6 +48,6 @@ public function InsererJeton()
 
 public static function Verifier($chaine)
 {
-    return ($_SESSION['PEUNC']['CSRF'] != $chaine);
+    return ($_SESSION['PEUNC']['CSRF'] == $chaine);
 }
 }
