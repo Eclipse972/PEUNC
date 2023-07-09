@@ -84,7 +84,7 @@ private static function SansRedirection()
 		case 'GET':
 			$Tparam = [0, 0, 0];	// un appel ordinaire vers la page d'accueil
 			break;
-		case 'POST':	// 
+		case 'POST':
 			/* La pseudo réécriture d'URL ne fonctionne pas avec le script action de formulaire.
 			 * J'ai choisi de repasser par index.php pour traiter tous les formulaires.
 			 * le jeton CSRF contient des infos sur le formuaire notemment sa position dans l'arborescence
@@ -94,10 +94,9 @@ private static function SansRedirection()
 
 			if (!JetonCSRF::Verifier($_POST['CSRF']))
 				throw new Exception(102);
-				
+							
 			$jeton = JetonCSRF::Dechiffre($_POST['CSRF']);
-
-			$Tparam = $jeton->noeud;// renvoie la position du formulaire dans l'arborescence
+			$Tparam = $jeton['noeud'];// renvoie la position du formulaire dans l'arborescence
 			break;
 		default:
 			throw new ServeurException(405);// erreur 405!
