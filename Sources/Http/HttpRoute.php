@@ -35,8 +35,14 @@ public function __construct($URI = null)
 	}
 
 	// décodage URI
-	list($URL, $reste) = explode('?', $URI);
-	list($paramURL, $ancre) = explode('#', $reste, 2);
+	$T = explode('?', $URI);	// T[1] contient ce qu'il y a après le ?
+	$URL = $T[0];
+	if (count($T) > 1)
+	{
+		$T2 = explode('#', $T[1]);
+		$paramURL = $T2[0];
+	}
+	else $paramURL = '';
 
 	// construire la requête pour retrouver tous les composants de la route
 	switch ($_GET['serverError']) {
@@ -113,7 +119,8 @@ private static function ExtraireParamURL($paramURL)
 	foreach (explode('&', $paramURL) as $instruction)
 	{
 		$param = explode("=", $instruction);
-		if ($param) $T_param[urldecode($param[0])] = urldecode($param[1]);
+		if (count($param) == 2)
+			$T_param[urldecode($param[0])] = urldecode($param[1]);
 	}
 	return $T_param;
 }
