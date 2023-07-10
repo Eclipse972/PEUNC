@@ -169,8 +169,10 @@ public function getTitre()		{ return $this->Tchamp['titre']; }
 
 public function getParam($nom = null)	// renvoie les paramètres $_GET, $_POST suivant les cas
 {
-	return (isset($nom)) ?
-			$this->T_param[$nom] :	// renvoie le paramètre demandé
-			$this->T_param;			// renvoie tout le tableau
+	if (is_null($nom))
+		return $this->T_param;		// tout le tableau
+	elseif (array_key_exists($nom, $this->T_param))
+		return $this->T_param[$nom];// le paramètre demandé
+	else return null;				// rien
 }
 }
