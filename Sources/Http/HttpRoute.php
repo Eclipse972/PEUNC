@@ -45,27 +45,25 @@ public function __construct($URI = null)
 	else $paramURL = '';
 
 	// construire la requête pour retrouver tous les composants de la route
-	switch ($_GET['serverError']) {
-		case null:// sans redirection
-			list($clauseWhereRequeteRoute, $TparamRequeteRoute) = self::SansRedirection();
-			break;
-		
-		case 404:
-			header('Status: 200 OK', false, 200);	// modification pour dire au navigateur que tout va bien finalement
-			$clauseWhereRequeteRoute = 'URL=? AND methodeHttp=?';
-			$TparamRequeteRoute = [$URL, $_SERVER['REQUEST_METHOD']];
-			break;
-		
-		case 403:
-		case 405:
-		case 500:
-			throw new ServeurException((int)$_GET['serverError']);
-			break;
-		
-		default:
-			throw new Exception('Erreur de route'); // .htaccess est à vérifier
-			break;
-	}
+	if (array_key_exists('serverError', $_GET))
+		switch ($_GET['serverError'])	// une erreur serveur a été redirigée vers index.php Cf .htaccess
+		{
+			case 404:
+				header('Status: 200 OK', false, 200);	// modification pour dire au navigateur que tout va bien finalement
+				$clauseWhereRequeteRoute = 'URL=? AND methodeHttp=?';
+				$TparamRequeteRoute = [$URL, $_SERVER['REQUEST_METHOD']];
+				break;
+			case 403:
+			case 405:
+			case 500:
+				throw new ServeurException((int)$_GET['serverError']);
+				break;
+			default:
+				throw new Exception('Erreur de route'); // .htaccess est à vérifier
+				break;
+		}
+	else list($clauseWhereRequeteRoute, $TparamRequeteRoute) = self::SansRedirection();	// pas d'erreur serveur
+
 	// extraction des données de la table Squelette
 	$this->Tchamp = BDD::SELECT('alpha, beta, gamma, URL, methodeHttp, titre, paramAutorise, controleur, methodeControleur, dureeCache
 									FROM Squelette WHERE ' . $clauseWhereRequeteRoute,
