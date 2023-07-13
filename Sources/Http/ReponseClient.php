@@ -16,33 +16,44 @@ private static $instance;
 
 protected $controleur;
 
-public function __construct($controleur)
+private function __construct()
 {
-	$this->controleur = $controleur;
+	// rien à faire a part avoir le statut privé pour empêcher l'instanciation de la classe
+}
 
-	/* Remarque: dans le cas d'un traitement de formulaire, la redirection devrait provoquer
-		* une nouvelle requête qui générera une nouvelle réponse. A VÉRIFIER */
+private static function getInstance()
+{
+	if (is_null(self::$instance))	self::$instance = new ReponseClient;
+
+	return self::$instance;
 }
 
 // Implémentation de l'interface =====================================================================
-public function View()
+public static function Absorbe($controleur)
 {
-	return $this->controleur->getVue();
+	$reponse = ReponseClient::getInstance();// récupération instance
+	$reponse->controleur = $controleur;		// modification
+	self::$instance = $reponse;				// sauvegarde
 }
 
-public function CSS()
+public static function View()
 {
-	$Liste = $this->controleur->getCSS();
+	return ReponseClient::getInstance()->controleur->getVue();
+}
 
+public static function CSS()
+{
+	$Liste = ReponseClient::getInstance()->controleur->getCSS();
 	foreach($Liste as $feuilleCSS)
 		echo "\t" , '<link rel="stylesheet" href="', $feuilleCSS, '"/>', "\n";
 }
 
-public function Menu()
+public static function Menu()
 {
 	$code = '';
 	$nbTabulation = 0;
-	foreach ($this->controleur->getNav() as $ligne)
+	$Liste = ReponseClient::getInstance()->controleur->getNav();
+	foreach ($Liste as $ligne)
 	{
 		if($ligne == '</ul>') $nbTabulation--;
 		$code .= str_repeat("\t", $nbTabulation) . $ligne . "\n";
@@ -51,9 +62,9 @@ public function Menu()
 	return $code;
 }
 
-public function Element($nom)
+public static function Element($nom)
 {
-	return $this->controleur->get($nom);
+	return ReponseClient::getInstance()->controleur->get($nom);
 }
 // Fin de l'implémentation de l'interface ============================================================
 }
