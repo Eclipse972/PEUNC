@@ -33,7 +33,7 @@ CONCAT('/',
 	IFNULL((SELECT CONCAT('/',ptiNom) FROM Squelette AS T3 WHERE T3.alpha = Squelette.alpha AND T3.beta = Squelette.beta AND T3.gamma = Squelette.gamma AND T3.beta>0 AND gamma>0 AND T3.methodeHttp='GET'), '')
 ) AS URL
 FROM Squelette
-WHERE ";
+WHERE methodeHttp=? AND ";
 
 private $Tchamp;	// Liste des champs tirés de la table Squelette voir la première ligne de la requête
 
@@ -63,8 +63,8 @@ public function __construct($URI = null)
 		{
 			case 404:
 				header('Status: 200 OK', false, 200);	// modification pour dire au navigateur que tout va bien finalement
-				$clauseWhereRequeteRoute = 'URL=? AND methodeHttp=?';
-				$TparamRequeteRoute = [$URL, $_SERVER['REQUEST_METHOD']];
+				$clauseWhereRequeteRoute = 'URL=?';
+				$TparamRequeteRoute = [$URL];
 				break;
 			case 403:
 			case 405:
@@ -76,6 +76,8 @@ public function __construct($URI = null)
 				break;
 		}
 	else list($clauseWhereRequeteRoute, $TparamRequeteRoute) = self::SansRedirection();	// pas d'erreur serveur
+
+	array_unshift($TparamRequeteRoute, $_SERVER['REQUEST_METHOD']);	// ajout comme premier paramètre
 
 	// extraction des données de la table Squelette
 	$this->Tchamp = BDD::SELECT(self::RequeteRoute . $clauseWhereRequeteRoute, $TparamRequeteRoute, true);
@@ -113,8 +115,7 @@ private static function SansRedirection()
 		default:
 			throw new ServeurException(405);// erreur 405!
 	}
-	$Tparam[] = $_SERVER['REQUEST_METHOD'];
-	return array('alpha=? AND beta=? AND gamma=? AND methodeHttp=?',$Tparam);
+	return array('alpha=? AND beta=? AND gamma=?',$Tparam);
 }
 
 //	Renvoie les paramètres $_GET ou $_POST nettoyés ==============================================
