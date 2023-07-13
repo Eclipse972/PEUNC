@@ -7,21 +7,17 @@ use PEUNC\Macro\Balise;
 use PEUNC\Controleur\Page;
 
 class ReponseClient implements iReponseClient
-/* Réponse à servir au client en fonction de la route trouvée suite à la requête http.
+/**
+ * Réponse à servir au client en fonction de la route trouvée suite à la requête http.
  * Classe nécesaire: HttpRoute chargée par l'autoloader
-*/
+ **/
 {
-const DOSSIER_CACHE = "cache/";
+private static $instance;
 
 protected $controleur;
 
 public function __construct($controleur)
 {
-	/* pour le moment toutes les pages peuvent être mise en cache.
-		* Or ce pas possible pour les pages posesdant des paramètres car on ne peut les connaitre
-		* tousà l'avance.
-		* La liste des paramètres de chaque page est diponible dans la table squellette
-		* Une age peut est 'cachée' si la méthode http =GET  et pas de paramètre */
 	$this->controleur = $controleur;
 
 	/* Remarque: dans le cas d'un traitement de formulaire, la redirection devrait provoquer
