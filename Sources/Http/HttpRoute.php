@@ -25,7 +25,7 @@ class HttpRoute implements iHttpRoute
  * le formulaire de contact est le noeud 5-1-0-GET. Le traitement de ce formulaire qui est 
  * le noeud 5-1-0-POST sera quant même trouvé.
  **/
-const Requete =
+const RequeteRoute =
 "alpha, beta, gamma, URL, methodeHttp, titre, paramAutorise, controleur, methodeControleur, dureeCache,
 CONCAT('/',
 	(SELECT ptiNom FROM Squelette AS T1 WHERE T1.alpha = Squelette.alpha AND T1.beta=0 AND T1.gamma=0 AND T1.methodeHttp='GET'),
@@ -33,7 +33,7 @@ CONCAT('/',
 	IFNULL((SELECT CONCAT('/',ptiNom) FROM Squelette AS T3 WHERE T3.alpha = Squelette.alpha AND T3.beta = Squelette.beta AND T3.gamma = Squelette.gamma AND T3.beta>0 AND gamma>0 AND T3.methodeHttp='GET'), '')
 ) AS URL
 FROM Squelette
-WHERE methodeHttp = ? AND ";
+WHERE ";
 
 private $Tchamp;	// Liste des champs tirés de la table Squelette voir la première ligne de la requête
 
@@ -78,9 +78,7 @@ public function __construct($URI = null)
 	else list($clauseWhereRequeteRoute, $TparamRequeteRoute) = self::SansRedirection();	// pas d'erreur serveur
 
 	// extraction des données de la table Squelette
-	$this->Tchamp = BDD::SELECT('alpha, beta, gamma, URL, methodeHttp, titre, paramAutorise, controleur, methodeControleur, dureeCache
-									FROM Squelette WHERE ' . $clauseWhereRequeteRoute,
-								$TparamRequeteRoute, true);
+	$this->Tchamp = BDD::SELECT(self::RequeteRoute . $clauseWhereRequeteRoute, $TparamRequeteRoute, true);
 	if(is_null($this->Tchamp)) throw new ServeurException(404);
 	
 	// construction de la liste des paramètres
