@@ -11,18 +11,31 @@ class HttpRoute implements iHttpRoute
  * Ma source d'inspiration: http://urlrewriting.fr/tutoriel-urlrewriting-sans-moteur-rewrite.htm Merci à son auteur.
  */
 {
-private $Tchamp;
-/** Liste des champs tirés de la table Squelette
- * alpha position dans l'arborescence
- * beta
- * gamma
- * methodeHttp
- * URL
- * titre
- * controleur
- * fonction
- * dureeCache;
- */
+/**
+ * Explications concernant cette méga-requete
+ * 1- liste des champs pour hydrater la route
+ * 2- l'URL est construte par concaténation URL = /chemin/vers/page
+ * 3- création de la première partie /chemin
+ * 4- si elle existe ajout de la 2e partie /vers
+ * 5- si elle existe ajout de la 3e partie /page
+ * 
+ * Cette requete ne tient compte que des noeuds avec une methodeHttp=GET ppour calculer l'URL.
+ * L'URL d'un neud POST sera quant même trouvé s'il existe un noeud POST avec le même triplet alpha-beta-gamma.
+ * Exemple:
+ * le formulaire de contact est le noeud 5-1-0-GET. Le traitement de ce formulaire qui est 
+ * le noeud 5-1-0-POST sera quant même trouvé.
+ **/
+const Requete =
+"alpha, beta, gamma, URL, methodeHttp, titre, paramAutorise, controleur, methodeControleur, dureeCache,
+CONCAT('/',
+	(SELECT ptiNom FROM Squelette AS T1 WHERE T1.alpha = Squelette.alpha AND T1.beta=0 AND T1.gamma=0 AND T1.methodeHttp='GET'),
+	IFNULL((SELECT CONCAT('/',ptiNom) FROM Squelette AS T2 WHERE T2.alpha = Squelette.alpha AND T2.beta = Squelette.beta AND T2.beta > 0 AND T2.gamma = 0 AND T2.methodeHttp = 'GET'),''),
+	IFNULL((SELECT CONCAT('/',ptiNom) FROM Squelette AS T3 WHERE T3.alpha = Squelette.alpha AND T3.beta = Squelette.beta AND T3.gamma = Squelette.gamma AND T3.beta>0 AND gamma>0 AND T3.methodeHttp='GET'), '')
+) AS URL
+FROM Squelette
+WHERE methodeHttp = ? AND ";
+
+private $Tchamp;	// Liste des champs tirés de la table Squelette voir la première ligne de la requête
 
 private $T_param;	// paramètres $_GET ou $_POST
 
