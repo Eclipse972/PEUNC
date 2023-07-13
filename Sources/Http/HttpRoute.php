@@ -26,7 +26,7 @@ class HttpRoute implements iHttpRoute
  * le noeud 5-1-0-POST sera quant même trouvé.
  **/
 const RequeteRoute =
-"alpha, beta, gamma, URL, methodeHttp, titre, paramAutorise, controleur, methodeControleur, dureeCache,
+"alpha, beta, gamma, URL, methodeHttp, titre, paramAutorise, controleur, methodeControleur,
 CONCAT('/',
 	(SELECT ptiNom FROM Squelette AS T1 WHERE T1.alpha = Squelette.alpha AND T1.beta=0 AND T1.gamma=0 AND T1.methodeHttp='GET'),
 	IFNULL((SELECT CONCAT('/',ptiNom) FROM Squelette AS T2 WHERE T2.alpha = Squelette.alpha AND T2.beta = Squelette.beta AND T2.beta > 0 AND T2.gamma = 0 AND T2.methodeHttp = 'GET'),''),
