@@ -26,7 +26,7 @@ class HttpRoute implements iHttpRoute
  * le noeud 5-1-0-POST sera quant même trouvé.
  **/
 const RequeteRoute =
-"alpha, beta, gamma, URL, methodeHttp, titre, paramAutorise, controleur, methodeControleur,
+"alpha, beta, gamma, methodeHttp, titre, paramAutorise, controleur, methodeControleur,
 CONCAT('/',
 	(SELECT ptiNom FROM Squelette AS T1 WHERE T1.alpha = Squelette.alpha AND T1.beta=0 AND T1.gamma=0 AND T1.methodeHttp='GET'),
 	IFNULL((SELECT CONCAT('/',ptiNom) FROM Squelette AS T2 WHERE T2.alpha = Squelette.alpha AND T2.beta = Squelette.beta AND T2.beta > 0 AND T2.gamma = 0 AND T2.methodeHttp = 'GET'),''),
@@ -121,10 +121,11 @@ private static function SansRedirection()
 //	Renvoie les paramètres $_GET ou $_POST nettoyés ==============================================
 
 private static function ExtraireParamURL($paramURL)
-/* Extraction des paramètres suite à une redirection 404.
-	* $_GET et $_POST n'existent pas, il faut donc décoder l'URL manuellement.
-	*/
 {
+	/**
+	 * Extraction des paramètres suite à une redirection 404.
+	 * $_GET et $_POST n'existent pas, il faut donc décoder l'URL manuellement.
+	 **/
 	$T_param = [];
 	foreach (explode('&', $paramURL) as $instruction)
 	{
@@ -181,8 +182,10 @@ public function getParam($nom = null)	// renvoie les paramètres $_GET, $_POST s
 {
 	if (is_null($nom))
 		return $this->T_param;		// tout le tableau
-	elseif (array_key_exists($nom, $this->T_param))
+
+	if (array_key_exists($nom, $this->T_param))
 		return $this->T_param[$nom];// le paramètre demandé
-	else return null;				// rien
+
+	return null;					// rien
 }
 }
