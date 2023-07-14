@@ -1,6 +1,8 @@
 <?php
 namespace PEUNC\Http;
 
+use PEUNC\Controleur\BaseControleur;
+
 /**
  * La réponse agrège toutes les "morceaux" construits par le controleur
  * C'est elle qui permet l'affichage de ces morceaux dans la vue.
@@ -23,7 +25,7 @@ namespace PEUNC\Http;
 
 interface iReponseClient
 {
-public static function Absorbe($controleur);
+public static function Absorbe(BaseControleur $controleur);
 
 public static function Element($nom);	// 
 /**

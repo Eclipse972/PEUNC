@@ -4,7 +4,7 @@ namespace PEUNC\Http;
 use PEUNC\Erreur\Exception;
 use PEUNC\Autre\BDD;
 use PEUNC\Macro\Balise;
-use PEUNC\Controleur\Page;
+use PEUNC\Controleur\BaseControleur;
 
 class ReponseClient implements iReponseClient
 /**
@@ -29,7 +29,7 @@ private static function getInstance()
 }
 
 // Implémentation de l'interface =====================================================================
-public static function Absorbe($controleur)
+public static function Absorbe(BaseControleur $controleur)
 {
 	$reponse = ReponseClient::getInstance();// récupération instance
 	$reponse->controleur = $controleur;		// modification
