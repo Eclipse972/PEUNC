@@ -25,12 +25,15 @@ public function __construct(HttpRoute $route)
 // implémentation de l'interface ==========================================================================
 
 // les éléments
-public function set($nom, $valeur)	 { $this->T_element[$nom] = $valeur; }
+public function set($nom, $valeur)	{ $this->T_element[$nom] = $valeur; }
 
-public function get($clé)
+public function Existe($nom)		{ return array_key_exists($nom, $this->T_element); }
+
+public function get($nom)
 {
-	if(!array_key_exists($clé, $this->T_element))	throw new Exception('Controleur: clé ' . $clé . ' inexistante');
-	return $this->T_element[$clé];
+	if(!array_key_exists($nom, $this->T_element))	// l'absence provoque une ereur pour forcer à deboguer
+		throw new Exception('Controleur: élément ' . $nom . ' inexistant');
+	return $this->T_element[$nom];
 }
 
 // feuille de style

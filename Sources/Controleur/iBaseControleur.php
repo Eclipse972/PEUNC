@@ -17,8 +17,9 @@ namespace PEUNC\Controleur;
 interface iBaseControleur
 {
 	// les éléments définis par le developpeur
+	public function set($nom, $valeur);	// ajoute ou écrase l'élément nommé.
 	public function get($nom);			// retourne l'élément nommé
-	public function set($nom, $valeur);	// ajoute ou écrase l'élément nommé. c'est une méthode privée
+	public function Existe($nom);		// vérifie l'existence d'un élément
 	
 	// les éléments incontournables
 	public function AjouteCSS($FeuilleCSS);	// sans extension ni dossier
