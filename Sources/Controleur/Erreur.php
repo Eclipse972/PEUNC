@@ -58,7 +58,7 @@ public function BDD()
 
 public function Exception()
 {
-	$this->set('type', 'inonnue');
+	$this->set('type', 'inconnue');
 	$this->set('titre', $this->message);
 	$this->set('contenu', self::NoeudArborescence());
 }
