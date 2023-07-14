@@ -66,6 +66,11 @@ public static function Element($nom)
 {
 	return ReponseClient::getInstance()->controleur->get($nom);
 }
+
+public static function Existe($nom)
+{
+	return array_key_exists($nom, ReponseClient::getInstance()->controleur->get());
+}
 // Fin de l'implémentation de l'interface ============================================================
 }
 

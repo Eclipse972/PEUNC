@@ -27,11 +27,11 @@ public function __construct(HttpRoute $route)
 // les éléments
 public function set($nom, $valeur)	{ $this->T_element[$nom] = $valeur; }
 
-public function Existe($nom)		{ return array_key_exists($nom, $this->T_element); }
-
-public function get($nom)
+public function get($nom = null)
 {
-	if(!array_key_exists($nom, $this->T_element))	// l'absence provoque une ereur pour forcer à deboguer
+	if(is_null($nom))	return $this->T_element;
+
+	if(!array_key_exists($nom, $this->T_element))
 		throw new Exception('Controleur: élément ' . $nom . ' inexistant');
 	return $this->T_element[$nom];
 }

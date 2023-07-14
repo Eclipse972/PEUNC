@@ -25,7 +25,14 @@ interface iReponseClient
 {
 public static function Absorbe($controleur);
 
-public static function Element($nom);  // affiche l'élément nommé (il peut être un tableau)
+public static function Element($nom);	// 
+/**
+ * Affiche l'élément nommé (il peut être un tableau).
+ * Provoque une erreur si l'élément n'a pas été créé par le controleur (pour imposer un débogage)
+ * Renvoie la liste des éléments si aucun paramètre
+ */
+public static function Existe($nom);	// vérifie l'existence de l'élément nommé
+
 /**
  * Méthodes
  **/
