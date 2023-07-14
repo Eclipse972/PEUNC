@@ -9,7 +9,7 @@ public static function AlphaBeta(HttpRoute $route, $alphaMini, $alphaMaxi)
 {	// menu sur 2 niveaux: premier alpha et deuxième beta
     return self::ConversionEnMenu(
         BDD::SELECT('	alpha AS niveau1, beta AS niveau2, CONCAT("<li><a href=",URL,">",titre,"</a></li>") AS lien
-                        FROM Squelette
+                        FROM Vue_route
                         WHERE (alpha>='.$alphaMini.' AND alpha<='.$alphaMaxi.' AND beta=0 AND gamma=0) OR (alpha=? AND beta>0 AND gamma=0)
                         ORDER BY alpha, beta',
                         [$route->getAlpha()]),
