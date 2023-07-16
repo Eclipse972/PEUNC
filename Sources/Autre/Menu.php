@@ -5,6 +5,9 @@ use PEUNC\Http\HttpRoute;
 
 class Menu implements iMenu
 {
+/**
+ * menu sur deux niveaux
+ **/
 public static function AlphaBeta(HttpRoute $route, $alphaMini, $alphaMaxi)
 {	// menu sur 2 niveaux: premier alpha et deuxième beta
     return self::ConversionEnMenu(
@@ -19,7 +22,27 @@ public static function AlphaBeta(HttpRoute $route, $alphaMini, $alphaMaxi)
 }
 
 public static function BetaGamma(HttpRoute $route)
-{}
+{
+
+}
+
+/**
+ * Menu sur un niveau
+ **/
+public static function Alpha(HttpRoute $route, $alphaMini, $alphaMaxi)
+{	// menu sur le niveau alpha
+    return self::ConversionEnMenu(
+        BDD::SELECT('	alpha AS niveau1, beta AS niveau2, CONCAT("<li><a href=",URL,">",titre,"</a></li>") AS lien
+                        FROM Vue_route
+                        WHERE alpha>='.$alphaMini.' AND alpha<='.$alphaMaxi.' AND beta=0 AND gamma=0
+                        ORDER BY alpha, beta',
+                        [$route->getAlpha()]),
+        $route->getAlpha(),
+        $route->getBeta()
+    );
+}
+
+
 
 private static function ConversionEnMenu(array $Liste, $selectionNiveau1, $selectionNiveau2)
 {	/**
