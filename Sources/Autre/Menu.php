@@ -13,7 +13,8 @@ public static function AlphaBeta(HttpRoute $route, $alphaMini, $alphaMaxi)
     return self::ConversionEnMenu(
         BDD::SELECT('	alpha AS niveau1, beta AS niveau2, CONCAT("<li><a href=",URL,">",titre,"</a></li>") AS lien
                         FROM Vue_route
-                        WHERE (alpha>='.$alphaMini.' AND alpha<='.$alphaMaxi.' AND beta=0 AND gamma=0) OR (alpha=? AND beta>0 AND gamma=0)
+                        WHERE (alpha>='.$alphaMini.' AND alpha<='.$alphaMaxi.' AND beta=0 AND gamma=0 AND methodeHttp="GET")
+							OR (alpha=? AND beta>0 AND gamma=0 AND methodeHttp="GET")
                         ORDER BY alpha, beta',
                         [$route->getAlpha()]),
         $route->getAlpha(),
@@ -34,15 +35,13 @@ public static function Alpha(HttpRoute $route, $alphaMini, $alphaMaxi)
     return self::ConversionEnMenu(
         BDD::SELECT('	alpha AS niveau1, beta AS niveau2, CONCAT("<li><a href=",URL,">",titre,"</a></li>") AS lien
                         FROM Vue_route
-                        WHERE alpha>='.$alphaMini.' AND alpha<='.$alphaMaxi.' AND beta=0 AND gamma=0
+                        WHERE alpha>='.$alphaMini.' AND alpha<='.$alphaMaxi.' AND beta=0 AND gamma=0 AND methodeHttp="GET"
                         ORDER BY alpha, beta',
-                        [$route->getAlpha()]),
+                        []),
         $route->getAlpha(),
         $route->getBeta()
     );
 }
-
-
 
 private static function ConversionEnMenu(array $Liste, $selectionNiveau1, $selectionNiveau2)
 {	/**
