@@ -335,7 +335,7 @@ dans /Modele les fichiers doivent s'appeler classe_Nom-de-la-classe.php
 Dans /PEUNC les fichiers s'appelent Nom-de-la-classe.php</rich_text>
     </node>
   </node>
-  <node name="Fonctionalités à venir" unique_id="84" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1672267227" ts_lastsave="1672267595">
+  <node name="Fonctionalités à venir" unique_id="84" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1672267227" ts_lastsave="1691249908">
     <node name="Gestion des ancres dans les page html" unique_id="83" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1672187266" ts_lastsave="1672267232">
       <rich_text>Je ne sais pas si PEUNC est capable de traiter les ancres dans les liens.</rich_text>
     </node>
@@ -384,6 +384,11 @@ Jesonge à version chiffrée qui rendrai incompréhensible les paramètres</rich
         <rich_text>gestion à venir</rich_text>
       </node>
       <node name="passés par la requête" unique_id="51" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1661628373" ts_lastsave="1661628385"/>
+    </node>
+    <node name="partager une BDD entre plusieurs sites" unique_id="91" prog_lang="custom-colors" tags="" readonly="0" nosearch_me="0" nosearch_ch="0" custom_icon_id="0" is_bold="0" foreground="" ts_creation="1691249908" ts_lastsave="1691250215">
+      <rich_text>J'i acheter un hébergement web premir prix; Celui ci permet d'héberger un site avec 5 sou-domaines mais une seule BBD.
+La contrainte de n'avoir qu'une seul BDD m'a poussé à trouver une nouvelle solution.
+Pluto que d'avoir plusieurs tables Squelette pour l'arborescence du site, j'ai choisi de n'en avoir qu'une. Dans cette table il suffit d'ajoter un champ site. Je crée une vue routes pour chaque site que reposent toutes sur la même table Ssquelette.</rich_text>
     </node>
   </node>
 </cherrytree>
