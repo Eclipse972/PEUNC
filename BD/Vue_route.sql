@@ -30,4 +30,5 @@ CONCAT('/',
 ) AS URL,
 methodeHttp, titre, paramAutorise, controleur, methodeControleur
 FROM Squelette
+WHERE site='site'
 ORDER BY alpha,beta,gamma;

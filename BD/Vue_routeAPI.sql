@@ -22,4 +22,5 @@ CONCAT('/',
 ) AS URL,
 methodeHttp, titre, paramAutorise, controleur, methodeControleur
 FROM Squelette
+WHERE site='API'
 ORDER BY alpha,beta,gamma;
