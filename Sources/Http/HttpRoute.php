@@ -15,7 +15,7 @@ private $Tchamp;	// Liste des champs tirés de la table Squelette voir la premi�
 
 private $T_param;	// paramètres $_GET ou $_POST
 
-public function __construct($URI = null)
+public function __construct($URI = null, $site = '')
 {
 	if (is_null($URI))
 	{
@@ -56,7 +56,7 @@ public function __construct($URI = null)
 	array_unshift($TparamRequeteRoute, $_SERVER['REQUEST_METHOD']);	// ajout comme premier paramètre
 
 	// extraction des données de la table Squelette
-	$this->Tchamp = BDD::SELECT('* FROM Vue_route WHERE methodeHttp=? AND ' . $clauseWhereRequeteRoute, $TparamRequeteRoute, true);
+	$this->Tchamp = BDD::SELECT('* FROM Vue_route'.$site.' WHERE methodeHttp=? AND ' . $clauseWhereRequeteRoute, $TparamRequeteRoute, true);
 	if(is_null($this->Tchamp)) throw new ServeurException(404);
 	
 	// construction de la liste des paramètres
