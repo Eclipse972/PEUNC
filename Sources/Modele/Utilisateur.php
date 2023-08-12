@@ -22,7 +22,7 @@ class Utilisateur implements iUtilisateur
 		{	// utilisateur enregistré
 			$this->ID		= $reponse["ID"];
 			$this->pseudo	= $reponse["pseudo"];
-			$this->MDP		= $reponse["MDP"];
+			$this->MDP		= $reponse["hashMDP"]; # Est-ce vraiment utile
 			$this->nom		= $reponse["nom"];
 			$this->prenom	= $reponse["prenom"];
 			$this->courriel = $reponse["courriel"];
