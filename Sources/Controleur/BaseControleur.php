@@ -58,7 +58,25 @@ public function setVue($fichier)
 public function getVue()	{ return $this->vue; }
 
 // balise nav
-public function getNav()	{ return $this->T_nav; }
+public function setNav(array $ListeInstructionHtml)	{
+	$this->T_nav = $ListeInstructionHtml;
+}
+
+public function getNav() {
+	/**
+	 * La balise <menu> devra être utiisée à la place de <ul>
+	 * L'indentation est automatiquement générée
+	 **/
+	$nbTabulation = 0;
+	$TcodeHTML = [];
+	foreach ($this->T_nav as $intructionHTML)
+	{
+		if($intructionHTML == '</menu>') $nbTabulation--;
+		$TcodeHTML[] = str_repeat("\t", $nbTabulation) . $intructionHTML;
+		if($intructionHTML == '<menu>') $nbTabulation++;
+	}
+	return $TcodeHTML;
+}
 
 // fin de l'implémentation de l'interface
 

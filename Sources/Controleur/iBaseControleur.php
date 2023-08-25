@@ -27,5 +27,6 @@ public function getCSS();				// retourne la liste des liens CSS
 public function setVue($fichier);	// nom du fichier sans le dossier par défaut
 public function getVue();			// renvoie le chimn complet vers la vue
 
-public function getNav();	// renvoie la liste des instructions html de la balise nav
+public function setNav(array $liste);	# ajoute la liste des instruction html pour la balise nav
+public function getNav();				# renvoie la liste des instructions html de la balise nav
 }

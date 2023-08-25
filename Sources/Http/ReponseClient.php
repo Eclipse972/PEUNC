@@ -49,17 +49,7 @@ public static function CSS()
 }
 
 public static function Menu() {
-	# la balise <menu> devra être utiisée à la place de <ul>
-	$code = '';
-	$nbTabulation = 0;
-	$Liste = ReponseClient::getInstance()->controleur->getNav();
-	foreach ($Liste as $ligne)
-	{
-		if($ligne == '</menu>') $nbTabulation--;
-		$code .= str_repeat("\t", $nbTabulation) . $ligne . "\n";
-		if($ligne == '<menu>') $nbTabulation++;
-	}
-	return $code;
+	return implode("\n", ReponseClient::getInstance()->controleur->getNav()) . "\n";
 }
 
 public static function Element($nom)
