@@ -11,63 +11,58 @@ class HttpRoute implements iHttpRoute
  * Ma source d'inspiration: http://urlrewriting.fr/tutoriel-urlrewriting-sans-moteur-rewrite.htm Merci à son auteur.
  */
 {
-private $Tchamp;	// Liste des champs tirés de la table Squelette voir la première ligne de la requête
+private $Tchamp = [];	# Liste des champs tirés de la table Squelette voir la première ligne de la requête
 
-private $T_param;	// paramètres $_GET ou $_POST
+private $T_param = [];	# paramètres $_GET ou $_POST
 
 public function __construct($URI = null, $site = 'site') {
-	if (is_null($URI))
-	{
-		$this->T_param = [];
-		return;
-	}
+	if (array_key_exists('serverError', $_GET)) { # Cf .htaccess pour redirection des erreurs serveurs
+		$erreurServeur = intval($_GET['serverError']);
+		if($erreurServeur != 404) throw new ServeurException($erreurServeur);
+	} else $erreurServeur = null;
 
-	// décodage URI
-	$T = explode('?', $URI);	// T[1] contient ce qu'il y a après le ?
+	if (is_null($URI)) return;
+
+	list($URL, $paramURL) = $this->DecodageURI($URI);
+
+	# construire la requête pour retrouver tous les composants de la route
+	if ($erreurServeur == 404) {
+		header('Status: 200 OK', false, 200); # modification pour dire au navigateur que tout va bien finalement
+		$clauseWhereRequeteRoute = 'URL=?';
+		$TparamRequeteRoute = [$URL];
+	} else list($clauseWhereRequeteRoute, $TparamRequeteRoute) = self::SansRedirection(); # pas d'erreur serveur
+
+	array_unshift($TparamRequeteRoute, $_SERVER['REQUEST_METHOD'], $site);	# ajout de deux paramètres en premier
+	
+	# extraction des données pour la route
+	$this->Tchamp = BDD::SELECT('* FROM Vue_route WHERE methodeHttp=? AND site=? AND ' . $clauseWhereRequeteRoute, $TparamRequeteRoute, true);
+	if(is_null($this->Tchamp)) throw new ServeurException(404);
+	
+	$this->T_param = $this->ListeParametre($paramURL);
+}	
+
+private function DecodageURI($URI) : array {
+	$T = explode('?', $URI); # T[1] contient ce qu'il y a après le ?
 	$URL = $T[0];
-	if (count($T) > 1)
-	{
+	if (count($T) > 1) {
 		$T2 = explode('#', $T[1]);
 		$paramURL = $T2[0];
 	}
 	else $paramURL = '';
+	return [$URL, $paramURL];
+}
 
-	// construire la requête pour retrouver tous les composants de la route
-	if (array_key_exists('serverError', $_GET))
-		switch ($_GET['serverError'])	// une erreur serveur a été redirigée vers index.php Cf .htaccess
-		{
-			case 404:
-				header('Status: 200 OK', false, 200);	// modification pour dire au navigateur que tout va bien finalement
-				$clauseWhereRequeteRoute = 'URL=?';
-				$TparamRequeteRoute = [$URL];
-				break;
-			case 403:
-			case 405:
-			case 500:
-				throw new ServeurException((int)$_GET['serverError']);
-				break;
-			default:
-				throw new Exception('Erreur de route'); // .htaccess est à vérifier
-				break;
-		}
-	else list($clauseWhereRequeteRoute, $TparamRequeteRoute) = self::SansRedirection();	// pas d'erreur serveur
-
-	array_unshift($TparamRequeteRoute, $_SERVER['REQUEST_METHOD'], $site);	// ajout comme premier paramètre
-
-	// extraction des données de la table Squelette
-	$this->Tchamp = BDD::SELECT('* FROM Vue_route WHERE methodeHttp=? AND site=? AND ' . $clauseWhereRequeteRoute, $TparamRequeteRoute, true);
-	if(is_null($this->Tchamp)) throw new ServeurException(404);
-	
-	// construction de la liste des paramètres
+private function ListeParametre($paramURL) : array {
 	$TparamAutorises = json_decode($this->Tchamp['paramAutorise'], true);
-	$TparamTransmis = ($URL == '/') || ($URL == '/home') ? // on est à la racine
+	$TparamTransmis = ($this->Tchamp['alpha'] == 0) && ($this->Tchamp['beta'] == 0) && ($this->Tchamp['gamma'] == 0) ?
 					self::ExtraireParamRacine() :
 					self::ExtraireParamURL($paramURL);
-	$this->T_param = [];
+	$T_param = [];
 	foreach ($TparamAutorises as $clé)
 		if (array_key_exists($clé, $TparamTransmis))	// seules les clés autorisées sont prises en compte
-			$this->T_param[$clé] = strip_tags($TparamTransmis[$clé]);	// la valeur est nettoyée
-}	
+			$T_param[$clé] = strip_tags($TparamTransmis[$clé]);	// la valeur est nettoyée
+	return $T_param;
+}
 
 private static function SansRedirection() : array {
 	switch($_SERVER['REQUEST_METHOD'])
@@ -78,7 +73,7 @@ private static function SansRedirection() : array {
 		case 'POST':
 			/* La pseudo réécriture d'URL ne fonctionne pas avec le script action de formulaire.
 			 * J'ai choisi de repasser par index.php pour traiter tous les formulaires.
-			 * le jeton CSRF contient des infos sur le formuaire notemment sa position dans l'arborescence
+			 * le jeton CSRF contient des infos sur le formulaire notemment sa position dans l'arborescence
 			 */
 			if (!JetonCSRF::Verifier($_POST['CSRF']))
 				throw new Exception(101);
