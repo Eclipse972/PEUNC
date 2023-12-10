@@ -7,9 +7,11 @@ use PEUNC\Autre\BDD;
 use PEUNC\Autre\JetonCSRF;
 
 class HttpRoute implements iHttpRoute
-/* J'utilise une pseudo-réécriture d'URL qui exploite la redirection 404 Cf .htaccess
+/**
+ * Les pages perso de free ne permettent pas l'uttilisation de la rééciture d'URL
+ * J'utilise une pseudo-réécriture d'URL qui exploite la redirection 404 Cf .htaccess
  * Ma source d'inspiration: http://urlrewriting.fr/tutoriel-urlrewriting-sans-moteur-rewrite.htm Merci à son auteur.
- */
+ **/
 {
 private $Tchamp = [];	# Liste des champs tirés de la table Squelette voir la première ligne de la requête
 
