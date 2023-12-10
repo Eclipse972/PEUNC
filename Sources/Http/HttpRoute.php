@@ -15,8 +15,7 @@ private $Tchamp;	// Liste des champs tirés de la table Squelette voir la premi�
 
 private $T_param;	// paramètres $_GET ou $_POST
 
-public function __construct($URI = null, $site = '')
-{
+public function __construct($URI = null, $site = 'site') {
 	if (is_null($URI))
 	{
 		$this->T_param = [];
@@ -53,10 +52,10 @@ public function __construct($URI = null, $site = '')
 		}
 	else list($clauseWhereRequeteRoute, $TparamRequeteRoute) = self::SansRedirection();	// pas d'erreur serveur
 
-	array_unshift($TparamRequeteRoute, $_SERVER['REQUEST_METHOD']);	// ajout comme premier paramètre
+	array_unshift($TparamRequeteRoute, $_SERVER['REQUEST_METHOD'], $site);	// ajout comme premier paramètre
 
 	// extraction des données de la table Squelette
-	$this->Tchamp = BDD::SELECT('* FROM Vue_route'.$site.' WHERE methodeHttp=? AND ' . $clauseWhereRequeteRoute, $TparamRequeteRoute, true);
+	$this->Tchamp = BDD::SELECT('* FROM Vue_route WHERE methodeHttp=? AND site=? AND ' . $clauseWhereRequeteRoute, $TparamRequeteRoute, true);
 	if(is_null($this->Tchamp)) throw new ServeurException(404);
 	
 	// construction de la liste des paramètres
@@ -70,8 +69,7 @@ public function __construct($URI = null, $site = '')
 			$this->T_param[$clé] = strip_tags($TparamTransmis[$clé]);	// la valeur est nettoyée
 }	
 
-private static function SansRedirection()
-{
+private static function SansRedirection() : array {
 	switch($_SERVER['REQUEST_METHOD'])
 	{
 		case 'GET':
@@ -96,15 +94,13 @@ private static function SansRedirection()
 
 //	Renvoie les paramètres $_GET ou $_POST nettoyés ==============================================
 
-private static function ExtraireParamURL($paramURL)
-{
+private static function ExtraireParamURL($paramURL) : array {
 	/**
 	 * Extraction des paramètres suite à une redirection 404.
 	 * $_GET et $_POST n'existent pas, il faut donc décoder l'URL manuellement.
 	 **/
 	$T_param = [];
-	foreach (explode('&', $paramURL) as $instruction)
-	{
+	foreach (explode('&', $paramURL) as $instruction) {
 		$param = explode("=", $instruction);
 		if (count($param) == 2)
 			$T_param[urldecode($param[0])] = urldecode($param[1]);
@@ -112,8 +108,7 @@ private static function ExtraireParamURL($paramURL)
 	return $T_param;
 }
 
-private static function ExtraireParamRacine()
-{	// renvoie les paramètres envoyés à index.php
+private static function ExtraireParamRacine() : array { # renvoie les paramètres envoyés à index.php
 	switch($_SERVER['REQUEST_METHOD'])
 	{
 		case"GET":
@@ -128,8 +123,7 @@ private static function ExtraireParamRacine()
 	return $tableau;
 }
 
-public static function SauvegardeEtat(HttpRoute $route)
-{
+public static function SauvegardeEtat(HttpRoute $route) : void {
 	$URLactuelle = $route->getURL();
 
 	if ($_SESSION['PEUNC']['URL'] != $URLactuelle) // sauvagarde s'il n'y a pas rafraichiisemnt de page
@@ -140,7 +134,9 @@ public static function SauvegardeEtat(HttpRoute $route)
 	}
 }
 
-public static function URLprecedente()	{ return $_SESSION['PEUNC']['URLprecedente']; }
+public static function URLprecedente() : string	{
+	return $_SESSION['PEUNC']['URLprecedente'];
+}
 
 //	Accesseurs ===================================================================================
 
@@ -154,14 +150,13 @@ public function getFonction()	{ return $this->Tchamp['methodeControleur']; }
 public function getDureeCache()	{ return $this->Tchamp['dureeCache']; }
 public function getTitre()		{ return $this->Tchamp['titre']; }
 
-public function getParam($nom = null)	// renvoie les paramètres $_GET, $_POST suivant les cas
-{
+public function getParam($nom = null) { # renvoie les paramètres $_GET, $_POST suivant les cas
 	if (is_null($nom))
-		return $this->T_param;		// tout le tableau
+		return $this->T_param;		# tout le tableau
 
 	if (array_key_exists($nom, $this->T_param))
-		return $this->T_param[$nom];// le paramètre demandé
+		return $this->T_param[$nom];# le paramètre demandé
 
-	return null;					// rien
+	return null;					# rien
 }
 }
