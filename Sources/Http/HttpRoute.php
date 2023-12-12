@@ -54,7 +54,7 @@ private function DecodageURI($URI) : array {
 
 private function ListeParametre($paramURL) : array {
 	$TparamAutorises = json_decode($this->Tchamp['paramAutorise'], true);
-	$TparamTransmis = ($this->Tchamp['alpha'] == 0) && ($this->Tchamp['beta'] == 0) && ($this->Tchamp['gamma'] == 0) ?
+	$TparamTransmis = ($_SERVER['REQUEST_METHOD'] == 'POST') ?
 					self::ExtraireParamRacine() :
 					self::ExtraireParamURL($paramURL);
 	$T_param = [];
