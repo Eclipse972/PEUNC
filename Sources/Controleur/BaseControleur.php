@@ -7,7 +7,7 @@ use PEUNC\Erreur\Exception;
 
 class BaseControleur implements iBaseControleur
 {
-const dossierCSS = 'CSS';
+const dossierCSS = '/CSS';
 const dossierVue = 'Application/Vue';
 
 protected $T_element = [];	// tableau asociatif des éléments simples à afficher (chaîne de caractères ou nombre)
