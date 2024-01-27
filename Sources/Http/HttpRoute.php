@@ -54,6 +54,7 @@ private function DecodageURI($URI) : array {
 
 private function ListeParametre($paramURL) : array {
 	$TparamAutorises = json_decode($this->Tchamp['paramAutorise'], true);
+	# À FAIRE: si $this->Tchamp['paramAutorise'] est mal encodé alors le résultat est vide => lancer une exception?
 	$TparamTransmis = ($_SERVER['REQUEST_METHOD'] == 'POST') ?
 					self::ExtraireParamRacine() :
 					self::ExtraireParamURL($paramURL);
