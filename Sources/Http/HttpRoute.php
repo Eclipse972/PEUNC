@@ -16,12 +16,12 @@ private $Tchamp = [];	# Liste des champs tirés de la table Squelette voir la pr
 private $T_param = [];	# paramètres $_GET ou $_POST
 
 public function __construct($URI = null, $site = 'site') {
+	if (is_null($URI)) return;
+
 	if (array_key_exists('serverError', $_GET)) { # Cf .htaccess pour redirection des erreurs serveurs
 		$erreurServeur = intval($_GET['serverError']);
 		if($erreurServeur != 404) throw new ServeurException($erreurServeur);
 	} else $erreurServeur = null;
-
-	if (is_null($URI)) return;
 
 	list($URL, $paramURL) = $this->DecodageURI($URI);
 
