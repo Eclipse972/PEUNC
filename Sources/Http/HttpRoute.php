@@ -15,13 +15,17 @@ private $Tchamp = [];	# Liste des champs tirés de la table Squelette voir la pr
 
 private $T_param = [];	# paramètres $_GET ou $_POST
 
-public function __construct($URI = null, $site = 'site') {
+private $server_request_method = 'GET';
+
+public function __construct($URI = null, $methodeHttp = 'GET', $site = 'site') {
 	if (is_null($URI)) return;
 
 	if (array_key_exists('serverError', $_GET)) { # Cf .htaccess pour redirection des erreurs serveurs
 		$erreurServeur = intval($_GET['serverError']);
 		if($erreurServeur != 404) throw new ServeurException($erreurServeur);
 	} else $erreurServeur = null;
+
+	$this->server_request_method = $methodeHttp;
 
 	list($URL, $paramURL) = $this->DecodageURI($URI);
 
@@ -30,9 +34,9 @@ public function __construct($URI = null, $site = 'site') {
 		header('Status: 200 OK', false, 200); # modification pour dire au navigateur que tout va bien finalement
 		$clauseWhereRequeteRoute = 'URL=?';
 		$TparamRequeteRoute = [$URL];
-	} else list($clauseWhereRequeteRoute, $TparamRequeteRoute) = self::SansRedirection(); # pas d'erreur serveur
+	} else list($clauseWhereRequeteRoute, $TparamRequeteRoute) = $this->SansRedirection(); # pas d'erreur serveur
 
-	array_unshift($TparamRequeteRoute, $_SERVER['REQUEST_METHOD'], $site);	# ajout de deux paramètres en premier
+	array_unshift($TparamRequeteRoute, $this->server_request_method, $site);	# ajout de deux paramètres en premier
 	
 	# extraction des données pour la route
 	$this->Tchamp = BDD::SELECT('* FROM Vue_route WHERE methodeHttp=? AND site=? AND ' . $clauseWhereRequeteRoute, $TparamRequeteRoute, true);
@@ -55,8 +59,8 @@ private function DecodageURI($URI) : array {
 private function ListeParametre($paramURL) : array {
 	$TparamAutorises = json_decode($this->Tchamp['paramAutorise'], true);
 	# À FAIRE: si $this->Tchamp['paramAutorise'] est mal encodé alors le résultat est vide => lancer une exception?
-	$TparamTransmis = ($_SERVER['REQUEST_METHOD'] == 'POST') ?
-					self::ExtraireParamRacine() :
+	$TparamTransmis = ($this->server_request_method == 'POST') ?
+					$this->ExtraireParamRacine() :
 					self::ExtraireParamURL($paramURL);
 	$T_param = [];
 	foreach ($TparamAutorises as $clé)
@@ -65,9 +69,8 @@ private function ListeParametre($paramURL) : array {
 	return $T_param;
 }
 
-private static function SansRedirection() : array {
-	switch($_SERVER['REQUEST_METHOD'])
-	{
+private function SansRedirection() : array {
+	switch($this->server_request_method) {
 		case 'GET':
 			$Tparam = [0, 0, 0];	// un appel ordinaire vers la page d'accueil
 			break;
@@ -104,9 +107,8 @@ private static function ExtraireParamURL($paramURL) : array {
 	return $T_param;
 }
 
-private static function ExtraireParamRacine() : array { # renvoie les paramètres envoyés à index.php
-	switch($_SERVER['REQUEST_METHOD'])
-	{
+private function ExtraireParamRacine() : array { # renvoie les paramètres envoyés à index.php
+	switch($this->server_request_method) {
 		case"GET":
 			$tableau = $_GET;
 			break;
