@@ -37,12 +37,11 @@ public function get($nom = null)
 }
 
 // feuille de style
-public function AjouteCSS($feuilleCSS)
-{
-	# À FAIRE: proposer la possibilité de rendre des feuille CSS externe
-	$fichier = self::dossierCSS . '/' . $feuilleCSS . '.css';
-	// A faire: vérification de l'existence
-	$this->T_CSS[] = $fichier;	// ajout d'un CSS à la liste
+public function AjouteCSS($feuilleCSS) {
+	$fichier =	substr($feuilleCSS,0,4) == 'http' ?
+				$feuilleCSS :
+				self::dossierCSS . '/' . $feuilleCSS . '.css'; # À FAIRE: vérification de l'existence
+	$this->T_CSS[] = $fichier;
 }
 
 public function getCSS()	{ return $this->T_CSS; }
