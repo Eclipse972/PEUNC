@@ -20,105 +20,59 @@ private $server_request_method = 'GET';
 public function __construct($URI = null, $methodeHttp = 'GET', $site = 'site') {
 	if (is_null($URI)) return;
 
-	if (array_key_exists('serverError', $_GET)) { # Cf .htaccess pour redirection des erreurs serveurs
-		$erreurServeur = intval($_GET['serverError']);
-		if($erreurServeur != 404) throw new ServeurException($erreurServeur);
-	} else $erreurServeur = null;
+	if (array_key_exists('serverError', $_GET)) # Cf .htaccess pour redirection des erreurs serveurs
+		throw new ServeurException(intval($_GET['serverError']));
 
 	$this->server_request_method = $methodeHttp;
-
-	list($URL, $paramURL) = $this->DecodageURI($URI);
-
-	# construire la requête pour retrouver tous les composants de la route
-	if ($erreurServeur == 404) {
-		header('Status: 200 OK', false, 200); # modification pour dire au navigateur que tout va bien finalement
-		$clauseWhereRequeteRoute = 'URL=?';
-		$TparamRequeteRoute = [$URL];
-	} else list($clauseWhereRequeteRoute, $TparamRequeteRoute) = $this->SansRedirection(); # pas d'erreur serveur
-
-	array_unshift($TparamRequeteRoute, $this->server_request_method, $site);	# ajout de deux paramètres en premier
+	$T = explode('?', $URI); # T[0] contient l'URL débarassée des paramètres
 	
-	# extraction des données pour la route
-	$this->Tchamp = BDD::SELECT('* FROM Vue_route WHERE methodeHttp=? AND site=? AND ' . $clauseWhereRequeteRoute, $TparamRequeteRoute, true);
-	if(is_null($this->Tchamp)) throw new ServeurException(404);
+	if(is_null($this->Tchamp = $this->ExtraireDonnéesRoute($T[0], $methodeHttp, $site))) # extraction des données pour la route
+		throw new ServeurException(404); # aucune route trouvée
 	
-	$this->T_param = $this->ListeParametre($paramURL);
+	$this->T_param = $this->ListeParametre();
 }	
 
-private function DecodageURI($URI) : array {
-	$T = explode('?', $URI); # T[1] contient ce qu'il y a après le ?
-	$URL = $T[0];
-	if (count($T) > 1) {
-		$T2 = explode('#', $T[1]);
-		$paramURL = $T2[0];
-	}
-	else $paramURL = '';
-	return [$URL, $paramURL];
-}
-
-private function ListeParametre($paramURL) : array {
-	$TparamAutorises = json_decode($this->Tchamp['paramAutorise'], true);
-	# À FAIRE: si $this->Tchamp['paramAutorise'] est mal encodé alors le résultat est vide => lancer une exception?
-	$TparamTransmis = ($this->server_request_method == 'POST') ?
-					$this->ExtraireParamRacine() :
-					self::ExtraireParamURL($paramURL);
-	$T_param = [];
-	foreach ($TparamAutorises as $clé)
-		if (array_key_exists($clé, $TparamTransmis))	// seules les clés autorisées sont prises en compte
-			$T_param[$clé] = strip_tags($TparamTransmis[$clé]);	// la valeur est nettoyée
-	return $T_param;
-}
-
-private function SansRedirection() : array {
-	switch($this->server_request_method) {
-		case 'GET':
-			$Tparam = [0, 0, 0];	// un appel ordinaire vers la page d'accueil
-			break;
-		case 'POST':
-			/* La pseudo réécriture d'URL ne fonctionne pas avec le script action de formulaire.
-			 * J'ai choisi de repasser par index.php pour traiter tous les formulaires.
-			 * le jeton CSRF contient des infos sur le formulaire notemment sa position dans l'arborescence
-			 */
-			if (!JetonCSRF::Verifier($_POST['CSRF']))
-				throw new Exception(101);
+private function ExtraireDonnéesRoute(string $URL, string $methodeHttp, $site) : ?array {
+	if (($methodeHttp== 'POST') && ($URL == '/')) { # formulaires traités par index.php
+		if (!JetonCSRF::Verifier($_POST['CSRF']))	throw new Exception(101);
 							
-			$jeton = JetonCSRF::Dechiffre($_POST['CSRF']);
-			$Tparam = $jeton['noeud'];// renvoie la position du formulaire dans l'arborescence
-			break;
-		default:
-			throw new ServeurException(405);// erreur 405!
+		$jeton = JetonCSRF::Dechiffre($_POST['CSRF']); # le jeton contient entre autre les coordonées du noeud
+
+		$Tchamp = BDD::SELECT('*
+							FROM Vue_route
+							WHERE methodeHttp="POST" AND site=? AND alpha=? AND beta=? AND gamma=?'
+						, $jeton['noeud'] # renvoie la position du formulaire dans l'arborescence
+						, true);
+	} elseif ($URL == '/') {
+		$Tchamp = BDD::SELECT('*
+						FROM Vue_route
+						WHERE methodeHttp=? AND site=? AND alpha=0 AND beta=0 AND gamma=0'
+					, [$methodeHttp, $site], true);
+	} else {
+		$Tchamp = BDD::SELECT('* FROM Vue_route WHERE methodeHttp=? AND site=? AND URL=?', [$methodeHttp, $site, $URL], true);
 	}
-	return array('alpha=? AND beta=? AND gamma=?',$Tparam);
+	return $Tchamp;
 }
-
-//	Renvoie les paramètres $_GET ou $_POST nettoyés ==============================================
-
-private static function ExtraireParamURL($paramURL) : array {
-	/**
-	 * Extraction des paramètres suite à une redirection 404.
-	 * $_GET et $_POST n'existent pas, il faut donc décoder l'URL manuellement.
-	 **/
-	$T_param = [];
-	foreach (explode('&', $paramURL) as $instruction) {
-		$param = explode("=", $instruction);
-		if (count($param) == 2)
-			$T_param[urldecode($param[0])] = urldecode($param[1]);
-	}
-	return $T_param;
-}
-
-private function ExtraireParamRacine() : array { # renvoie les paramètres envoyés à index.php
-	switch($this->server_request_method) {
+private function ListeParametre() : array {
+	switch ($this->server_request_method) {
 		case"GET":
-			$tableau = $_GET;
+			$TparamTransmis = $_GET;
 			break;
 		case"POST":
-			$tableau = $_POST;
+			$TparamTransmis = $_POST;
 			break;
 		default:
-			throw new Exception(100);
+			throw new Exception(100); # méthode http inconnue
 	}
-	return $tableau;
+	
+	$T_param = [];
+	# nettoyage des paramètres
+	$TparamAutorises = json_decode($this->Tchamp['paramAutorise'], true);
+	# À FAIRE: si $this->Tchamp['paramAutorise'] est mal encodé alors le résultat est vide => lancer une exception?
+	foreach ($TparamAutorises as $clé)
+		if (array_key_exists($clé, $TparamTransmis))	# seules les clés autorisées sont prises en compte
+			$T_param[$clé] = strip_tags($TparamTransmis[$clé]);	# la valeur est nettoyée
+	return $T_param;
 }
 
 public static function SauvegardeEtat(HttpRoute $route) : void {
@@ -138,6 +92,7 @@ public static function URLprecedente() : string	{
 
 //	Accesseurs ===================================================================================
 
+public function getSite()		{ return $this->Tchamp['site']; }
 public function getAlpha()		{ return $this->Tchamp['alpha']; }
 public function getBeta()		{ return $this->Tchamp['beta']; }
 public function getGamma()		{ return $this->Tchamp['gamma']; }
