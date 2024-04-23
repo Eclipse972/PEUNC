@@ -20,9 +20,6 @@ private $server_request_method = 'GET';
 public function __construct($URI = null, $methodeHttp = 'GET', $site = 'site') {
 	if (is_null($URI)) return;
 
-	if (array_key_exists('serverError', $_GET)) # Cf .htaccess pour redirection des erreurs serveurs
-		throw new ServeurException(intval($_GET['serverError']));
-
 	$this->server_request_method = $methodeHttp;
 	$T = explode('?', $URI); # T[0] contient l'URL débarassée des paramètres
 	
