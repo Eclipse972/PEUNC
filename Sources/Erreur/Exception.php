@@ -34,6 +34,10 @@ class Exception extends \Exception
 		// Utilisateur
 		700 => 'Pseudo utilis&eacute; plusieurs fois',
 
+		# Routeur
+		800 => 'le controleur n&apos;existe pas',
+		801 => 'la m&eacute;thode de controleur n&apos;existe pas',
+		
 		// inconnue
 		0 => 'Erreur inconnue'
 	);
