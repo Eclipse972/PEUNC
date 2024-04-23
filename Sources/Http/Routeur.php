@@ -5,21 +5,26 @@ use PEUNC\Erreur\ServeurException;
 
 class Routeur {
 private array $Troute = [];
+private string $baseNamespaceControleur; # namespace de base ex: VolEval\Controleur\
+
+public function __construct(string $namespace) {
+	$this->baseNamespaceControleur = $namespace;
+}
 
 private function ajouteRoute(string $URL,
 							string $methodeHttp,
-							string $namespaceControleur,
+							string $namespaceControleurRelatif,
 							string $controleurMethode,
-							array $parametreAutorisés) : void 
+							array $parametreAutorisés) : void
 {
 	/**
 	 * À FAIRE: vérifier la validité des paramètre
 	 * URL: URL sur 3 niveaux ne contenant que des caractères cf .htacces 
 	 * methodeHttp, namespaceControleur, controleurMethode des chaine de caractères non vide
 	 * lancer un exception si ça arrive
-	 */
+	 **/
 	$this->Troute[$URL][$methodeHttp] = array(
-		'controleur' => $namespaceControleur,
+		'controleur' => $this->baseNamespaceControleur . $namespaceControleurRelatif,
 		'fonction' => $controleurMethode,
 		'paramAutorise' => $parametreAutorisés
 	);
@@ -53,4 +58,6 @@ public function TrouveChemin(RequeteHttp $requete) : array {
 	#$T['route'] = new httpRoute($requete, $T['paramAutorise']); # route à construire 
 	return $T;
 }
+
+# À FAIRE: vérifier l'intégrité de l'arborescence. noeud orphelin, doubllon
 }
