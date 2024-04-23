@@ -40,8 +40,9 @@ public function post(string $URL,
 
 public function TrouveChemin(RequeteHttp $requete) : array {
 	/**
-	 * C'est index.php qui va instancié le controleur. Cette fonction lui fournit tous les éléments pour le faire
-	 * controleur, sa fonction, la liste des paramètre autorisés et la route
+	 * C'est index.php qui va instancié le controleur.
+	 * Cette fonction lui fournit tous les éléments pour le faire:
+	 * controleur, sa fonction, la liste des paramètres autorisés et la route
 	 **/
 	$URL = $requete->getURL();
 	$methodeHttp = $requete->getMethode();
