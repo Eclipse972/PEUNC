@@ -5,7 +5,7 @@ use PEUNC\Erreur\ServeurException;
 
 class Routeur {
 private array $Troute = [];
-private string $baseNamespaceControleur; # namespace de base ex: VolEval\Controleur\
+private string $baseNamespaceControleur; # namespace de base ex: VolEval\Controleur le \ ajouté automatiquement
 
 public function __construct(string $namespace) {
 	$this->baseNamespaceControleur = $namespace;
@@ -21,10 +21,15 @@ private function ajouteRoute(string $URL,
 	 * À FAIRE: vérifier la validité des paramètre
 	 * URL: URL sur 3 niveaux ne contenant que des caractères cf .htacces 
 	 * methodeHttp, namespaceControleur, controleurMethode des chaine de caractères non vide
-	 * lancer un exception si ça arrive
+	 * existence du controleur et de la méthode
+	 * lancer une exception de PEUNC si ça arrive
 	 **/
+	# validté de l'URL
+	# validité de la méthode http
+	# existence du controleur
+	# existence de la méthode du controleur
 	$this->Troute[$URL][$methodeHttp] = array(
-		'controleur' => $this->baseNamespaceControleur . $namespaceControleurRelatif,
+		'controleur' => $this->baseNamespaceControleur . '\\' . $namespaceControleurRelatif,
 		'fonction' => $controleurMethode,
 		'paramAutorise' => $parametreAutorisés
 	);
