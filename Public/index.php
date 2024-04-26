@@ -48,7 +48,7 @@ catch(Exception $e)
 	$controleurMethode = 'Exception';
 }
 
-# création du controleur
+# Création du controleur
 if (in_array($controleurNom, ['Serveur', 'PDO', 'PEUNC', 'Exception'])) {
 	$controleur = new ErreurControleur($route, $e->getMessage(), $e->getCode());
 } else $controleur = new $controleurNom($route);
