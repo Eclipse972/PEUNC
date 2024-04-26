@@ -22,7 +22,7 @@ private function ajouteRoute(string $URL,
 	 * URL: URL sur 3 niveaux ne contenant que des caractères cf .htacces 
 	 * methodeHttp, namespaceControleur, controleurMethode des chaine de caractères non vide
 	 * existence du controleur et de la méthode
-	 * lancer une exception de PEUNC si ça arrive.
+	 * lancer une exception de PEUNC si ça arrive
 	 **/
 	# validté de l'URL
 	# validité de la méthode http
