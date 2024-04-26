@@ -37,6 +37,10 @@ class Exception extends \Exception
 		# Routeur
 		800 => 'le controleur n&apos;existe pas',
 		801 => 'la m&eacute;thode de controleur n&apos;existe pas',
+
+		# requête http
+		900 => 'M&eacute;thode http inconnue',
+		901 => 'Jeton CSRF inexistant ou invalide',
 		
 		// inconnue
 		0 => 'Erreur inconnue'

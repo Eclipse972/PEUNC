@@ -60,7 +60,7 @@ public function TrouveChemin(RequeteHttp $requete) : array {
 		|| (!array_key_exists($methodeHttp, $this->Troute[$URL])) # méthode http inconnue pour l'url donnée
 	) throw new ServeurException(404);
 	$T = $this->Troute[$URL][$methodeHttp];
-	#$T['route'] = new httpRoute($requete, $T['paramAutorise']); # route à construire 
+	$T['route'] = new HttpRoute($requete, $T['paramAutorise']); # route à construire 
 	return $T;
 }
 
