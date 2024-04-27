@@ -46,6 +46,6 @@ public function InsererJeton()
 
 public static function Verifier()
 {
-    return (array_key_exists('CSRF', $_POST)) && ($_SESSION['PEUNC']['CSRF'] == $chaine);
+    return (array_key_exists('CSRF', $_POST)) && ($_SESSION['PEUNC']['CSRF'] == $_POST['CSRF']);
 }
 }
