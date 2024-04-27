@@ -18,7 +18,7 @@ public function __construct() {
 			$this->param = $_GET;
 			break;
 		case 'POST':
-			if ((!array_key_exists('CSRF', $_POST)) || (!JetonCSRF::Verifier($_POST['CSRF'])))	throw new Exception(901);
+			if (!JetonCSRF::Verifier())	throw new Exception(901);
 			# par défaut tous les formulaire sont traité par index.php
 			$jeton = JetonCSRF::Dechiffre($_POST['CSRF']);
 			$this->URL = $jeton['URL']; # le jeton contient entre autre l'URL de la page qui a créé le jeton

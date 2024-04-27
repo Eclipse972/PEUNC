@@ -44,8 +44,8 @@ public function InsererJeton()
     return '<input name="CSRF" type="hidden" value="' . $jeton . '">' . "\n";
 }
 
-public static function Verifier($chaine)
+public static function Verifier()
 {
-    return ($_SESSION['PEUNC']['CSRF'] == $chaine);
+    return (array_key_exists('CSRF', $_POST)) && ($_SESSION['PEUNC']['CSRF'] == $chaine);
 }
 }
