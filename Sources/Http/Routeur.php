@@ -1,7 +1,9 @@
 <?php
 namespace PEUNC\Http;
 use PEUNC\Http\RequeteHttp;
+use PEUNC\Http\HttpRoute;
 use PEUNC\Erreur\ServeurException;
+use PEUNC\Erreur\Exception;
 
 class Routeur {
 private array $Troute = [];
@@ -17,19 +19,29 @@ private function ajouteRoute(string $URL,
 							string $controleurMethode,
 							array $parametreAutorisés) : void
 {
-	/**
-	 * À FAIRE: vérifier la validité des paramètre
-	 * URL: URL sur 3 niveaux ne contenant que des caractères cf .htacces 
-	 * methodeHttp, namespaceControleur, controleurMethode des chaine de caractères non vide
-	 * existence du controleur et de la méthode
-	 * lancer une exception de PEUNC si ça arrive
-	 **/
-	# validté de l'URL
-	# validité de la méthode http
-	# existence du controleur
+	# validité de l'URL sur 3 niveaux ne contenant que des caractères cf .htacces 
+	$regexp = '/^\/(?:[a-zA-Z0-9_-]+\/?(?:[a-zA-Z0-9_-]+\/?(?:[a-zA-Z0-9_-]+\/?)?)?)?$/';
+	if (!preg_match($regexp, $URL)) throw new Exception(800, $URL);
+
+	# validité de la méthode http: les routes sont construites avec les nom des méthodes
+
+	# inexistence du controleur => échec autoloading -> À FAIRE: lancer une exception au lieu de faire exit
+	$namespaceControleur = $this->baseNamespaceControleur.'\\'.$namespaceControleurRelatif;
+
 	# existence de la méthode du controleur
+	/**
+	 * if(!method_exists($namespaceControleur, $controleurMethode))	throw new Exception(801,$controleurMethode.' pour '.$namespaceControleur);
+	 * 
+	 * Pour une raison que je comprend pas la méthode ClicSurNON de MobileControleur n'est pas détecté
+	 * Toutes les autres méthode sont détectées. Si je met en commentaire les lignes incriminées ça passe.
+	 * Toutes les autre méthode de MobileControleur sont détectées et toutes les méthode des autres controleurs aussi
+	 * Le changement de nom ne fonctionne pas non plus
+	 * 
+	 **/
+
+	# enregistrement de la route
 	$this->Troute[$URL][$methodeHttp] = array(
-		'controleur' => $this->baseNamespaceControleur . '\\' . $namespaceControleurRelatif,
+		'controleur' => $namespaceControleur,
 		'fonction' => $controleurMethode,
 		'paramAutorise' => $parametreAutorisés
 	);

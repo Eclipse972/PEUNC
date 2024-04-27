@@ -4,8 +4,8 @@ namespace PEUNC\Erreur;
 class Exception extends \Exception
 {
 	const LISTE = array(
-		// HttpRoute
-		100 => 'M&eacute;thode non prise en charge',
+		# requête http
+		100 => 'M&eacute;thode http inconnue',
 		101 => 'Jeton CSRF inexistant ou invalide',
 
 		// ReponseClient
@@ -35,12 +35,8 @@ class Exception extends \Exception
 		700 => 'Pseudo utilis&eacute; plusieurs fois',
 
 		# Routeur
-		800 => 'le controleur n&apos;existe pas',
-		801 => 'la m&eacute;thode de controleur n&apos;existe pas',
-
-		# requête http
-		900 => 'M&eacute;thode http inconnue',
-		901 => 'Jeton CSRF inexistant ou invalide',
+		800 => 'création de route: chemin incorrect',
+		801 => 'création de route: méthode controleur inconnue',
 		
 		// inconnue
 		0 => 'Erreur inconnue'

@@ -18,11 +18,10 @@ class Formulaire extends Page	// formulaire de PEUNC
 			case "GET":
 				// création du jeton qui sauvegarde l'état lors de la création du formulaire
 				$this->jetonJSON = '{"depart":' . time()	// permet d'avoir une jeton qui change à chaque fois.
-								. ', "noeud":[' . $route->getAlpha() . ',' . $route->getBeta() . ',' . $route->getGamma() . ']}';	// position dans l'arborescence
+								. ', "URL":' . $route->getURL() . '}';	# chemin
 				break;
 			case "POST":
-				// lecture du jeton
-				$this->jetonJSON = Formulaire::DecoderJeton($this->route->getParam("CSRF"));
+				# c'est RequeteHttp qui vérifie le jeton CSRF
 				break;
 			default:
 				throw new Exception(300);

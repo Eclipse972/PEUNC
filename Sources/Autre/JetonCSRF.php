@@ -29,10 +29,10 @@ public function Chiffre()
     );
 }
 
-public static function Dechiffre($chaine)
+public static function Dechiffre()
 {
     return  json_decode(
-        openssl_decrypt($chaine, Chiffrement::cipher, Chiffrement::key, 0, Chiffrement::iv),
+        openssl_decrypt($_POST['CSRF'], Chiffrement::cipher, Chiffrement::key, 0, Chiffrement::iv),
         true
     );
 }
@@ -44,8 +44,8 @@ public function InsererJeton()
     return '<input name="CSRF" type="hidden" value="' . $jeton . '">' . "\n";
 }
 
-public static function Verifier($chaine)
+public static function Verifier()
 {
-    return ($_SESSION['PEUNC']['CSRF'] == $chaine);
+    return (array_key_exists('CSRF', $_POST)) && ($_SESSION['PEUNC']['CSRF'] == $chaine);
 }
 }
