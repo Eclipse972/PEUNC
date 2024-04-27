@@ -27,10 +27,7 @@ public function __construct(HttpRoute $route, $message, $code)
 public function NoeudArborescence()
 {	// permet d'afficher le noeud dans la vue s'il existe
 	return isset($this->route) ?
-			"<p>Noeud : " . $this->route->getAlpha() . 
-				" - " . $this->route->getBeta() . 
-				" - " . $this->route->getGamma(). 
-				" m&eacute;thode http:" . $this->route->getMethodeHttp() . "</p>\n" :
+			"<p>chemin : " . $this->route->getURL() . "</p>\n" :
 			'';
 }
 
