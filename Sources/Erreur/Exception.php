@@ -35,10 +35,8 @@ class Exception extends \Exception
 		700 => 'Pseudo utilis&eacute; plusieurs fois',
 
 		# Routeur
-		800 => 'le controleur n&apos;existe pas',
-		801 => 'la m&eacute;thode de controleur n&apos;existe pas',
-		802 => 'chemin incorrect pour le routeur',
-		803 => 'methode de chemin inconnue',
+		800 => 'création de route: chemin incorrect',
+		801 => 'création de route: méthode controleur inconnue',
 		
 		// inconnue
 		0 => 'Erreur inconnue'
