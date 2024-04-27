@@ -20,7 +20,7 @@ public function __construct() {
 		case 'POST':
 			if (!JetonCSRF::Verifier())	throw new Exception(901);
 			# par défaut tous les formulaire sont traité par index.php
-			$jeton = JetonCSRF::Dechiffre($_POST['CSRF']);
+			$jeton = JetonCSRF::Dechiffre();
 			$this->URL = $jeton['URL']; # le jeton contient entre autre l'URL de la page qui a créé le jeton
 			$this->param = $_POST;
 			break;

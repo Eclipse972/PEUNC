@@ -32,7 +32,7 @@ public function Chiffre()
 public static function Dechiffre($chaine)
 {
     return  json_decode(
-        openssl_decrypt($chaine, Chiffrement::cipher, Chiffrement::key, 0, Chiffrement::iv),
+        openssl_decrypt($_POST['CSRF'], Chiffrement::cipher, Chiffrement::key, 0, Chiffrement::iv),
         true
     );
 }
