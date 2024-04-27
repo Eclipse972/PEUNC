@@ -29,15 +29,7 @@ private function ajouteRoute(string $URL,
 	$namespaceControleur = $this->baseNamespaceControleur.'\\'.$namespaceControleurRelatif;
 
 	# existence de la méthode du controleur
-	/**
-	 * if(!method_exists($namespaceControleur, $controleurMethode))	throw new Exception(801,$controleurMethode.' pour '.$namespaceControleur);
-	 * 
-	 * Pour une raison que je comprend pas la méthode ClicSurNON de MobileControleur n'est pas détecté
-	 * Toutes les autres méthode sont détectées. Si je met en commentaire les lignes incriminées ça passe.
-	 * Toutes les autre méthode de MobileControleur sont détectées et toutes les méthode des autres controleurs aussi
-	 * Le changement de nom ne fonctionne pas non plus
-	 * 
-	 **/
+	if(!method_exists($namespaceControleur, $controleurMethode))	throw new Exception(801,$controleurMethode.' pour '.$namespaceControleur);
 
 	# enregistrement de la route
 	$this->Troute[$URL][$methodeHttp] = array(
