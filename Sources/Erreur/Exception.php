@@ -37,6 +37,8 @@ class Exception extends \Exception
 		# Routeur
 		800 => 'le controleur n&apos;existe pas',
 		801 => 'la m&eacute;thode de controleur n&apos;existe pas',
+		802 => 'chemin incorrect pour le routeur',
+		803 => 'methode de chemin inconnue',
 		
 		// inconnue
 		0 => 'Erreur inconnue'

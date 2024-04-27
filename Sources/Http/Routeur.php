@@ -2,6 +2,7 @@
 namespace PEUNC\Http;
 use PEUNC\Http\RequeteHttp;
 use PEUNC\Erreur\ServeurException;
+use PEUNC\Erreur\Exception;
 
 class Routeur {
 private array $Troute = [];
@@ -17,17 +18,16 @@ private function ajouteRoute(string $URL,
 							string $controleurMethode,
 							array $parametreAutorisés) : void
 {
-	/**
-	 * À FAIRE: vérifier la validité des paramètre
-	 * URL: URL sur 3 niveaux ne contenant que des caractères cf .htacces 
-	 * methodeHttp, namespaceControleur, controleurMethode des chaine de caractères non vide
-	 * existence du controleur et de la méthode
-	 * lancer une exception de PEUNC si ça arrive
-	 **/
-	# validté de l'URL
+	# validité de l'URL sur 3 niveaux ne contenant que des caractères cf .htacces 
+	$regexp = '/^\/(?:[a-zA-Z0-9_-]+\/?(?:[a-zA-Z0-9_-]+\/?(?:[a-zA-Z0-9_-]+\/?)?)?)?$/';
+	if (!preg_match($regexp, $URL)) throw new Exception(802);
+
 	# validité de la méthode http
+	if (!in_array($methodeHttp, ['GET', 'POST'])) throw new Exception(803);
+	
 	# existence du controleur
 	# existence de la méthode du controleur
+
 	$this->Troute[$URL][$methodeHttp] = array(
 		'controleur' => $this->baseNamespaceControleur . '\\' . $namespaceControleurRelatif,
 		'fonction' => $controleurMethode,
