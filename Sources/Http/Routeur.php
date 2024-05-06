@@ -17,7 +17,8 @@ private function ajouteRoute(string $URL,
 							string $methodeHttp,
 							string $namespaceControleurRelatif,
 							string $controleurMethode,
-							array $parametreAutorisés) : void
+							array $parametreAutorisés,
+							int $roleExigés) : void
 {
 	# validité de l'URL sur 3 niveaux ne contenant que des caractères cf .htacces 
 	$regexp = '/^\/(?:[a-zA-Z0-9_-]+\/?(?:[a-zA-Z0-9_-]+\/?(?:[a-zA-Z0-9_-]+\/?)?)?)?$/';
@@ -35,7 +36,8 @@ private function ajouteRoute(string $URL,
 	$this->Troute[$URL][$methodeHttp] = array(
 		'controleur' => $namespaceControleur,
 		'fonction' => $controleurMethode,
-		'paramAutorise' => $parametreAutorisés
+		'paramAutorise' => $parametreAutorisés,
+		'roles' => $roleExigés
 	);
 }
 
@@ -43,14 +45,16 @@ private function ajouteRoute(string $URL,
 public function get(string $URL,
 					string $namespaceControleur,
 					string $controleurMethode,
-					array $parametreAutorisés = []) : void
-{ $this->ajouteRoute($URL, 'GET', $namespaceControleur, $controleurMethode, $parametreAutorisés); }
+					array $parametreAutorisés,
+					int $roleExigés) : void
+{ $this->ajouteRoute($URL, 'GET', $namespaceControleur, $controleurMethode, $parametreAutorisés, $roleExigés); }
 
 public function post(string $URL,
 					string $namespaceControleur,
 					string $controleurMethode,
-					array $parametreAutorisés = []) : void
-{ $this->ajouteRoute($URL, 'POST', $namespaceControleur, $controleurMethode, $parametreAutorisés); }
+					array $parametreAutorisés,
+					int $roleExigés) : void
+{ $this->ajouteRoute($URL, 'POST', $namespaceControleur, $controleurMethode, $parametreAutorisés, $roleExigés); }
 
 public function TrouveChemin(RequeteHttp $requete) : array {
 	/**
