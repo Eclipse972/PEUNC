@@ -8,10 +8,10 @@ private string $URL;
 private string $methode;
 private array $param;
 
-public function __construct() {
-	$decompositionURI = parse_url($_SERVER['REQUEST_URI']);
+public function __construct(string $URI, string $méthode) {
+	$decompositionURI = parse_url($URI);
 	$this->URL = $decompositionURI['path'];
-	$this->methode = $_SERVER['REQUEST_METHOD'];
+	$this->methode = $méthode;
 	
 	switch ($this->methode) {
 		case 'GET':
