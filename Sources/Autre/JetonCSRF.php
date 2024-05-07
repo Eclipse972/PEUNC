@@ -31,8 +31,12 @@ public function Chiffre()
 
 public static function Dechiffre()
 {
-    return  json_decode(
-        openssl_decrypt($_POST['CSRF'], Chiffrement::cipher, Chiffrement::key, 0, Chiffrement::iv),
+    return json_decode(
+        openssl_decrypt($_POST['CSRF'],
+						Chiffrement::cipher,
+						Chiffrement::key,
+						0,
+						Chiffrement::iv),
         true
     );
 }
@@ -40,12 +44,15 @@ public static function Dechiffre()
 public function InsererJeton()
 {
     $jeton = $this->Chiffre();
-    $_SESSION['PEUNC']['CSRF'] = $jeton;
     return '<input name="CSRF" type="hidden" value="' . $jeton . '">' . "\n";
 }
 
-public static function Verifier()
+public static function Verifier(int $duréeMax = 600)
 {
-    return (array_key_exists('CSRF', $_POST)) && ($_SESSION['PEUNC']['CSRF'] == $_POST['CSRF']);
+    return array_key_exists('CSRF', $_POST)
+		&& ($jeton = self::Dechiffre()) !== null
+		&& isset($jeton['date'])
+		&& $jeton['date'] - time() < $duréeMax
+		&& isset($jeton['URL']);
 }
 }
