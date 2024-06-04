@@ -12,6 +12,7 @@ class ReponseClient implements iReponseClient
  * Classe nécesaire: HttpRoute chargée par l'autoloader
  **/
 {
+	# À FAIRE: utiliser la syntaxe de PHP8 pour la déclaration des fonctions
 private static $instance;
 
 protected $controleur;
