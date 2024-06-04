@@ -61,6 +61,15 @@ public static function Existe($nom)
 {
 	return array_key_exists($nom, ReponseClient::getInstance()->controleur->get());
 }
+
+public static function Message(string $nomMessage) : string
+{
+	if (array_key_exists($nomMessage, $_SESSION)) {
+		$codeHTML = "<p style=\"color:red\">{$_SESSION[$nomMessage]}</p>\n";
+		unset($_SESSION[$nomMessage]); # suppression du message dans la session
+		return $codeHTML;
+	} else return '';
+}
 // Fin de l'implémentation de l'interface ============================================================
 }
 

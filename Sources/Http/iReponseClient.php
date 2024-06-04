@@ -33,12 +33,21 @@ public static function Element($nom);	//
  * Provoque une erreur si l'élément n'a pas été créé par le controleur (pour imposer un débogage)
  * Renvoie la liste des éléments si aucun paramètre
  */
-public static function Existe($nom);	// vérifie l'existence de l'élément nommé
+public static function Existe($nom);	# vérifie l'existence de l'élément nommé
 
 /**
  * Méthodes
  **/
-public static function Menu();	// Affiche la balise nav et son contenu créé par le controleur
-public static function View();	// renvoie le nom complet de la vue
-public static function CSS();	// liste des liens CSS
+public static function Menu();	# Affiche la balise nav et son contenu créé par le controleur
+public static function View();	# renvoie le nom complet de la vue
+public static function CSS();	# liste des liens CSS
+
+/**
+ * Affiche un message en rouge
+ * paramètre: nomMessage = indice sous lequel le message est sauvegardé dans $_SESSION
+ * Le message est ensuite supprimé de la session
+ * 
+ * retour: chaine de caractère contenant le code html du message
+ */
+public static function Message(string $nomMessage) : string;
 }
