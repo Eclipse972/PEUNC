@@ -91,7 +91,7 @@ public function getNav() {
  * 'message' => code html de l'éventuel message d'avertissement
  * 'nom' => nom de l'élément crée par le controleur ce nom doit être différent des entrées précédentes
  **/
-public function conteneurPourVue(string $messageSession = 'message') : array {
+public function conteneurPourVue() : array {
 	$CSS = ''; # création liste CSS
 	foreach($this->T_CSS as $feuilleCSS) $CSS .= "\t<link rel=\"stylesheet\" href=\"$feuilleCSS\"/>\n";
 
