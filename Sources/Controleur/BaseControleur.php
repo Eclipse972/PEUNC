@@ -81,7 +81,7 @@ public function getNav() {
 /**
  * renvoie un conteneur contenant tous les éléments pour construire la page
  * 
- * Paramètre: aucun
+ * Paramètre: string messageSession le nom du message sauvagardé en session
  * 
  * Retour: array
  * tableau associatif contenant
@@ -89,12 +89,32 @@ public function getNav() {
  * 'menu' => code html du menu
  * 'vue' => chemin vers le fichier vue
  * 'message' => code html de l'éventuel message d'avertissement
- * 'nom' => nom de l'élémet crée par le controleur ce nom doit être différent des entrées précédentes
+ * 'nom' => nom de l'élément crée par le controleur ce nom doit être différent des entrées précédentes
  **/
-public function conteneurPourVue() : array {
+public function conteneurPourVue(string $messageSession = 'message') : array {
+	$CSS = ''; # création liste CSS
+	foreach($this->T_CSS as $feuilleCSS) $CSS .= "\t<link rel=\"stylesheet\" href=\"$feuilleCSS\"/>\n";
+
+	$menu = ''; # menu
+	$nbTabulation = 0;
+	foreach ($this->T_nav as $intructionHTML) {
+		if($intructionHTML == '</menu>') $nbTabulation--;
+		$menu .= str_repeat("\t", $nbTabulation) . $intructionHTML . "\n";
+		if($intructionHTML == '<menu>') $nbTabulation++;
+	}
+
+	$message = ''; # sauvegardé dans la session
+	if (array_key_exists($messageSession, $_SESSION)) {
+		$message = "<p style=\"color:red\">{$_SESSION[$messageSession]}</p>\n";
+		unset($_SESSION[$messageSession]); # suppression du message dans la session
+	} 
+
 	return array(
-		'CSS'
-	);
+		'CSS' => $CSS,
+		'menu' => $menu,
+		'vue' => $this->vue,
+		'message' => $message
+	) + $this->T_element;
 }
 // fin de l'implémentation de l'interface
 
