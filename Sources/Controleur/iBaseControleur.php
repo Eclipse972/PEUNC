@@ -30,5 +30,5 @@ public function getVue();			// renvoie le chimn complet vers la vue
 public function setNav(array $liste);	# ajoute la liste des instruction html pour la balise nav
 public function getNav();				# renvoie la liste des instructions html de la balise nav
 
-public function conteneurPourVue();	# renvoie un conteneur contenant tous les éléments pour construire la page
+public function conteneurPourVue(string $messageSession) : array;	# renvoie un conteneur contenant tous les éléments pour construire la page
 }
