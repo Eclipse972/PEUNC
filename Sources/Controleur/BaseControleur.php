@@ -103,17 +103,10 @@ public function conteneurPourVue(string $messageSession = 'message') : array {
 		if($intructionHTML == '<menu>') $nbTabulation++;
 	}
 
-	$message = ''; # sauvegardé dans la session
-	if (array_key_exists($messageSession, $_SESSION)) {
-		$message = "<p style=\"color:red\">{$_SESSION[$messageSession]}</p>\n";
-		unset($_SESSION[$messageSession]); # suppression du message dans la session
-	} 
-
 	return array(
 		'CSS' => $CSS,
 		'menu' => $menu,
-		'vue' => $this->vue,
-		'message' => $message
+		'vue' => $this->vue
 	) + $this->T_element;
 }
 // fin de l'implémentation de l'interface
