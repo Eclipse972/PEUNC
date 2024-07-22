@@ -78,6 +78,24 @@ public function getNav() {
 	return $TcodeHTML;
 }
 
+/**
+ * renvoie un conteneur contenant tous les éléments pour construire la page
+ * 
+ * Paramètre: aucun
+ * 
+ * Retour: array
+ * tableau associatif contenant
+ * 'CSS' => code html appelant toutes les CSS
+ * 'menu' => code html du menu
+ * 'vue' => chemin vers le fichier vue
+ * 'message' => code html de l'éventuel message d'avertissement
+ * 'nom' => nom de l'élémet crée par le controleur ce nom doit être différent des entrées précédentes
+ **/
+public function conteneurPourVue() : array {
+	return array(
+		'CSS'
+	);
+}
 // fin de l'implémentation de l'interface
 
 }
